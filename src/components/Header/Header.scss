@@ -1,0 +1,43 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.header {
+  padding: $spacing-24 $spacing-16;
+  background-color: $color-background-dark;
+  @include flex-col($spacing-24);
+
+  @include tablet {
+    padding: $spacing-24 $spacing-32;
+    @include flex-row-between;
+  }
+
+  &__logo {
+    height: 28px;
+  }
+
+  &__nav-list {
+    @include flex-row-center($spacing-16);
+  }
+
+  &__nav-item {
+    flex: 1 1 0;
+    text-align: center;
+  }
+
+  &__nav-link {
+    display: inline-block;
+    width: 100%;
+    color: $color-light-primary;
+    padding: $spacing-8 $spacing-16;
+    border-radius: $radius-full;
+    transition: background-color 0.3s ease;
+
+    &.active {
+      background-color: $color-text-primary;
+    }
+
+    &:hover {
+      background-color: $color-text-primary;
+    }
+  }
+}
