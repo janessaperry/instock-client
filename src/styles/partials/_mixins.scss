@@ -73,6 +73,8 @@
 
 @mixin table-header {
   @include typography(11px, 600, 16px);
+  text-transform: uppercase;
+  color: $color-text-secondary;
 
   @include tablet {
     @include typography(12px, 600, 18px);

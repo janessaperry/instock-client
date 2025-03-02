@@ -1,2 +1,12 @@
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/variables" as *;
+
+.warehouses-container {
+  background-color: $color-light-primary;
+  border-radius: $radius-4;
+  @include container;
+}
+
+.warehouses-header {
+  @include flex-row-between($spacing-16);
+}

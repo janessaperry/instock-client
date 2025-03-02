@@ -1,6 +1,11 @@
 import "./InventoryPage.scss";
 
-function InventoryPage() {
+interface InventoryPageProps {
+  baseApiUrl: string;
+}
+
+function InventoryPage({ baseApiUrl }: InventoryPageProps) {
+  console.log(baseApiUrl);
   return (
     <div>
       <h1>Inventory</h1>

@@ -25,6 +25,10 @@ h3 {
   @include labels;
 }
 
+h4 {
+  @include table-header;
+}
+
 p {
   @include body-medium;
 }

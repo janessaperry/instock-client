@@ -4,8 +4,11 @@
 .app {
   @include flex-col;
   min-height: 100vh;
+  // background-color: $color-background-light;
+  background-color: $color-background-dark;
 
   &__main {
     flex: 1;
+    @include container;
   }
 }
