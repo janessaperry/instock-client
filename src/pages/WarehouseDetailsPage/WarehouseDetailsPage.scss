@@ -1,0 +1,57 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.warehouse-container {
+  background-color: $color-light-primary;
+  border-radius: $radius-4;
+  @include flex-col($spacing-16);
+}
+
+.warehouse-header {
+  border-bottom: 1px solid $color-border-primary;
+  @include flex-row-between($spacing-16);
+  @include container;
+}
+
+.warehouse-details {
+  @include flex-col($spacing-16);
+  @include container-compact;
+}
+
+.warehouse-inventory {
+  @include flex-col;
+
+  &__row {
+    border-top: 1px solid $color-border-primary;
+    @include flex-row($spacing-16);
+    flex-wrap: wrap;
+    @include container;
+  }
+
+  &__item {
+    flex: 1 1 calc(50% - $spacing-16);
+  }
+
+  &__chip {
+    padding: $spacing-4 $spacing-8;
+    border-radius: $radius-full;
+    justify-self: flex-start;
+    text-transform: uppercase;
+    @include labels;
+
+    &--in-stock {
+      color: $color-success;
+      background-color: $color-success-light;
+    }
+
+    &--out-of-stock {
+      color: $color-error;
+      background-color: $color-error-light;
+    }
+  }
+
+  &__actions {
+    flex: 1 1 100%;
+    @include flex-row-between($spacing-16);
+  }
+}

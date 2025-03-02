@@ -62,7 +62,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
               <div className="warehouses-list__item">
                 <h4 className="warehouses-list__title">Warehouse</h4>
                 <Link
-                  to={`/warehouses/${warehouse.id}`}
+                  to={`/${warehouse.id}`}
                   className="warehouses-list__content warehouses-list__content--link"
                 >
                   {warehouse.warehouse_name}
