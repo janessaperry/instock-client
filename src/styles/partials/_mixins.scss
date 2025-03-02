@@ -1,0 +1,103 @@
+@use "./variables" as *;
+
+@mixin tablet {
+  @media (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+@mixin flex-row($gap: 0) {
+  display: flex;
+  flex-direction: row;
+  gap: $gap;
+}
+
+@mixin flex-row-center($gap: 0) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-row-between($gap: 0) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin flex-col($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin typography($font-size, $font-weight, $line-height) {
+  font-family: $font-family-primary;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+}
+
+@mixin page-header {
+  @include typography(28px, 600, 36px);
+
+  @include tablet {
+    @include typography(32px, 600, 40px);
+  }
+}
+
+@mixin sub-header {
+  @include typography(20px, 600, 28px);
+
+  @include tablet {
+    @include typography(24px, 600, 32px);
+  }
+}
+
+@mixin labels {
+  @include typography(13px, 600, 20px);
+
+  @include tablet {
+    @include typography(14px, 600, 22px);
+  }
+}
+
+@mixin table-header {
+  @include typography(11px, 600, 16px);
+
+  @include tablet {
+    @include typography(12px, 600, 18px);
+  }
+}
+
+@mixin body-large {
+  @include typography(15px, 400, 26px);
+
+  @include tablet {
+    @include typography(16px, 400, 28px);
+  }
+}
+
+@mixin body-medium {
+  @include typography(13px, 400, 20px);
+
+  @include tablet {
+    @include typography(14px, 400, 22px);
+  }
+}
+
+@mixin body-small {
+  @include typography(11px, 400, 16px);
+
+  @include tablet {
+    @include typography(12px, 400, 18px);
+  }
+}
