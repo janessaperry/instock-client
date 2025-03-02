@@ -4,9 +4,29 @@
 .warehouses-container {
   background-color: $color-light-primary;
   border-radius: $radius-4;
-  @include container;
 }
 
 .warehouses-header {
   @include flex-row-between($spacing-16);
+  @include container;
+}
+
+.warehouses-list {
+  @include flex-col;
+
+  &__row {
+    border-top: 1px solid $color-border-primary;
+    @include flex-row($spacing-16);
+    flex-wrap: wrap;
+    @include container;
+  }
+
+  &__item {
+    flex: 1 1 calc(50% - $spacing-16);
+  }
+
+  &__actions {
+    flex: 1 1 100%;
+    @include flex-row-between($spacing-16);
+  }
 }
