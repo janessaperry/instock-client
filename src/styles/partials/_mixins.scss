@@ -1,4 +1,4 @@
-@use "./variables" as *;
+@use "./variables.scss" as *;
 
 @mixin tablet {
   @media (min-width: $breakpoint-tablet) {
@@ -21,6 +21,7 @@
 @mixin flex-row-center($gap: 0) {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   gap: $gap;
 }
@@ -99,5 +100,15 @@
 
   @include tablet {
     @include typography(12px, 400, 18px);
+  }
+}
+
+@mixin container {
+  & {
+    padding: $spacing-24 $spacing-16;
+  }
+
+  @include tablet {
+    padding: $spacing-24 $spacing-32;
   }
 }

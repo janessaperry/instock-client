@@ -2,17 +2,17 @@
 @use "../../styles/partials/mixins" as *;
 
 .header {
-  padding: $spacing-24 $spacing-16;
   background-color: $color-background-dark;
   @include flex-col($spacing-24);
+  @include container;
 
   @include tablet {
-    padding: $spacing-24 $spacing-32;
     @include flex-row-between;
   }
 
   &__logo {
     height: 28px;
+    align-self: center;
   }
 
   &__nav-list {
