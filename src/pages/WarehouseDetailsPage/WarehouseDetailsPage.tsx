@@ -59,7 +59,8 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
     getInventoryByWarehouse();
   }, [warehouseId]);
 
-  if (!Object.keys(warehouse).length || !inventory.length) {
+  //todo add empty state for wareouse inventory
+  if (!Object.keys(warehouse).length) {
     return <p>Loading...</p>;
   }
 

@@ -1,0 +1,23 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.form-container {
+  background-color: $color-light-primary;
+  border-radius: $radius-4;
+  border-bottom: 1px solid $color-border-primary;
+  @include flex-col($spacing-16);
+
+  &__header {
+    @include flex-row($spacing-16);
+    @include container;
+  }
+}
+
+.form {
+  @include flex-col($spacing-16);
+  @include container;
+
+  &__section {
+    @include flex-col($spacing-16);
+  }
+}

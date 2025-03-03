@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./WarehousesPage.scss";
 
@@ -20,6 +20,7 @@ interface Warehouses {
 }
 
 function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
+  const navigate = useNavigate();
   const [warehouses, setWarehouses] = useState<Warehouses[]>([]);
 
   const getAllWarehouses = async () => {
@@ -49,7 +50,10 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
             type="text"
             placeholder="Search..."
           />
-          <button className="warehouses-header__button">
+          <button
+            className="warehouses-header__button"
+            onClick={() => navigate("/add")}
+          >
             Add New Warehouse
           </button>
         </div>
@@ -92,7 +96,17 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
 
               <div className="warehouses-list__actions">
                 <button>Delete</button>
-                <button>Edit</button>
+                <button
+                  onClick={() =>
+                    navigate(`/${warehouse.id}/edit`, {
+                      state: {
+                        existingWarehouseDetails: warehouse,
+                      },
+                    })
+                  }
+                >
+                  Edit
+                </button>
               </div>
             </div>
           );
