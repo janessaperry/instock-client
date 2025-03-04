@@ -1,27 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { WarehouseDetails } from "../../types";
 import "./WarehousesPage.scss";
 
 interface WarehousesPageProps {
   baseApiUrl: string;
 }
 
-interface Warehouses {
-  id: number;
-  warehouse_name: string;
-  address: string;
-  city: string;
-  country: string;
-  contact_name: string;
-  contact_position: string;
-  contact_phone: string;
-  contact_email: string;
-}
-
 function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
   const navigate = useNavigate();
-  const [warehouses, setWarehouses] = useState<Warehouses[]>([]);
+  const [warehouses, setWarehouses] = useState<WarehouseDetails[]>([]);
 
   const getAllWarehouses = async () => {
     try {

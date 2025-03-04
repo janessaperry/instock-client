@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { WarehouseFormData } from "../../types";
+import { WarehouseDetails, WarehouseFormData } from "../../types";
 import InputText from "../../components/InputText/InputText";
 import "./WarehouseFormPage.scss";
 
@@ -12,43 +12,61 @@ interface WarehousesFormPageProps {
 
 function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { existingWarehouseDetails } = location.state || {};
   const { warehouseId } = useParams();
-  const [formData, setFormData] = useState<WarehouseFormData>({
+  const [existingWarehouseDetails, setExistingWarehouseDetails] =
+    useState<WarehouseDetails>({} as WarehouseDetails);
+
+  const formDataObject = (warehouseObject: WarehouseDetails) => ({
     warehouseName: {
-      value: existingWarehouseDetails?.warehouse_name || "",
+      value: warehouseObject?.warehouse_name || "",
       hasError: false,
     },
     address: {
-      value: existingWarehouseDetails?.address || "",
+      value: warehouseObject?.address || "",
       hasError: false,
     },
     city: {
-      value: existingWarehouseDetails?.city || "",
+      value: warehouseObject?.city || "",
       hasError: false,
     },
     country: {
-      value: existingWarehouseDetails?.country || "",
+      value: warehouseObject?.country || "",
       hasError: false,
     },
     contactName: {
-      value: existingWarehouseDetails?.contact_name || "",
+      value: warehouseObject?.contact_name || "",
       hasError: false,
     },
     contactPosition: {
-      value: existingWarehouseDetails?.contact_position || "",
+      value: warehouseObject?.contact_position || "",
       hasError: false,
     },
     contactPhone: {
-      value: existingWarehouseDetails?.contact_phone || "",
+      value: warehouseObject?.contact_phone || "",
       hasError: false,
     },
     contactEmail: {
-      value: existingWarehouseDetails?.contact_email || "",
+      value: warehouseObject?.contact_email || "",
       hasError: false,
     },
   });
+
+  const [formData, setFormData] = useState<WarehouseFormData>(
+    formDataObject(existingWarehouseDetails)
+  );
+
+  const getWarehouseDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${baseApiUrl}/warehouses/${warehouseId}`
+      );
+      const warehouseDetailsData = response.data;
+      setExistingWarehouseDetails(warehouseDetailsData);
+      setFormData(formDataObject(warehouseDetailsData));
+    } catch (error) {
+      console.error(`Error fetching warehouse details: ${error}`);
+    }
+  };
 
   const addNewWarehouse = async (newWarehouse: Object) => {
     try {
@@ -89,6 +107,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
 
     let isValid = true;
     Object.keys(formData).forEach((key) => {
+      console.log(formData[key].value.trim());
       if (formData[key].value.trim().length === 0) {
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -120,6 +139,10 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
       ? await editExistingWarehouse(warehouseDetails)
       : await addNewWarehouse(warehouseDetails);
   };
+
+  useEffect(() => {
+    editMode && getWarehouseDetails();
+  }, [warehouseId]);
 
   return (
     <div className="form-container">
