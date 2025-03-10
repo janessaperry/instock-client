@@ -1,0 +1,28 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+@use "sass:color";
+
+.btn {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: $radius-full;
+  padding: $spacing-8 $spacing-12;
+  background-color: unset;
+  transition: 0.2s ease background-color;
+
+  &--primary {
+    background-color: $color-brand-primary;
+    color: $color-light-primary;
+
+    &:hover {
+      background-color: color.adjust($color-brand-primary, $lightness: -10%);
+    }
+  }
+
+  &--icon {
+    &:hover {
+      background-color: $color-background-light;
+    }
+  }
+}
