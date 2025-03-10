@@ -1,10 +1,12 @@
+import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { WarehouseDetails } from "../../types";
-import "./WarehousesPage.scss";
+import Modal from "../../components/Modal/Modal";
 import Button from "../../components/Button/Button";
 import { DeleteOutlineIcon, EditIcon } from "../../components/Icons/Icons";
+import { WarehouseDetails } from "../../types";
+import "./WarehousesPage.scss";
 
 interface WarehousesPageProps {
   baseApiUrl: string;
@@ -12,6 +14,8 @@ interface WarehousesPageProps {
 
 function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [deletedId, setDeletedId] = useState<number | null>(null);
   const [warehouses, setWarehouses] = useState<WarehouseDetails[]>([]);
 
   const getAllWarehouses = async () => {
@@ -27,6 +31,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
     try {
       await axios.delete(`${baseApiUrl}/warehouses/${warehouseId}`);
       await getAllWarehouses();
+      setShowModal(false);
     } catch (error) {
       console.error(`Error deleting warehouse ${warehouseId}: ${error}`);
     }
@@ -97,7 +102,10 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                 <Button
                   icon={<DeleteOutlineIcon />}
                   btnClasses="btn--icon"
-                  handleClick={() => handleDelete(warehouse.id)}
+                  handleClick={() => {
+                    setShowModal(true);
+                    setDeletedId(warehouse.id);
+                  }}
                 />
                 <Button
                   icon={<EditIcon />}
@@ -109,6 +117,16 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
           );
         })}
       </section>
+      {showModal &&
+        createPortal(
+          <Modal
+            setShowModal={setShowModal}
+            setDeletedId={setDeletedId}
+            handleDelete={handleDelete}
+            idToDelete={deletedId}
+          />,
+          document.body
+        )}
     </div>
   );
 }

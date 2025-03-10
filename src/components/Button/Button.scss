@@ -20,6 +20,23 @@
     }
   }
 
+  &--secondary {
+    border: 1px solid $color-border-primary;
+
+    &:hover {
+      background-color: $color-background-light;
+    }
+  }
+
+  &--warning {
+    color: $color-light-primary;
+    background-color: $color-error;
+
+    &:hover {
+      background-color: color.adjust($color-error, $lightness: -5%);
+    }
+  }
+
   &--icon {
     &:hover {
       background-color: $color-background-light;

@@ -4,6 +4,7 @@ import axios from "axios";
 import { WarehouseDetails, WarehouseFormData } from "../../types";
 import InputText from "../../components/InputText/InputText";
 import "./WarehouseFormPage.scss";
+import Button from "../../components/Button/Button";
 
 interface WarehousesFormPageProps {
   baseApiUrl: string;
@@ -217,14 +218,17 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
           />
         </section>
 
-        <button
-          className="btn btn--secondary"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Cancel
-        </button>
-        <button className="btn btn--primary">Save</button>
+        <Button
+          btnClasses="btn--secondary"
+          label="Cancel"
+          handleClick={() => navigate(-1)}
+        />
+        <Button
+          btnType="submit"
+          btnClasses="btn--primary"
+          label="Save"
+          handleClick={() => navigate(-1)}
+        />
       </form>
     </div>
   );

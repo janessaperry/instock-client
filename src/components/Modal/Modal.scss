@@ -1,0 +1,40 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color-background-dark, 60%);
+  @include flex-col;
+
+  @include tablet {
+    @include container;
+  }
+
+  &__content {
+    background-color: $color-light-primary;
+    border-radius: $radius-4;
+    flex-grow: 1;
+    @include flex-col($spacing-16);
+    @include container;
+
+    @include tablet {
+      flex-grow: 0;
+    }
+  }
+
+  &__actions {
+    @include flex-row($spacing-16);
+
+    & .btn {
+      flex-grow: 1;
+    }
+
+    @include tablet {
+      align-self: flex-end;
+    }
+  }
+}
