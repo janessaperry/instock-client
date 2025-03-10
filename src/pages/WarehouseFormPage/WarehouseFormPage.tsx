@@ -107,7 +107,6 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
 
     let isValid = true;
     Object.keys(formData).forEach((key) => {
-      console.log(formData[key].value.trim());
       if (formData[key].value.trim().length === 0) {
         setFormData((prevFormData) => ({
           ...prevFormData,

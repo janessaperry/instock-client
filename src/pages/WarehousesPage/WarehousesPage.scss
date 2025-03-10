@@ -7,8 +7,20 @@
 }
 
 .warehouses-header {
-  @include flex-row-between($spacing-16);
+  @include flex-col($spacing-16);
   @include container;
+
+  @include tablet {
+    @include flex-row-between($spacing-16);
+  }
+
+  &__actions {
+    @include flex-col($spacing-16);
+  }
+
+  &__search {
+    @include input-text;
+  }
 }
 
 .warehouses-list {

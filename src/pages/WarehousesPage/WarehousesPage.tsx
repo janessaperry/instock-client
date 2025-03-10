@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { WarehouseDetails } from "../../types";
 import "./WarehousesPage.scss";
+import Button from "../../components/Button/Button";
+import { DeleteOutlineIcon, EditIcon } from "../../components/Icons/Icons";
 
 interface WarehousesPageProps {
   baseApiUrl: string;
@@ -18,6 +20,15 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
       setWarehouses(response.data);
     } catch (error) {
       console.error(`Error fetching warehouses: ${error}`);
+    }
+  };
+
+  const handleDelete = async (warehouseId: number) => {
+    try {
+      await axios.delete(`${baseApiUrl}/warehouses/${warehouseId}`);
+      await getAllWarehouses();
+    } catch (error) {
+      console.error(`Error deleting warehouse ${warehouseId}: ${error}`);
     }
   };
 
@@ -39,12 +50,11 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
             type="text"
             placeholder="Search..."
           />
-          <button
-            className="warehouses-header__button"
-            onClick={() => navigate("/add")}
-          >
-            Add New Warehouse
-          </button>
+          <Button
+            btnClasses="btn--primary"
+            label="Add New Warehouse"
+            handleClick={() => navigate("/add")}
+          />
         </div>
       </header>
 
@@ -84,18 +94,16 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
               </div>
 
               <div className="warehouses-list__actions">
-                <button>Delete</button>
-                <button
-                  onClick={() =>
-                    navigate(`/${warehouse.id}/edit`, {
-                      state: {
-                        existingWarehouseDetails: warehouse,
-                      },
-                    })
-                  }
-                >
-                  Edit
-                </button>
+                <Button
+                  icon={<DeleteOutlineIcon />}
+                  btnClasses="btn--icon"
+                  handleClick={() => handleDelete(warehouse.id)}
+                />
+                <Button
+                  icon={<EditIcon />}
+                  btnClasses="btn--icon"
+                  handleClick={() => navigate(`/${warehouse.id}/edit`)}
+                />
               </div>
             </div>
           );
