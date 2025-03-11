@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { WarehouseDetails, WarehouseFormData } from "../../types";
-import InputText from "../../components/InputText/InputText";
-import "./WarehouseFormPage.scss";
 import Button from "../../components/Button/Button";
+import InputText from "../../components/InputText/InputText";
+import { ArrowBackIcon } from "../../components/Icons/Icons";
+import { WarehouseDetails, WarehouseFormData } from "../../types";
+import "./WarehouseFormPage.scss";
 
 interface WarehousesFormPageProps {
   baseApiUrl: string;
@@ -147,7 +148,11 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
   return (
     <div className="form-container">
       <header className="form-container__header">
-        <button onClick={() => navigate(-1)}>Back</button>
+        <Button
+          btnClasses="btn--icon"
+          icon={<ArrowBackIcon />}
+          handleClick={() => navigate(-1)}
+        />
         <h1 className="form-container__title">
           {editMode ? "Edit" : "Add New"} Warehouse
         </h1>

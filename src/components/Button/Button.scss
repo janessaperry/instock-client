@@ -9,6 +9,7 @@
   border-radius: $radius-full;
   padding: $spacing-8 $spacing-12;
   background-color: unset;
+  @include flex-row-center($spacing-8);
   transition: 0.2s ease background-color;
 
   &--primary {
@@ -38,6 +39,8 @@
   }
 
   &--icon {
+    padding: $spacing-4;
+
     &:hover {
       background-color: $color-background-light;
     }

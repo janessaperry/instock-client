@@ -9,6 +9,7 @@
 
   &__header {
     @include flex-row($spacing-16);
+    align-items: center;
     @include container;
   }
 }
