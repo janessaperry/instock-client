@@ -2,9 +2,8 @@
 @use "../../styles/partials/mixins" as *;
 
 .header {
-  background-color: $color-background-dark;
   @include flex-col($spacing-24);
-  @include container;
+  @include container-padding;
 
   @include tablet {
     @include flex-row-between;

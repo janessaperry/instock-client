@@ -105,7 +105,8 @@
   }
 }
 
-@mixin container-compact {
+// @mixin container-compact {
+@mixin container-padding-compact {
   & {
     padding: $spacing-16;
   }
@@ -115,7 +116,8 @@
   }
 }
 
-@mixin container {
+// @mixin container {
+@mixin container-padding {
   & {
     padding: $spacing-24 $spacing-16;
   }
@@ -123,6 +125,12 @@
   @include tablet {
     padding: $spacing-24 $spacing-32;
   }
+}
+
+@mixin content-container {
+  background-color: $color-light-primary;
+  border-radius: $radius-4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 @mixin input-text {

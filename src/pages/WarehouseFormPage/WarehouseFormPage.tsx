@@ -161,7 +161,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
 
       <form className="form" onSubmit={handleFormSubmit}>
         <section className="form__section">
-          <h2 className="form_section-title">Warehouse Details</h2>
+          <h2 className="form__section-title">Warehouse Details</h2>
 
           <InputText
             label="Warehouse Name"
@@ -193,7 +193,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
         </section>
 
         <section className="form__section">
-          <h2 className="form_section-title">Contact Details</h2>
+          <h2 className="form__section-title">Contact Details</h2>
 
           <InputText
             label="Contact Name"
@@ -224,12 +224,14 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
           />
         </section>
 
-        <Button
-          className="btn--secondary"
-          label="Cancel"
-          handleClick={() => navigate(-1)}
-        />
-        <Button btnType="submit" className="btn--primary" label="Save" />
+        <div className="form__actions">
+          <Button
+            className="btn--secondary"
+            label="Cancel"
+            handleClick={() => navigate(-1)}
+          />
+          <Button btnType="submit" className="btn--primary" label="Save" />
+        </div>
       </form>
     </div>
   );

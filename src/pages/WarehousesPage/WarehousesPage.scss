@@ -2,8 +2,7 @@
 @use "../../styles/partials/variables" as *;
 
 .warehouses-container {
-  background-color: $color-light-primary;
-  border-radius: $radius-4;
+  @include content-container;
 }
 
 .warehouses-list {
@@ -12,7 +11,7 @@
   &__row {
     @include flex-row($spacing-16);
     flex-wrap: wrap;
-    @include container;
+    @include container-padding;
 
     &:not(:first-of-type) {
       border-top: 1px solid $color-border-primary;
@@ -21,6 +20,17 @@
 
   &__item {
     flex: 1 1 calc(50% - $spacing-16);
+  }
+
+  &__content {
+    &--link {
+      color: $color-brand-primary;
+      @include flex-row($spacing-4);
+
+      &:hover {
+        color: $color-brand-primary-hover;
+      }
+    }
   }
 
   &__actions {

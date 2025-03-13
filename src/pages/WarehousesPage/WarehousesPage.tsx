@@ -6,8 +6,12 @@ import Modal from "../../components/Modal/Modal";
 import Button from "../../components/Button/Button";
 import InputSearch from "../../components/InputSearch/InputSearch";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
-import { DeleteOutlineIcon, EditIcon } from "../../components/Icons/Icons";
-import { WarehouseDetails } from "../../types";
+import {
+  ChevronRightIcon,
+  DeleteOutlineIcon,
+  EditIcon,
+} from "../../components/Icons/Icons";
+import { WarehouseDetails, DeletedWarehouseProps } from "../../types";
 import "./WarehousesPage.scss";
 
 interface WarehousesPageProps {
@@ -17,7 +21,8 @@ interface WarehousesPageProps {
 function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [deletedId, setDeletedId] = useState<number | null>(null);
+  const [deletedWarehouse, setDeletedWarehouse] =
+    useState<DeletedWarehouseProps | null>(null);
   const [warehouses, setWarehouses] = useState<WarehouseDetails[]>([]);
 
   const getAllWarehouses = async () => {
@@ -34,6 +39,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
       await axios.delete(`${baseApiUrl}/warehouses/${warehouseId}`);
       await getAllWarehouses();
       setShowModal(false);
+      setDeletedWarehouse(null);
     } catch (error) {
       console.error(`Error deleting warehouse ${warehouseId}: ${error}`);
     }
@@ -71,7 +77,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                   to={`/${warehouse.id}`}
                   className="warehouses-list__content warehouses-list__content--link"
                 >
-                  {warehouse.warehouse_name}
+                  {warehouse.warehouse_name} <ChevronRightIcon size="20" />
                 </Link>
               </div>
 
@@ -102,7 +108,10 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                   className="btn--icon"
                   handleClick={() => {
                     setShowModal(true);
-                    setDeletedId(warehouse.id);
+                    setDeletedWarehouse({
+                      warehouseId: warehouse.id,
+                      warehouseName: warehouse.warehouse_name,
+                    });
                   }}
                 />
                 <Button
@@ -119,9 +128,9 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
         createPortal(
           <Modal
             setShowModal={setShowModal}
-            setDeletedId={setDeletedId}
+            setDeletedWarehouse={setDeletedWarehouse}
             handleDelete={handleDelete}
-            idToDelete={deletedId}
+            warehouseToDelete={deletedWarehouse}
           />,
           document.body
         )}

@@ -11,7 +11,11 @@
   @include flex-col;
 
   @include tablet {
-    @include container;
+    @include container-padding;
+  }
+
+  &__close-btn {
+    align-self: flex-end;
   }
 
   &__content {
@@ -19,11 +23,15 @@
     border-radius: $radius-4;
     flex-grow: 1;
     @include flex-col($spacing-16);
-    @include container;
+    @include container-padding;
 
     @include tablet {
       flex-grow: 0;
     }
+  }
+
+  &__body {
+    flex-grow: 1;
   }
 
   &__actions {

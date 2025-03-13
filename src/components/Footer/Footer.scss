@@ -5,5 +5,5 @@
   color: $color-text-secondary;
   @include flex-row-center;
   @include body-small;
-  @include container;
+  @include container-padding;
 }

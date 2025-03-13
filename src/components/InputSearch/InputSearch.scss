@@ -1,6 +1,17 @@
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/variables" as *;
 
-.search-input {
-  @include input-text;
+.search {
+  position: relative;
+
+  &__input {
+    width: 100%;
+    @include input-text;
+  }
+
+  &__btn {
+    position: absolute;
+    right: 0.1875rem;
+    top: 0.1875rem;
+  }
 }

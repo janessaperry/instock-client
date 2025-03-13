@@ -1,3 +1,5 @@
+import Button from "../Button/Button";
+import { SearchIcon } from "../Icons/Icons";
 import "./InputSearch.scss";
 
 interface InputSearchProps {
@@ -7,11 +9,10 @@ interface InputSearchProps {
 
 function InputSearch({ bemClasses, placeholder }: InputSearchProps) {
   return (
-    <input
-      className={`search-input ${bemClasses}`}
-      type="text"
-      placeholder={placeholder}
-    />
+    <div className={`search ${bemClasses || ""}`}>
+      <input className="search__input" type="text" placeholder={placeholder} />
+      <Button icon={<SearchIcon />} className="btn--icon search__btn" />
+    </div>
   );
 }
 

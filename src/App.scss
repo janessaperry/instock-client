@@ -4,11 +4,13 @@
 .app {
   @include flex-col;
   min-height: 100vh;
-  // background-color: $color-background-light;
-  background-color: $color-background-dark;
+  background: linear-gradient(
+    $color-background-dark 33vh,
+    $color-background-light 33vh
+  );
 
   &__main {
     flex: 1;
-    @include container;
+    @include container-padding;
   }
 }

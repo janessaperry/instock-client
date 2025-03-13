@@ -2,8 +2,7 @@
 @use "../../styles/partials/variables" as *;
 
 .warehouse-container {
-  background-color: $color-light-primary;
-  border-radius: $radius-4;
+  @include content-container;
   @include flex-col($spacing-16);
 }
 
@@ -13,7 +12,7 @@
 
 .warehouse-details {
   @include flex-col($spacing-16);
-  @include container-compact;
+  @include container-padding-compact;
 }
 
 .warehouse-inventory {
@@ -23,7 +22,7 @@
     border-top: 1px solid $color-border-primary;
     @include flex-row($spacing-16);
     flex-wrap: wrap;
-    @include container;
+    @include container-padding;
   }
 
   &__item {

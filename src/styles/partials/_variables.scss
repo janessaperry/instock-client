@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Breakpoints
 $breakpoint-tablet: 48rem;
 $breakpoint-desktop: 80rem;
@@ -7,6 +9,10 @@ $font-family-primary: "Titillium Web", sans-serif;
 
 // Colors
 $color-brand-primary: #2e66e5;
+$color-brand-primary-hover: color.adjust(
+  $color-brand-primary,
+  $lightness: -10%
+);
 $color-light-primary: #ffffff;
 $color-text-primary: #13182c;
 $color-text-secondary: #5c667e;
@@ -16,6 +22,7 @@ $color-background-light: #f7f8f9;
 $color-success: #158463;
 $color-success-light: #d5f4ea;
 $color-error: #c94515;
+$color-error-hover: color.adjust($color-error, $lightness: -5%);
 $color-error-light: #ffe5db;
 
 // Spacing

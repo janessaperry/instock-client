@@ -10,10 +10,14 @@ export interface WarehouseDetails {
   contact_email: string;
 }
 
-
 export interface WarehouseFormData {
   [key: string]: {
     value: string;
     hasError: boolean;
   };
+}
+
+export interface DeletedWarehouseProps {
+  warehouseId: number;
+  warehouseName: string;
 }

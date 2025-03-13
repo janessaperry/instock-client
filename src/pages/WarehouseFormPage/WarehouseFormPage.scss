@@ -2,23 +2,30 @@
 @use "../../styles/partials/mixins" as *;
 
 .form-container {
-  background-color: $color-light-primary;
-  border-radius: $radius-4;
-  border-bottom: 1px solid $color-border-primary;
-  @include flex-col($spacing-16);
+  @include content-container;
+  @include flex-col;
 
   &__header {
     @include flex-row($spacing-16);
     align-items: center;
-    @include container;
+    @include container-padding;
   }
 }
 
 .form {
-  @include flex-col($spacing-16);
-  @include container;
+  @include flex-col;
 
   &__section {
     @include flex-col($spacing-16);
+    @include container-padding;
+
+    &:not(:first-of-type) {
+      border-top: 1px solid $color-border-primary;
+    }
+  }
+
+  &__actions {
+    background-color: $color-background-light;
+    @include container-padding;
   }
 }

@@ -4,7 +4,7 @@
 .container-header {
   border-bottom: 1px solid $color-border-primary;
   @include flex-col($spacing-16);
-  @include container;
+  @include container-padding;
 
   @include tablet {
     @include flex-row-between($spacing-16);
