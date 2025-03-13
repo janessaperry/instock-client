@@ -5,7 +5,7 @@ interface ButtonProps {
   label?: string;
   icon?: React.ReactNode;
   handleClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  btnClasses?: string;
+  className?: string;
 }
 
 function Button({
@@ -13,16 +13,16 @@ function Button({
   label,
   icon: Icon,
   handleClick,
-  btnClasses,
+  className,
 }: ButtonProps) {
   return (
     <button
       type={btnType}
       onClick={handleClick}
-      className={`btn ${btnClasses}`}
+      className={`btn ${className || ""}`}
     >
       {Icon && Icon}
-      {label}
+      {label && <span className="btn__label">{label}</span>}
     </button>
   );
 }

@@ -149,7 +149,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
     <div className="form-container">
       <header className="form-container__header">
         <Button
-          btnClasses="btn--icon"
+          className="btn--icon"
           icon={<ArrowBackIcon />}
           handleClick={() => navigate(-1)}
         />
@@ -224,16 +224,11 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
         </section>
 
         <Button
-          btnClasses="btn--secondary"
+          className="btn--secondary"
           label="Cancel"
           handleClick={() => navigate(-1)}
         />
-        <Button
-          btnType="submit"
-          btnClasses="btn--primary"
-          label="Save"
-          handleClick={() => navigate(-1)}
-        />
+        <Button btnType="submit" className="btn--primary" label="Save" />
       </form>
     </div>
   );

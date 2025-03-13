@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from "../../components/Modal/Modal";
 import Button from "../../components/Button/Button";
+import InputSearch from "../../components/InputSearch/InputSearch";
+import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import { DeleteOutlineIcon, EditIcon } from "../../components/Icons/Icons";
 import { WarehouseDetails } from "../../types";
 import "./WarehousesPage.scss";
@@ -47,21 +49,17 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
 
   return (
     <div className="warehouses-container">
-      <header className="warehouses-header">
-        <h1 className="warehouses-header__title">Warehouses</h1>
-        <div className="warehouses-header__actions">
-          <input
-            className="warehouses-header__search"
-            type="text"
-            placeholder="Search..."
-          />
+      <ContainerHeader
+        title="Warehouses"
+        search={<InputSearch placeholder="Search..." />}
+        button={
           <Button
-            btnClasses="btn--primary"
+            className="btn--primary"
             label="Add New Warehouse"
             handleClick={() => navigate("/add")}
           />
-        </div>
-      </header>
+        }
+      />
 
       <section className="warehouses-list">
         {warehouses.map((warehouse) => {
@@ -101,7 +99,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
               <div className="warehouses-list__actions">
                 <Button
                   icon={<DeleteOutlineIcon />}
-                  btnClasses="btn--icon"
+                  className="btn--icon"
                   handleClick={() => {
                     setShowModal(true);
                     setDeletedId(warehouse.id);
@@ -109,7 +107,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                 />
                 <Button
                   icon={<EditIcon />}
-                  btnClasses="btn--icon"
+                  className="btn--icon"
                   handleClick={() => navigate(`/${warehouse.id}/edit`)}
                 />
               </div>

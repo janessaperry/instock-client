@@ -1,0 +1,13 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.loading-container {
+  background-color: $color-light-primary;
+  border-radius: $radius-4;
+  height: 50vh;
+  @include flex-col;
+}
+
+.loading-body {
+  @include container;
+}

@@ -2,6 +2,10 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./WarehouseDetailsPage.scss";
+import Loading from "../../components/Loading/Loading";
+import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
+import Button from "../../components/Button/Button";
+import { EditIcon } from "../../components/Icons/Icons";
 
 interface WarehouseDetailsPageProps {
   baseApiUrl: string;
@@ -38,6 +42,7 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
         `${baseApiUrl}/warehouses/${warehouseId}`
       );
       setWarehouse(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(`Error fetching warehouse details: ${error}`);
     }
@@ -59,19 +64,23 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
     getInventoryByWarehouse();
   }, [warehouseId]);
 
-  //todo add empty state for wareouse inventory
   if (!Object.keys(warehouse).length) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (
     <div className="warehouse-container">
-      <header className="warehouse-header">
-        <h1 className="warehouse-header__title">Warehouses</h1>
-        <div className="warehouse-header__actions">
-          <button className="warehouses-header__button">Edit</button>
-        </div>
-      </header>
+      <ContainerHeader
+        className="warehouse-header"
+        title={warehouse.warehouse_name}
+        button={
+          <Button
+            label="Edit"
+            icon={<EditIcon color="white" />}
+            className="btn--primary"
+          />
+        }
+      />
 
       <section className="warehouse-details">
         <div className="warehouse-details__info">

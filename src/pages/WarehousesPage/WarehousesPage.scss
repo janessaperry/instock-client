@@ -6,31 +6,17 @@
   border-radius: $radius-4;
 }
 
-.warehouses-header {
-  @include flex-col($spacing-16);
-  @include container;
-
-  @include tablet {
-    @include flex-row-between($spacing-16);
-  }
-
-  &__actions {
-    @include flex-col($spacing-16);
-  }
-
-  &__search {
-    @include input-text;
-  }
-}
-
 .warehouses-list {
   @include flex-col;
 
   &__row {
-    border-top: 1px solid $color-border-primary;
     @include flex-row($spacing-16);
     flex-wrap: wrap;
     @include container;
+
+    &:not(:first-of-type) {
+      border-top: 1px solid $color-border-primary;
+    }
   }
 
   &__item {

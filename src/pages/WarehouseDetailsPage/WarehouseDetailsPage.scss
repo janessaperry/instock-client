@@ -8,9 +8,7 @@
 }
 
 .warehouse-header {
-  border-bottom: 1px solid $color-border-primary;
   @include flex-row-between($spacing-16);
-  @include container;
 }
 
 .warehouse-details {

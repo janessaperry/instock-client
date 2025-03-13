@@ -1,0 +1,24 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.container-header {
+  border-bottom: 1px solid $color-border-primary;
+  @include flex-col($spacing-16);
+  @include container;
+
+  @include tablet {
+    @include flex-row-between($spacing-16);
+  }
+
+  &__actions {
+    @include flex-col($spacing-16);
+
+    @include tablet {
+      @include flex-row($spacing-16);
+    }
+  }
+
+  &__search {
+    @include input-text;
+  }
+}

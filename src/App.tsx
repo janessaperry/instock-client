@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.scss";
 import WarehousesPage from "./pages/WarehousesPage/WarehousesPage";
 import InventoryPage from "./pages/InventoryPage/InventoryPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import WarehouseDetailsPage from "./pages/WarehouseDetailsPage/WarehouseDetailsPage";
 import WarehouseFormPage from "./pages/WarehouseFormPage/WarehouseFormPage";
+import "./App.scss";
 
 function App() {
   const baseApiUrl: string = import.meta.env.VITE_API_URL;
