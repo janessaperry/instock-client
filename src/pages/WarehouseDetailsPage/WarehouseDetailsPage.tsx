@@ -1,11 +1,15 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./WarehouseDetailsPage.scss";
+import Button from "../../components/Button/Button";
 import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
-import Button from "../../components/Button/Button";
-import { EditIcon } from "../../components/Icons/Icons";
+import {
+  ArrowBackIcon,
+  DeleteOutlineIcon,
+  EditIcon,
+} from "../../components/Icons/Icons";
+import "./WarehouseDetailsPage.scss";
 
 interface WarehouseDetailsPageProps {
   baseApiUrl: string;
@@ -35,6 +39,7 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
   const { warehouseId } = useParams();
   const [warehouse, setWarehouse] = useState<Warehouse>({} as Warehouse);
   const [inventory, setInventory] = useState<Inventory[]>([]);
+  const navigate = useNavigate();
 
   const getWarehouseDetails = async () => {
     try {
@@ -42,7 +47,6 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
         `${baseApiUrl}/warehouses/${warehouseId}`
       );
       setWarehouse(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(`Error fetching warehouse details: ${error}`);
     }
@@ -73,11 +77,19 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
       <ContainerHeader
         className="warehouse-header"
         title={warehouse.warehouse_name}
+        prevBtn={
+          <Button
+            icon={<ArrowBackIcon />}
+            className="btn--icon"
+            handleClick={() => navigate(-1)}
+          />
+        }
         button={
           <Button
             label="Edit"
             icon={<EditIcon color="white" />}
             className="btn--primary"
+            handleClick={() => navigate(`/${warehouse.id}/edit`)}
           />
         }
       />
@@ -147,8 +159,18 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
               </div>
 
               <div className="warehouse-inventory__actions">
-                <button>Delete</button>
-                <button>Edit</button>
+                <Button
+                  icon={<DeleteOutlineIcon />}
+                  className="btn--icon"
+                  handleClick={() => console.log("add delete modal")}
+                />
+                <Button
+                  icon={<EditIcon />}
+                  className="btn--icon"
+                  handleClick={() =>
+                    console.log("navigate to edit inventory item")
+                  }
+                />
               </div>
             </div>
           );

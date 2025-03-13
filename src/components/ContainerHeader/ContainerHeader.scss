@@ -10,6 +10,10 @@
     @include flex-row-between($spacing-16);
   }
 
+  &__title-wrapper {
+    @include flex-row($spacing-8);
+  }
+
   &__actions {
     @include flex-col($spacing-16);
 

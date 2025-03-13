@@ -6,6 +6,7 @@ import InputText from "../../components/InputText/InputText";
 import { ArrowBackIcon } from "../../components/Icons/Icons";
 import { WarehouseDetails, WarehouseFormData } from "../../types";
 import "./WarehouseFormPage.scss";
+import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 
 interface WarehousesFormPageProps {
   baseApiUrl: string;
@@ -147,16 +148,16 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
 
   return (
     <div className="form-container">
-      <header className="form-container__header">
-        <Button
-          className="btn--icon"
-          icon={<ArrowBackIcon />}
-          handleClick={() => navigate(-1)}
-        />
-        <h1 className="form-container__title">
-          {editMode ? "Edit" : "Add New"} Warehouse
-        </h1>
-      </header>
+      <ContainerHeader
+        title={`${editMode ? "Edit" : "Add New"} Warehouse`}
+        prevBtn={
+          <Button
+            className="btn--icon"
+            icon={<ArrowBackIcon />}
+            handleClick={() => navigate(-1)}
+          />
+        }
+      />
 
       <form className="form" onSubmit={handleFormSubmit}>
         <section className="form__section">
