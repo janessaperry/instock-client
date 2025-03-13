@@ -130,7 +130,8 @@
 @mixin content-container {
   background-color: $color-light-primary;
   border-radius: $radius-4;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba($color-background-dark, 0.1);
+  overflow: hidden;
 }
 
 @mixin input-text {

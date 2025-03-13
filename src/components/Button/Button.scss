@@ -9,7 +9,8 @@
   padding: $spacing-8 $spacing-12;
   background-color: unset;
   @include flex-row-center($spacing-8);
-  transition: 0.2s ease background-color;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease;
 
   &--primary {
     background-color: $color-brand-primary;
@@ -22,9 +23,11 @@
 
   &--secondary {
     border: 1px solid $color-border-primary;
+    background-color: $color-light-primary;
 
     &:hover {
-      background-color: $color-background-light;
+      border-color: $color-brand-primary;
+      color: $color-brand-primary;
     }
   }
 
@@ -42,6 +45,24 @@
 
     &:hover {
       background-color: $color-background-light;
+    }
+  }
+
+  &--hide-label-mobile {
+    aspect-ratio: 1/1;
+    padding: $spacing-8;
+
+    @include tablet {
+      aspect-ratio: unset;
+      padding: $spacing-8 $spacing-12;
+    }
+
+    & .btn__label {
+      display: none;
+
+      @include tablet {
+        display: block;
+      }
     }
   }
 }

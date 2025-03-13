@@ -6,6 +6,7 @@ import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import {
   ArrowBackIcon,
+  ChevronRightIcon,
   DeleteOutlineIcon,
   EditIcon,
 } from "../../components/Icons/Icons";
@@ -87,8 +88,8 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
         button={
           <Button
             label="Edit"
-            icon={<EditIcon color="white" />}
-            className="btn--primary"
+            icon={<EditIcon color="white" size="20" />}
+            className="btn--primary btn--hide-label-mobile"
             handleClick={() => navigate(`/${warehouse.id}/edit`)}
           />
         }
@@ -97,23 +98,28 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
       <section className="warehouse-details">
         <div className="warehouse-details__info">
           <h4 className="warehouse-details__title">Warehouse Address:</h4>
-          <p className="warehouse-details__content">{warehouse.address}</p>
-        </div>
-        <div className="warehouse-details__info">
-          <h4 className="warehouse-details__title">Contact Name:</h4>
           <p className="warehouse-details__content">
-            {warehouse.contact_name}
-            <br />
-            {warehouse.contact_position}
+            {warehouse.address}, {warehouse.city}, {warehouse.country}
           </p>
         </div>
-        <div className="warehouse-details__info">
-          <h4 className="warehouse-details__title">Contact Information:</h4>
-          <p className="warehouse-details__content">
-            {warehouse.contact_phone}
-            <br />
-            {warehouse.contact_email}
-          </p>
+
+        <div className="warehouse-details__info-wrapper">
+          <div className="warehouse-details__info">
+            <h4 className="warehouse-details__title">Contact Name:</h4>
+            <p className="warehouse-details__content">
+              {warehouse.contact_name}
+              <br />
+              {warehouse.contact_position}
+            </p>
+          </div>
+          <div className="warehouse-details__info">
+            <h4 className="warehouse-details__title">Contact Information:</h4>
+            <p className="warehouse-details__content">
+              {warehouse.contact_phone}
+              <br />
+              {warehouse.contact_email}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -127,7 +133,7 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
                   to={`/${inventoryItem.id}`}
                   className="warehouse-inventory__content warehouse-inventory__content--link"
                 >
-                  {inventoryItem.item_name}
+                  {inventoryItem.item_name} <ChevronRightIcon size="20" />
                 </Link>
               </div>
 

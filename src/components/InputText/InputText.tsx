@@ -1,4 +1,5 @@
 import { WarehouseFormData } from "../../types";
+import { ErrorIcon } from "../Icons/Icons";
 import "./InputText.scss";
 
 interface InputTextProps {
@@ -27,7 +28,10 @@ function InputText({
         onChange={handleInputChange}
       ></input>
       {formData[fieldName].hasError && (
-        <span className="form__error">This field is required.</span>
+        <span className="form__error">
+          <ErrorIcon size="16" />
+          This field is required.
+        </span>
       )}
     </label>
   );

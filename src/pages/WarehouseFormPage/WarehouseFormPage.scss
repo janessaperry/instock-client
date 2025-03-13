@@ -26,6 +26,11 @@
 
   &__actions {
     background-color: $color-background-light;
+    @include flex-row($spacing-16);
     @include container-padding;
+  }
+
+  &__btn {
+    flex: 1 1 0;
   }
 }

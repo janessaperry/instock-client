@@ -20,6 +20,7 @@
 
   &__item {
     flex: 1 1 calc(50% - $spacing-16);
+    @include flex-col($spacing-4);
   }
 
   &__content {

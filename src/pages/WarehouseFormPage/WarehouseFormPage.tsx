@@ -226,11 +226,15 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
 
         <div className="form__actions">
           <Button
-            className="btn--secondary"
+            className="btn--secondary form__btn"
             label="Cancel"
             handleClick={() => navigate(-1)}
           />
-          <Button btnType="submit" className="btn--primary" label="Save" />
+          <Button
+            btnType="submit"
+            className="btn--primary form__btn"
+            label={`${editMode ? "Save" : "Add New Warehouse"}`}
+          />
         </div>
       </form>
     </div>

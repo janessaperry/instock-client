@@ -13,6 +13,14 @@
 .warehouse-details {
   @include flex-col($spacing-16);
   @include container-padding-compact;
+
+  &__info-wrapper {
+    @include flex-row($spacing-16);
+  }
+
+  &__info {
+    flex: 1 1 0;
+  }
 }
 
 .warehouse-inventory {
@@ -27,12 +35,24 @@
 
   &__item {
     flex: 1 1 calc(50% - $spacing-16);
+    @include flex-col($spacing-4);
+  }
+
+  &__content {
+    &--link {
+      color: $color-brand-primary;
+      @include flex-row($spacing-4);
+
+      &:hover {
+        color: $color-brand-primary-hover;
+      }
+    }
   }
 
   &__chip {
     padding: $spacing-4 $spacing-8;
     border-radius: $radius-full;
-    justify-self: flex-start;
+    align-self: flex-start;
     text-transform: uppercase;
     @include labels;
 

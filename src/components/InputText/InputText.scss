@@ -8,17 +8,6 @@
 
   &__input-text {
     @include input-text;
-    // padding: $spacing-8 $spacing-12;
-    // border: 1px solid $color-border-primary;
-    // border-radius: $radius-full;
-    // transition: 0.2s ease-out border-color;
-
-    // &:hover,
-    // &:focus,
-    // &:focus-within {
-    //   outline: none;
-    //   border-color: $color-brand-primary;
-    // }
 
     &--error {
       border-color: $color-error;
@@ -27,6 +16,8 @@
 
   &__error {
     color: $color-error;
+    @include flex-row($spacing-4);
+    align-items: center;
     @include body-small;
   }
 }
