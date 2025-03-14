@@ -1,17 +1,27 @@
+// Libraries
 import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+// Components
 import Modal from "../../components/Modal/Modal";
 import Button from "../../components/Button/Button";
 import InputSearch from "../../components/InputSearch/InputSearch";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
+import Loading from "../../components/Loading/Loading";
+import ListHeaderItem from "../../components/ListHeaderItem/ListHeaderItem";
 import {
-  ChevronRightIcon,
-  DeleteOutlineIcon,
-  EditIcon,
-} from "../../components/Icons/Icons";
+  ListBodyActions,
+  ListBodyLink,
+  ListBodyText,
+} from "../../components/ListBodyItem/ListBodyItem";
+import { SortIcon } from "../../components/Icons/Icons";
+
+// Types
 import { WarehouseDetails, DeletedWarehouseProps } from "../../types";
+
+// Styles
 import "./WarehousesPage.scss";
 
 interface WarehousesPageProps {
@@ -45,12 +55,20 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
     }
   };
 
+  const handleModalOpen = (warehouse: WarehouseDetails) => {
+    setShowModal(true);
+    setDeletedWarehouse({
+      warehouseId: warehouse.id,
+      warehouseName: warehouse.warehouse_name,
+    });
+  };
+
   useEffect(() => {
     getAllWarehouses();
   }, []);
 
   if (!warehouses.length) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (
@@ -67,63 +85,79 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
         }
       />
 
-      <section className="warehouses-list">
-        {warehouses.map((warehouse) => {
-          return (
-            <div key={warehouse.id} className="warehouses-list__row">
-              <div className="warehouses-list__item">
-                <h4 className="warehouses-list__title">Warehouse</h4>
-                <Link
-                  to={`/${warehouse.id}`}
-                  className="warehouses-list__content warehouses-list__content--link"
-                >
-                  {warehouse.warehouse_name} <ChevronRightIcon size="20" />
-                </Link>
-              </div>
+      <section className="warehouses-section">
+        <div className="list-header">
+          <ListHeaderItem
+            className="list-header__item--warehouse-name"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Warehouse"
+          />
 
-              <div className="warehouses-list__item">
-                <h4 className="warehouses-list__title">Contact Name</h4>
-                <p className="warehouses-list__content">
-                  {warehouse.contact_name}
-                </p>
-              </div>
+          <ListHeaderItem
+            className="list-header__item--address"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Address"
+          />
 
-              <div className="warehouses-list__item">
-                <h4 className="warehouses-list__title">Address</h4>
-                <p className="warehouses-list__content">{warehouse.address}</p>
-              </div>
+          <ListHeaderItem
+            className="list-header__item--contact-name"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Contact Name"
+          />
 
-              <div className="warehouses-list__item">
-                <h4 className="warehouses-list__title">Contact Information</h4>
-                <p className="warehouses-list__content">
-                  {warehouse.contact_phone}
-                  <br />
-                  {warehouse.contact_email}
-                </p>
-              </div>
+          <ListHeaderItem
+            className="list-header__item--contact-info"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Contact Information"
+          />
 
-              <div className="warehouses-list__actions">
-                <Button
-                  icon={<DeleteOutlineIcon />}
-                  className="btn--icon"
-                  handleClick={() => {
-                    setShowModal(true);
-                    setDeletedWarehouse({
-                      warehouseId: warehouse.id,
-                      warehouseName: warehouse.warehouse_name,
-                    });
-                  }}
+          <ListHeaderItem
+            className="list-header__item--actions"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Actions"
+          />
+        </div>
+
+        <div className="list-body">
+          {warehouses.map((warehouse) => {
+            return (
+              <div key={warehouse.id} className="list-body__row">
+                <ListBodyLink
+                  className="list-body__item--warehouse-name"
+                  title="Warehouse"
+                  linkTo={`${warehouse.id}`}
+                  content={warehouse.warehouse_name}
                 />
-                <Button
-                  icon={<EditIcon />}
-                  className="btn--icon"
-                  handleClick={() => navigate(`/${warehouse.id}/edit`)}
+
+                <ListBodyText
+                  className="list-body__item--contact-name"
+                  title="Contact Name"
+                  content={warehouse.contact_name}
+                />
+
+                <ListBodyText
+                  className="list-body__item--address"
+                  title="Address"
+                  content={`${warehouse.address}, ${warehouse.city}, ${warehouse.country}`}
+                />
+
+                <ListBodyText
+                  className="list-body__item--contact-info"
+                  title="Contact Information"
+                  content={`${warehouse.contact_phone}\n${warehouse.contact_email}`}
+                />
+
+                <ListBodyActions
+                  className="list-body__item--actions"
+                  onDelete={() => handleModalOpen(warehouse)}
+                  onEdit={() => navigate(`/${warehouse.id}/edit`)}
                 />
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </section>
+
       {showModal &&
         createPortal(
           <Modal

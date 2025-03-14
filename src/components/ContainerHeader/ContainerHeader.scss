@@ -2,7 +2,7 @@
 @use "../../styles/partials/variables" as *;
 
 .container-header {
-  border-bottom: 1px solid $color-border-primary;
+  // border-bottom: 1px solid $color-border-primary;
   @include flex-col($spacing-16);
   @include container-padding;
 

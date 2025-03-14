@@ -1,6 +1,7 @@
 interface IconProps {
   size?: string;
   color?: string;
+  className?: string;
 }
 
 export function ArrowBackIcon() {
@@ -139,18 +140,19 @@ export function SearchIcon({ color = "#5C667E", size = "24" }: IconProps) {
   );
 }
 
-export function SortIcon() {
+export function SortIcon({ color = "#5C667E", size = "20", className = "" }) {
   return (
     <svg
-      width="24"
-      height="24"
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M12 5.83L15.17 9L16.58 7.59L12 3L7.41003 7.59L8.83003 9L12 5.83ZM12 18.17L8.83003 15L7.42003 16.41L12 21L16.59 16.41L15.17 15L12 18.17Z"
-        fill="#5C667E"
+        fill={color}
       />
     </svg>
   );

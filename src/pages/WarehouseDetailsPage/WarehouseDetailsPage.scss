@@ -3,7 +3,6 @@
 
 .warehouse-container {
   @include content-container;
-  @include flex-col($spacing-16);
 }
 
 .warehouse-header {

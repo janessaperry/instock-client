@@ -5,7 +5,7 @@
   @include content-container;
 }
 
-.warehouses-list {
+.list-body {
   @include flex-col;
 
   &__row {
@@ -16,26 +16,9 @@
     &:not(:first-of-type) {
       border-top: 1px solid $color-border-primary;
     }
-  }
 
-  &__item {
-    flex: 1 1 calc(50% - $spacing-16);
-    @include flex-col($spacing-4);
-  }
-
-  &__content {
-    &--link {
-      color: $color-brand-primary;
-      @include flex-row($spacing-4);
-
-      &:hover {
-        color: $color-brand-primary-hover;
-      }
+    @include tablet {
+      flex-wrap: nowrap;
     }
-  }
-
-  &__actions {
-    flex: 1 1 100%;
-    @include flex-row-between($spacing-16);
   }
 }
