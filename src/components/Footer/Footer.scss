@@ -6,4 +6,12 @@
   @include flex-row-center;
   @include body-small;
   @include container-padding;
+
+  @include desktop {
+    max-width: 63.75rem;
+    width: 100%;
+    margin: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

@@ -9,6 +9,14 @@
     @include flex-row-between;
   }
 
+  @include desktop {
+    max-width: 63.75rem;
+    width: 100%;
+    margin: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   &__logo {
     height: 28px;
     align-self: center;

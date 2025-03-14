@@ -16,7 +16,7 @@ interface ListBodyLinkProps {
 interface ListBodyTextProps {
   className: string;
   title: string;
-  content: string;
+  content: string | string[];
 }
 
 interface ListBodyActionsProps {
@@ -45,10 +45,20 @@ function ListBodyLink({
 }
 
 function ListBodyText({ className, title, content }: ListBodyTextProps) {
+  const generateContent = (content: string | string[]) => {
+    return typeof content === "string"
+      ? content
+      : content.map((item, index) => (
+          <span key={item}>
+            {item} {index !== content.length - 1 && <br />}
+          </span>
+        ));
+  };
+
   return (
     <div className={`list-body__item ${className}`}>
       <h4 className="list-body__title">{title}</h4>
-      <p className="list-body__content">{content}</p>
+      <p className="list-body__content">{generateContent(content)}</p>
     </div>
   );
 }

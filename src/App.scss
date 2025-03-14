@@ -5,12 +5,24 @@
   @include flex-col;
   min-height: 100vh;
   background: linear-gradient(
-    $color-background-dark 33vh,
-    $color-background-light 33vh
+    $color-background-dark 11rem,
+    $color-background-light 11rem
   );
 
   &__main {
     flex: 1;
     @include container-padding;
+
+    & {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    @include desktop {
+      max-width: 63.75rem;
+      width: 100%;
+      margin: auto;
+      padding: 0;
+    }
   }
 }

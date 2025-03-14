@@ -75,6 +75,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
     <div className="warehouses-container">
       <ContainerHeader
         title="Warehouses"
+        className="container-header--tablet-border-none"
         search={<InputSearch placeholder="Search..." />}
         button={
           <Button
@@ -144,7 +145,10 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                 <ListBodyText
                   className="list-body__item--contact-info"
                   title="Contact Information"
-                  content={`${warehouse.contact_phone}\n${warehouse.contact_email}`}
+                  content={[
+                    `${warehouse.contact_phone}`,
+                    `${warehouse.contact_email}`,
+                  ]}
                 />
 
                 <ListBodyActions
