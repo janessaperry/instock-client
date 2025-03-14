@@ -170,7 +170,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
             handleDelete={handleDelete}
             warehouseToDelete={deletedWarehouse}
           />,
-          document.body
+          document.querySelector<HTMLElement>(".warehouses-container")!
         )}
     </div>
   );

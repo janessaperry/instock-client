@@ -10,10 +10,6 @@
   background-color: rgba($color-background-dark, 60%);
   @include flex-col;
 
-  @include tablet {
-    @include container-padding;
-  }
-
   &__close-btn {
     align-self: flex-end;
   }
@@ -27,6 +23,9 @@
 
     @include tablet {
       flex-grow: 0;
+      max-width: 80vw;
+      width: 100%;
+      margin: 11rem auto $spacing-64;
     }
   }
 
