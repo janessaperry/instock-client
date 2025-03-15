@@ -19,6 +19,13 @@ interface ListBodyTextProps {
   content: string | string[];
 }
 
+interface ListBodyChipProps {
+  className: string;
+  title: string;
+  count: number;
+  content: string;
+}
+
 interface ListBodyActionsProps {
   className?: string;
   onDelete: () => void;
@@ -63,6 +70,21 @@ function ListBodyText({ className, title, content }: ListBodyTextProps) {
   );
 }
 
+function ListBodyChip({ className, title, count, content }: ListBodyChipProps) {
+  return (
+    <div className={`list-body__item ${className}`}>
+      <h4 className="list-body__title">{title}</h4>
+      <p
+        className={`list-body__chip list-body__chip${
+          count === 0 ? "--out-of-stock" : "--in-stock"
+        }`}
+      >
+        {content}
+      </p>
+    </div>
+  );
+}
+
 function ListBodyActions({
   className,
   onDelete,
@@ -80,4 +102,4 @@ function ListBodyActions({
   );
 }
 
-export { ListBodyLink, ListBodyText, ListBodyActions };
+export { ListBodyLink, ListBodyText, ListBodyChip, ListBodyActions };

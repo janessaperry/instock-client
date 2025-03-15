@@ -46,6 +46,24 @@
     }
   }
 
+  &__chip {
+    padding: $spacing-4 $spacing-8;
+    border-radius: $radius-full;
+    align-self: flex-start;
+    text-transform: uppercase;
+    @include labels;
+
+    &--in-stock {
+      color: $color-success;
+      background-color: $color-success-light;
+    }
+
+    &--out-of-stock {
+      color: $color-error;
+      background-color: $color-error-light;
+    }
+  }
+
   &__content {
     &--link {
       color: $color-brand-primary;
