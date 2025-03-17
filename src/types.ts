@@ -17,7 +17,7 @@ export interface WarehouseFormData {
   };
 }
 
-export interface DeletedWarehouseProps {
-  warehouseId: number;
-  warehouseName: string;
+export interface DeletedRecordProps {
+  id: number;
+  name: string;
 }

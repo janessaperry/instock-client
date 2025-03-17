@@ -1,24 +1,24 @@
-import { DeletedWarehouseProps } from "../../types";
+import { DeletedRecordProps } from "../../types";
 import Button from "../Button/Button";
 import { CloseIcon } from "../Icons/Icons";
 import "./Modal.scss";
 
 interface ModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setDeletedWarehouse: React.Dispatch<
-    React.SetStateAction<DeletedWarehouseProps | null>
-  >;
+  setDeleted: React.Dispatch<React.SetStateAction<DeletedRecordProps | null>>;
   handleDelete: Function;
-  warehouseToDelete: DeletedWarehouseProps | null;
+  dataToDelete: DeletedRecordProps | null;
+  type: string;
 }
 
 function Modal({
   setShowModal,
+  setDeleted,
   handleDelete,
-  setDeletedWarehouse,
-  warehouseToDelete,
+  dataToDelete,
+  type,
 }: ModalProps) {
-  console.log(warehouseToDelete);
+  console.log(dataToDelete);
   return (
     <div className="modal">
       <div className="modal__content">
@@ -29,13 +29,14 @@ function Modal({
         />
 
         <h2 className="modal__title">
-          Delete {warehouseToDelete?.warehouseName} Warehouse?
+          Delete {dataToDelete?.name}{" "}
+          {type === "warehouse" ? "Warehouse" : "inventory item"}?
         </h2>
 
         <p className="modal__body">
-          Please confirm that you'd like to delete the{" "}
-          {warehouseToDelete?.warehouseName} from the list of warehouses. You
-          won't be able to undo this action.
+          Please confirm that you'd like to delete the {dataToDelete?.name} from
+          the {type === "warehouse" ? "list of warehouses" : "inventory list"}.
+          You won't be able to undo this action.
         </p>
 
         <div className="modal__actions">
@@ -44,14 +45,14 @@ function Modal({
             className="btn--secondary"
             handleClick={() => {
               setShowModal(false);
-              setDeletedWarehouse(null);
+              setDeleted(null);
             }}
           />
           <Button
             label="Delete"
             className="btn--warning"
             handleClick={() => {
-              handleDelete(warehouseToDelete?.warehouseId);
+              handleDelete(dataToDelete?.id);
             }}
           />
         </div>

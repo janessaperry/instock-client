@@ -19,7 +19,7 @@ import {
 import { SortIcon } from "../../components/Icons/Icons";
 
 // Types
-import { WarehouseDetails, DeletedWarehouseProps } from "../../types";
+import { WarehouseDetails, DeletedRecordProps } from "../../types";
 
 // Styles
 import "./WarehousesPage.scss";
@@ -32,7 +32,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [deletedWarehouse, setDeletedWarehouse] =
-    useState<DeletedWarehouseProps | null>(null);
+    useState<DeletedRecordProps | null>(null);
   const [warehouses, setWarehouses] = useState<WarehouseDetails[]>([]);
 
   const getAllWarehouses = async () => {
@@ -58,8 +58,8 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
   const handleModalOpen = (warehouse: WarehouseDetails) => {
     setShowModal(true);
     setDeletedWarehouse({
-      warehouseId: warehouse.id,
-      warehouseName: warehouse.warehouse_name,
+      id: warehouse.id,
+      name: warehouse.warehouse_name,
     });
   };
 
@@ -166,9 +166,10 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
         createPortal(
           <Modal
             setShowModal={setShowModal}
-            setDeletedWarehouse={setDeletedWarehouse}
+            setDeleted={setDeletedWarehouse}
             handleDelete={handleDelete}
-            warehouseToDelete={deletedWarehouse}
+            dataToDelete={deletedWarehouse}
+            type="warehouse"
           />,
           document.querySelector<HTMLElement>(".warehouses-container")!
         )}
