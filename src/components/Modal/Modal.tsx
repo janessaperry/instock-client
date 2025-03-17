@@ -18,7 +18,11 @@ function Modal({
   dataToDelete,
   type,
 }: ModalProps) {
-  console.log(dataToDelete);
+  const generateBodyMessage = () => {
+    return type === "warehouse"
+      ? `Please confirm that you'd like to delete the ${dataToDelete?.name} warehouse from the list of warehouses. You won't be able to undo this action.`
+      : `Please confirm that you'd like to delete ${dataToDelete?.name} from the inventory list. You won't be able to undo this action.`;
+  };
   return (
     <div className="modal">
       <div className="modal__content">
@@ -33,11 +37,7 @@ function Modal({
           {type === "warehouse" ? "Warehouse" : "inventory item"}?
         </h2>
 
-        <p className="modal__body">
-          Please confirm that you'd like to delete the {dataToDelete?.name} from
-          the {type === "warehouse" ? "list of warehouses" : "inventory list"}.
-          You won't be able to undo this action.
-        </p>
+        <p className="modal__body">{generateBodyMessage()}</p>
 
         <div className="modal__actions">
           <Button
