@@ -126,7 +126,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                 <ListBodyLink
                   className="list-body__item--warehouse-name"
                   title="Warehouse"
-                  linkTo={`${warehouse.id}`}
+                  linkTo={`/${warehouse.id}`}
                   content={warehouse.warehouse_name}
                 />
 

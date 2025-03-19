@@ -142,7 +142,7 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
                   className="list-body__item--inventory-item"
                   title="Inventory Item"
                   content={item.item_name}
-                  linkTo={`${item.id}`}
+                  linkTo={`/inventory/${item.id}`}
                 />
 
                 <ListBodyText

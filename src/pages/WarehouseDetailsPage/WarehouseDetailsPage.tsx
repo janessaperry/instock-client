@@ -130,7 +130,7 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
               <div className="warehouse-inventory__item">
                 <h4 className="warehouse-inventory__title">Inventory Item</h4>
                 <Link
-                  to={`/${inventoryItem.id}`}
+                  to={`/inventory/${inventoryItem.id}`}
                   className="warehouse-inventory__content warehouse-inventory__content--link"
                 >
                   {inventoryItem.item_name} <ChevronRightIcon size="20" />

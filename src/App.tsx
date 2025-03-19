@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import WarehouseDetailsPage from "./pages/WarehouseDetailsPage/WarehouseDetailsPage";
 import WarehouseFormPage from "./pages/WarehouseFormPage/WarehouseFormPage";
 import "./App.scss";
+import InventoryItemDetailsPage from "./pages/InventoryItemDetailsPage/InventoryItemDetailsPage";
 
 function App() {
   const baseApiUrl: string = import.meta.env.VITE_API_URL;
@@ -39,6 +40,10 @@ function App() {
             <Route
               path="/inventory"
               element={<InventoryPage baseApiUrl={baseApiUrl} />}
+            />
+            <Route
+              path="/inventory/:itemId"
+              element={<InventoryItemDetailsPage baseApiUrl={baseApiUrl} />}
             />
           </Routes>
         </main>

@@ -42,7 +42,7 @@ function ListBodyLink({
     <div className={`list-body__item ${className}`}>
       <h4 className="list-body__title">{title}</h4>
       <Link
-        to={`/${linkTo}`}
+        to={`${linkTo}`}
         className="list-body__content list-body__content--link"
       >
         {content} <ChevronRightIcon size="20" />
