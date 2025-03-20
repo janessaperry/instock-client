@@ -1,4 +1,7 @@
+// Components
 import ContainerHeader from "../ContainerHeader/ContainerHeader";
+
+// Styles
 import "./Loading.scss";
 
 function Loading() {

@@ -1,4 +1,7 @@
+// Libraries
 import { ReactNode } from "react";
+
+// Styles
 import "./ListHeaderItem.scss";
 
 interface ListHeaderItemProps {

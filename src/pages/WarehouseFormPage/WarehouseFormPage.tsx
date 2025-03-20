@@ -1,12 +1,19 @@
+// Libraries
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+// Components
 import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText/InputText";
-import { ArrowBackIcon } from "../../components/Icons/Icons";
-import { WarehouseDetails, WarehouseFormData } from "../../types";
-import "./WarehouseFormPage.scss";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
+import { ArrowBackIcon } from "../../components/Icons/Icons";
+
+// Types
+import { WarehouseDetails, WarehouseFormData } from "../../types";
+
+// Styles
+import "./WarehouseFormPage.scss";
 
 interface WarehousesFormPageProps {
   baseApiUrl: string;

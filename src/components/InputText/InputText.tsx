@@ -1,5 +1,8 @@
+// Components
 import { WarehouseFormData } from "../../types";
 import { ErrorIcon } from "../Icons/Icons";
+
+// Styles
 import "./InputText.scss";
 
 interface InputTextProps {

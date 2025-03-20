@@ -1,12 +1,21 @@
+// Libraries
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Pages
 import WarehousesPage from "./pages/WarehousesPage/WarehousesPage";
 import InventoryPage from "./pages/InventoryPage/InventoryPage";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 import WarehouseDetailsPage from "./pages/WarehouseDetailsPage/WarehouseDetailsPage";
 import WarehouseFormPage from "./pages/WarehouseFormPage/WarehouseFormPage";
-import "./App.scss";
 import InventoryItemDetailsPage from "./pages/InventoryItemDetailsPage/InventoryItemDetailsPage";
+import InventoryFormPage from "./pages/InventoryFormPage/InventoryFormPage";
+
+// Components
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+
+// Types
+// Styles
+import "./App.scss";
 
 function App() {
   const baseApiUrl: string = import.meta.env.VITE_API_URL;
@@ -47,11 +56,15 @@ function App() {
             />
             <Route
               path="/inventory/add"
-              element={<InventoryItemDetailsPage baseApiUrl={baseApiUrl} />}
+              element={
+                <InventoryFormPage baseApiUrl={baseApiUrl} editMode={false} />
+              }
             />
             <Route
               path="/inventory/:inventoryId/edit"
-              element={<InventoryItemDetailsPage baseApiUrl={baseApiUrl} />}
+              element={
+                <InventoryFormPage baseApiUrl={baseApiUrl} editMode={true} />
+              }
             />
           </Routes>
         </main>

@@ -1,6 +1,9 @@
-import { DeletedRecordProps } from "../../types";
+// Componets
 import Button from "../Button/Button";
 import { CloseIcon } from "../Icons/Icons";
+import { DeletedRecordProps } from "../../types";
+
+// Styles
 import "./Modal.scss";
 
 interface ModalProps {

@@ -1,5 +1,8 @@
+// Components
 import Button from "../Button/Button";
 import { SearchIcon } from "../Icons/Icons";
+
+// Styles
 import "./InputSearch.scss";
 
 interface InputSearchProps {

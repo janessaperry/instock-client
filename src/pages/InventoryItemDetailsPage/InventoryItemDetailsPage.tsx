@@ -1,11 +1,18 @@
+// Libraries
 import { useEffect, useState } from "react";
-import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
-import "./InventoryItemDetailsPage.scss";
-import Loading from "../../components/Loading/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+// Components
+import Loading from "../../components/Loading/Loading";
 import Button from "../../components/Button/Button";
+import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import { ArrowBackIcon, EditIcon } from "../../components/Icons/Icons";
+
+// Types
+
+// Styles
+import "./InventoryItemDetailsPage.scss";
 
 interface InventoryItemDetailsPageProps {
   baseApiUrl: string;
@@ -92,7 +99,6 @@ function InventoryItemDetailsPage({
                 itemDetails.quantity === 0 ? "out-of-stock" : "in-stock"
               }`}
             >
-              {" "}
               {itemDetails.status}
             </p>
           </div>

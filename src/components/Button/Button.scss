@@ -3,7 +3,7 @@
 
 .btn {
   cursor: pointer;
-  outline: none;
+  outline-color: $color-brand-primary-hover;
   border: none;
   border-radius: $radius-full;
   padding: $spacing-8 $spacing-12;

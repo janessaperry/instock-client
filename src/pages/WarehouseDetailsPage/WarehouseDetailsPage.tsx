@@ -1,20 +1,27 @@
-import { useNavigate, useParams } from "react-router-dom";
+// Libraries
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+// Components
+import Modal from "../../components/Modal/Modal";
 import Button from "../../components/Button/Button";
 import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import { ArrowBackIcon, EditIcon } from "../../components/Icons/Icons";
-import "./WarehouseDetailsPage.scss";
+
+// Types
 import {
   ListBodyActions,
   ListBodyChip,
   ListBodyLink,
   ListBodyText,
 } from "../../components/ListBodyItem/ListBodyItem";
-import { createPortal } from "react-dom";
-import Modal from "../../components/Modal/Modal";
 import { DeletedRecordProps } from "../../types";
+
+// Styles
+import "./WarehouseDetailsPage.scss";
 
 interface WarehouseDetailsPageProps {
   baseApiUrl: string;
