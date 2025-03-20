@@ -1,0 +1,25 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.form {
+  &__label {
+    @include flex-col($spacing-4);
+  }
+
+  &__input-textarea {
+    @include input-text;
+    border-radius: $radius-20;
+    resize: none;
+
+    &--error {
+      border-color: $color-error;
+    }
+  }
+
+  &__error {
+    color: $color-error;
+    @include flex-row($spacing-4);
+    align-items: center;
+    @include body-small;
+  }
+}
