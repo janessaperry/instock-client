@@ -4,3 +4,41 @@
 .inventory-container {
   @include content-container;
 }
+
+.item-details {
+  @include flex-col($spacing-16);
+  @include container-padding;
+
+  &__wrapper {
+    @include flex-row($spacing-16);
+    flex-wrap: wrap;
+  }
+
+  &__info {
+    flex: 1 1 100%;
+    @include flex-col($spacing-4);
+
+    &--status,
+    &--quantity {
+      flex: 1 1 calc(50% - $spacing-16);
+    }
+  }
+
+  &__info-chip {
+    padding: $spacing-4 $spacing-8;
+    border-radius: $radius-full;
+    align-self: flex-start;
+    text-transform: uppercase;
+    @include labels;
+
+    &--in-stock {
+      color: $color-success;
+      background-color: $color-success-light;
+    }
+
+    &--out-of-stock {
+      color: $color-error;
+      background-color: $color-error-light;
+    }
+  }
+}

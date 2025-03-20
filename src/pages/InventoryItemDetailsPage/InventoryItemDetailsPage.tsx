@@ -72,32 +72,41 @@ function InventoryItemDetailsPage({
       <section className="item-details">
         <div className="item-details__wrapper">
           <div className="item-details__info item-details__info--description">
-            <h4 className="item-details__info-title">Item Description</h4>
+            <h4 className="item-details__info-title">Item Description:</h4>
             <p className="item-details__info-content">
               {itemDetails.description}
             </p>
           </div>
 
           <div className="item-details__info item-details__info--category">
-            <h4 className="item-details__info-title">Category</h4>
+            <h4 className="item-details__info-title">Category:</h4>
             <p className="item-details__info-content">{itemDetails.category}</p>
           </div>
         </div>
 
         <div className="item-details__wrapper">
-          <div className="item-details__info">
-            <h4 className="">Status</h4>
-            <p>{itemDetails.status}</p>
+          <div className="item-details__info item-details__info--status">
+            <h4 className="item-details__info-title">Status:</h4>
+            <p
+              className={`item-details__info-chip item-details__info-chip--${
+                itemDetails.quantity === 0 ? "out-of-stock" : "in-stock"
+              }`}
+            >
+              {" "}
+              {itemDetails.status}
+            </p>
           </div>
 
-          <div className="item-details__info">
-            <h4 className="">Quantity</h4>
-            <p>{itemDetails.quantity}</p>
+          <div className="item-details__info item-details__info--quantity">
+            <h4 className="item-details__info-title">Quantity:</h4>
+            <p className="item-details__info-content">{itemDetails.quantity}</p>
           </div>
 
-          <div className="item-details__info">
-            <h4 className="">Warehouse</h4>
-            <p>{itemDetails.warehouseName}</p>
+          <div className="item-details__info item-details__info--warehouse">
+            <h4 className="item-details__info-title">Warehouse:</h4>
+            <p className="item-details__info-content">
+              {itemDetails.warehouseName}
+            </p>
           </div>
         </div>
       </section>

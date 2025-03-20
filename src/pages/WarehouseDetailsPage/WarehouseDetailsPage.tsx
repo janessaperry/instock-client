@@ -1,16 +1,20 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "../../components/Button/Button";
 import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
-import {
-  ArrowBackIcon,
-  ChevronRightIcon,
-  DeleteOutlineIcon,
-  EditIcon,
-} from "../../components/Icons/Icons";
+import { ArrowBackIcon, EditIcon } from "../../components/Icons/Icons";
 import "./WarehouseDetailsPage.scss";
+import {
+  ListBodyActions,
+  ListBodyChip,
+  ListBodyLink,
+  ListBodyText,
+} from "../../components/ListBodyItem/ListBodyItem";
+import { createPortal } from "react-dom";
+import Modal from "../../components/Modal/Modal";
+import { DeletedRecordProps } from "../../types";
 
 interface WarehouseDetailsPageProps {
   baseApiUrl: string;
@@ -38,6 +42,10 @@ interface Inventory {
 
 function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
   const { warehouseId } = useParams();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [deletedItem, setDeletedItem] = useState<DeletedRecordProps | null>(
+    null
+  );
   const [warehouse, setWarehouse] = useState<Warehouse>({} as Warehouse);
   const [inventory, setInventory] = useState<Inventory[]>([]);
   const navigate = useNavigate();
@@ -62,6 +70,27 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
     } catch (error) {
       console.error(`Error fetching inventory by warehouse: ${error}`);
     }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${baseApiUrl}/inventories/${deletedItem?.id}`);
+      await getInventoryByWarehouse();
+      setShowModal(false);
+      setDeletedItem(null);
+    } catch (error) {
+      console.error(
+        `Error deleting inventory item ${deletedItem?.id}: ${error}`
+      );
+    }
+  };
+
+  const handleModalOpen = (inventoryItem: Inventory) => {
+    setShowModal(true);
+    setDeletedItem({
+      id: inventoryItem.id,
+      name: inventoryItem.item_name,
+    });
   };
 
   useEffect(() => {
@@ -127,61 +156,52 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
         {inventory.map((inventoryItem) => {
           return (
             <div key={inventoryItem.id} className="warehouse-inventory__row">
-              <div className="warehouse-inventory__item">
-                <h4 className="warehouse-inventory__title">Inventory Item</h4>
-                <Link
-                  to={`/inventory/${inventoryItem.id}`}
-                  className="warehouse-inventory__content warehouse-inventory__content--link"
-                >
-                  {inventoryItem.item_name} <ChevronRightIcon size="20" />
-                </Link>
-              </div>
+              <ListBodyLink
+                className="list-body__item--item-name"
+                title="Inventory Item"
+                linkTo={`/inventory/${inventoryItem.id}`}
+                content={inventoryItem.item_name}
+              />
 
-              <div className="warehouse-inventory__item">
-                <h4 className="warehouse-inventory__title">Status</h4>
-                <p
-                  className={`warehouse-inventory__chip warehouse-inventory__chip${
-                    inventoryItem.quantity === 0
-                      ? "--out-of-stock"
-                      : "--in-stock"
-                  }`}
-                >
-                  {inventoryItem.status}
-                </p>
-              </div>
+              <ListBodyChip
+                className="list-body__item--status"
+                title="Status"
+                content={inventoryItem.status}
+                count={inventoryItem.quantity}
+              />
 
-              <div className="warehouse-inventory__item">
-                <h4 className="warehouse-inventory__title">Category</h4>
-                <p className="warehouse-inventory__content">
-                  {inventoryItem.category}
-                </p>
-              </div>
+              <ListBodyText
+                className="list-body__item--category"
+                title="Category"
+                content={inventoryItem.category}
+              />
 
-              <div className="warehouse-inventory__item">
-                <h4 className="warehouse-inventory__title">Qty</h4>
-                <p className="warehouse-inventory__content">
-                  {inventoryItem.quantity}
-                </p>
-              </div>
+              <ListBodyText
+                className="list-body__item--quantity"
+                title="Qty"
+                content={`${inventoryItem.quantity}`}
+              />
 
-              <div className="warehouse-inventory__actions">
-                <Button
-                  icon={<DeleteOutlineIcon />}
-                  className="btn--icon"
-                  handleClick={() => console.log("add delete modal")}
-                />
-                <Button
-                  icon={<EditIcon />}
-                  className="btn--icon"
-                  handleClick={() =>
-                    console.log("navigate to edit inventory item")
-                  }
-                />
-              </div>
+              <ListBodyActions
+                className="list-body__item--actions"
+                onDelete={() => handleModalOpen(inventoryItem)}
+                onEdit={() => navigate(`/inventory/${inventoryItem.id}/edit`)}
+              />
             </div>
           );
         })}
       </section>
+      {showModal &&
+        createPortal(
+          <Modal
+            setShowModal={setShowModal}
+            setDeleted={setDeletedItem}
+            handleDelete={handleDelete}
+            dataToDelete={deletedItem}
+            type={"inventory"}
+          />,
+          document.querySelector<HTMLElement>(".warehouse-container")!
+        )}
     </div>
   );
 }

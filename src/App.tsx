@@ -45,6 +45,14 @@ function App() {
               path="/inventory/:itemId"
               element={<InventoryItemDetailsPage baseApiUrl={baseApiUrl} />}
             />
+            <Route
+              path="/inventory/add"
+              element={<InventoryItemDetailsPage baseApiUrl={baseApiUrl} />}
+            />
+            <Route
+              path="/inventory/:inventoryId/edit"
+              element={<InventoryItemDetailsPage baseApiUrl={baseApiUrl} />}
+            />
           </Routes>
         </main>
         <Footer />

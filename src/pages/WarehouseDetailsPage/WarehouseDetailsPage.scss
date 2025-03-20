@@ -19,6 +19,7 @@
 
   &__info {
     flex: 1 1 0;
+    @include flex-col($spacing-4);
   }
 }
 
