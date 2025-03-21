@@ -1,0 +1,53 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.dropdown {
+  position: relative;
+
+  &__label {
+    @include flex-col($spacing-4);
+  }
+
+  &__btn {
+    cursor: pointer;
+    @include input-text;
+    @include flex-row-between($spacing-16);
+  }
+
+  &__options {
+    position: absolute;
+    top: calc(100% + $spacing-4);
+    width: 100%;
+    background-color: $color-background-light;
+    border: 1px solid $color-border-primary;
+    border-radius: $radius-20;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba($color-background-dark, 0.1);
+    z-index: 1;
+
+    transition: 0.5s max-height ease, 0.5s transform ease, 0.25s opacity ease;
+    max-height: 0px;
+    transform: translateY(-4px);
+    opacity: 0;
+
+    &[aria-expanded="true"] {
+      max-height: 500px;
+      transform: translateY(0);
+      opacity: 100%;
+    }
+  }
+
+  &__option {
+    cursor: pointer;
+    padding: $spacing-12 $spacing-16;
+
+    &:hover {
+      background-color: $color-brand-primary-light-hover;
+    }
+
+    &[aria-checked="true"] {
+      color: $color-background-light;
+      background-color: $color-brand-primary;
+    }
+  }
+}

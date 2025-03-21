@@ -17,6 +17,22 @@ export interface WarehouseFormData {
   };
 }
 
+export interface InventoryItemDetailsProps {
+  id: number;
+  itemName: string;
+  description: string;
+  category: string;
+  status: string;
+  warehouse: string;
+}
+
+export interface FormDataProps {
+  [key: string]: {
+    value: string;
+    hasError: boolean;
+  }
+}
+
 export interface DeletedRecordProps {
   id: number;
   name: string;
