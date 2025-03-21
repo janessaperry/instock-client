@@ -82,7 +82,11 @@ function InputDropdown({ label, fieldName, options }: InputDropdownProps) {
           onKeyDown={(e) => e.key === "Enter" && handleDropdownClick()}
           aria-placeholder="Please select"
         >
-          <span className="dropdown__placeholder">Please select</span>
+          <span className="dropdown__placeholder">
+            {selectedOption
+              ? options.find((option) => option.id === selectedOption)?.value
+              : "Please select"}
+          </span>
           <ArrowDropDownIcon />
         </div>
       </label>

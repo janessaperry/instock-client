@@ -25,15 +25,8 @@
     box-shadow: 0 4px 8px rgba($color-background-dark, 0.1);
     z-index: 1;
 
-    transition: 0.5s max-height ease, 0.5s transform ease, 0.25s opacity ease;
-    max-height: 0px;
-    transform: translateY(-4px);
-    opacity: 0;
-
-    &[aria-expanded="true"] {
-      max-height: 500px;
-      transform: translateY(0);
-      opacity: 100%;
+    &[aria-expanded="false"] {
+      display: none;
     }
   }
 
