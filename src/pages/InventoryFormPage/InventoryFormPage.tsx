@@ -53,6 +53,10 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
       value: inventoryObject?.status || "",
       hasError: false,
     },
+    quantity: {
+      value: inventoryObject?.quantity || "",
+      hasError: false,
+    },
     warehouse: {
       value: inventoryObject?.warehouse || "",
       hasError: false,
@@ -152,7 +156,23 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
         <section className="form__section">
           <h2 className="form__section-title">Item Availability</h2>
 
-          <InputRadio />
+          <InputRadio
+            label="Status"
+            fieldName="status"
+            options={[
+              { id: "1", value: "In stock" },
+              { id: "2", value: "Out of stock" },
+            ]}
+            formData={formData}
+          />
+
+          <InputText
+            label="Quantity"
+            fieldName="quantity"
+            formData={formData}
+            handleInputChange={handleInputChange}
+          />
+
           <InputDropdown
             label="Warehouse"
             fieldName="warehouse"

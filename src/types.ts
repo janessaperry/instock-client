@@ -23,6 +23,7 @@ export interface InventoryItemDetailsProps {
   description: string;
   category: string;
   status: string;
+  quantity: string;
   warehouse: string;
 }
 

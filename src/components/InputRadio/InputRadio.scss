@@ -1,2 +1,22 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
+
+.input-radio {
+  @include flex-col($spacing-4);
+
+  &__options {
+    @include flex-row($spacing-4);
+  }
+
+  &__label {
+    cursor: pointer;
+    flex: 1 1 0;
+    @include flex-row($spacing-8);
+    align-items: center;
+    color: $color-text-secondary;
+
+    &:has(input:checked) {
+      color: $color-text-primary;
+    }
+  }
+}
