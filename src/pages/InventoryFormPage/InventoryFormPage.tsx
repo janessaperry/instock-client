@@ -17,6 +17,7 @@ import {
   FormDataProps,
   InventoryItemDetailsProps,
   WarehouseDetails,
+  OptionProps,
 } from "../../types";
 
 // Styles
@@ -30,6 +31,9 @@ interface InventoryFormPageProps {
 function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
   const navigate = useNavigate();
   const { inventoryId } = useParams();
+  const [inventoryCategories, setInventoryCategories] = useState<OptionProps[]>(
+    []
+  );
   const [warehousesList, setWarehousesList] = useState<
     { id: string; value: string }[]
   >([]);
@@ -96,20 +100,42 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     }
   };
 
-  //TODO update this to fetch categories from database?
-  const inventoryCategories = [
-    { id: "1", value: "Health" },
-    { id: "2", value: "Electronics" },
-    { id: "3", value: "Apparel" },
-  ];
+  const getInventoryCategories = async () => {
+    try {
+      const response = await axios.get(`${baseApiUrl}/inventories/categories`);
+      setInventoryCategories(response.data);
+    } catch (error) {}
+  };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("submitted");
+    console.log("form submit clicked");
+    console.log(formData);
+
+    let isValid = true;
+    Object.keys(formData).forEach((key) => {
+      if (formData[key].value.trim().length === 0) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [key]: {
+            ...prevFormData[key],
+            hasError: true,
+          },
+        }));
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    console.log("validated");
   };
 
   useEffect(() => {
     getWarehousesList();
+    getInventoryCategories();
     // setFormData(formDataObject);
   }, []);
 
@@ -150,6 +176,7 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
             fieldName="category"
             options={inventoryCategories}
             formData={formData}
+            handleInputChange={handleInputChange}
           />
         </section>
 
@@ -164,34 +191,39 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
               { id: "2", value: "Out of stock" },
             ]}
             formData={formData}
-          />
-
-          <InputText
-            label="Quantity"
-            fieldName="quantity"
-            formData={formData}
             handleInputChange={handleInputChange}
           />
+
+          {formData["status"].value === "In stock" && (
+            <InputText
+              label="Quantity"
+              fieldName="quantity"
+              formData={formData}
+              handleInputChange={handleInputChange}
+            />
+          )}
 
           <InputDropdown
             label="Warehouse"
             fieldName="warehouse"
             options={warehousesList}
             formData={formData}
+            handleInputChange={handleInputChange}
           />
         </section>
 
         <div className="form__actions">
           <Button
+            btnType="button"
             className="btn--secondary form__btn"
             label={"Cancel"}
             handleClick={() => navigate(-1)}
           />
 
           <Button
+            btnType="submit"
             className="btn--primary form__btn"
             label={`${editMode ? "Save" : "Add Item"} `}
-            handleClick={() => navigate(-1)}
           />
         </div>
       </form>

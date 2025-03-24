@@ -38,3 +38,8 @@ export interface DeletedRecordProps {
   id: number;
   name: string;
 }
+
+export interface OptionProps {
+  id: string;
+  value: string;
+}

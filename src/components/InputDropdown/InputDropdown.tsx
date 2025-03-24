@@ -1,11 +1,11 @@
 // Libraries
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Components
-import { ArrowDropDownIcon } from "../Icons/Icons";
+import { ArrowDropDownIcon, ErrorIcon } from "../Icons/Icons";
 
 // Types
-import { FormDataProps } from "../../types";
+import { FormDataProps, OptionProps } from "../../types";
 
 // Styles
 import "./InputDropdown.scss";
@@ -13,51 +13,54 @@ import "./InputDropdown.scss";
 interface InputDropdownProps {
   label: string;
   fieldName: string;
-  options: {
-    id: string;
-    value: string;
-  }[];
+  options: OptionProps[];
   formData: FormDataProps;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function InputDropdown({ label, fieldName, options }: InputDropdownProps) {
+function InputDropdown({
+  label,
+  fieldName,
+  options,
+  formData,
+  handleInputChange,
+}: InputDropdownProps) {
   const [showOptions, setShowOptions] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleDropdownClick = () => {
+  const toggleDropdown = () => {
     setShowOptions(!showOptions);
   };
 
   const handleLabelClick = () => {
-    const btn = document.querySelector("div.dropdown__btn") as HTMLDivElement;
+    const btn = dropdownRef.current?.querySelector(
+      "div.dropdown__btn"
+    ) as HTMLDivElement;
     btn.focus();
   };
 
-  const handleDropdownSelection = (e: React.MouseEvent) => {
-    const clickedOption = e.target as HTMLElement;
+  const handleOptionSelect = (value: string) => {
+    const syntheticEvent = {
+      target: {
+        name: fieldName,
+        value: value,
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
 
-    if (clickedOption && clickedOption.hasAttribute("data-value")) {
-      const selectedId = clickedOption.getAttribute("data-value");
-      setSelectedOption(selectedId);
+    handleInputChange(syntheticEvent);
+    setShowOptions(false);
+  };
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(e.target as Node)
+    ) {
       setShowOptions(false);
     }
   };
 
   useEffect(() => {
-    const dropdowns = Array.from(
-      document.querySelectorAll("div.dropdown")
-    ) as HTMLDivElement[];
-
-    const handleClickOutside = (e: MouseEvent) => {
-      const clickedTarget = e.target as HTMLElement;
-
-      const isOutsideClick = !dropdowns.some((dropdown: HTMLDivElement) =>
-        dropdown.contains(clickedTarget)
-      );
-
-      isOutsideClick && setShowOptions(false);
-    };
-
     document.addEventListener("click", handleClickOutside);
 
     return () => {
@@ -66,7 +69,7 @@ function InputDropdown({ label, fieldName, options }: InputDropdownProps) {
   }, []);
 
   return (
-    <div className="dropdown">
+    <div className="dropdown" ref={dropdownRef}>
       <label
         id={fieldName}
         className="dropdown__label"
@@ -78,17 +81,21 @@ function InputDropdown({ label, fieldName, options }: InputDropdownProps) {
           tabIndex={0}
           role="button"
           aria-labelledby={fieldName}
-          onClick={handleDropdownClick}
-          onKeyDown={(e) => e.key === "Enter" && handleDropdownClick()}
+          onClick={toggleDropdown}
+          onKeyDown={(e) => e.key === "Enter" && toggleDropdown()}
           aria-placeholder="Please select"
         >
           <span className="dropdown__placeholder">
-            {selectedOption
-              ? options.find((option) => option.id === selectedOption)?.value
-              : "Please select"}
+            {formData[fieldName]?.value || "Please select"}
           </span>
           <ArrowDropDownIcon />
         </div>
+        {formData[fieldName].hasError && (
+          <span className="form__error">
+            <ErrorIcon size="16" />
+            This field is required.
+          </span>
+        )}
       </label>
 
       <ul
@@ -101,11 +108,11 @@ function InputDropdown({ label, fieldName, options }: InputDropdownProps) {
             <li
               key={option.id}
               role="radio"
-              aria-checked={selectedOption === option.id}
+              aria-checked={formData[fieldName]?.value === option.id}
               aria-label={option.value}
               data-value={option.id}
               className="dropdown__option"
-              onClick={(e) => handleDropdownSelection(e)}
+              onClick={() => handleOptionSelect(option.value)}
             >
               {option.value}
             </li>

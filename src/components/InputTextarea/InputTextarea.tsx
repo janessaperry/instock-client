@@ -1,5 +1,6 @@
 // Types
 import { FormDataProps } from "../../types";
+import { ErrorIcon } from "../Icons/Icons";
 
 // Styles
 import "./InputTextarea.scss";
@@ -30,6 +31,12 @@ function InputTextarea({
         value={formData[fieldName].value}
         onChange={handleInputChange}
       ></textarea>
+      {formData[fieldName].hasError && (
+        <span className="form__error">
+          <ErrorIcon size="16" />
+          This field is required.
+        </span>
+      )}
     </label>
   );
 }

@@ -1,27 +1,23 @@
 // Styles
-import { useState } from "react";
-import { FormDataProps } from "../../types";
+import { FormDataProps, OptionProps } from "../../types";
 import { ErrorIcon } from "../Icons/Icons";
 import "./InputRadio.scss";
 
 interface InputRadioProps {
   label: string;
   fieldName: string;
-  options: {
-    id: string;
-    value: string;
-  }[];
+  options: OptionProps[];
   formData: FormDataProps;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function InputRadio({ label, fieldName, options, formData }: InputRadioProps) {
-  const [selectedOption, setSelectedOption] = useState<string>("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const clickedTarget = e.target;
-    setSelectedOption(clickedTarget.value);
-  };
-
+function InputRadio({
+  label,
+  fieldName,
+  options,
+  formData,
+  handleInputChange,
+}: InputRadioProps) {
   return (
     <div className="input-radio">
       {label}
@@ -33,8 +29,8 @@ function InputRadio({ label, fieldName, options, formData }: InputRadioProps) {
                 className="input-radio__input"
                 type="radio"
                 name={fieldName}
-                value={option.id}
-                checked={selectedOption === option.id}
+                value={option.value}
+                checked={formData[fieldName].value === option.value}
                 onChange={handleInputChange}
               />
               {option.value}
