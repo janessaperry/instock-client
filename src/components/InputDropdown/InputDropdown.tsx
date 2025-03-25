@@ -46,7 +46,6 @@ function InputDropdown({
         value: value,
       },
     } as React.ChangeEvent<HTMLInputElement>;
-
     handleInputChange(syntheticEvent);
     setShowOptions(false);
   };
@@ -110,7 +109,7 @@ function InputDropdown({
               role="radio"
               aria-checked={formData[fieldName]?.value === option.id}
               aria-label={option.value}
-              data-value={option.id}
+              data-value={option.value}
               className="dropdown__option"
               onClick={() => handleOptionSelect(option.value)}
             >

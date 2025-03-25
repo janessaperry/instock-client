@@ -61,8 +61,8 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
       value: inventoryObject?.quantity || "",
       hasError: false,
     },
-    warehouse: {
-      value: inventoryObject?.warehouse || "",
+    warehouseName: {
+      value: inventoryObject?.warehouseName || "",
       hasError: false,
     },
   });
@@ -77,7 +77,7 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
         `${baseApiUrl}/inventories/${inventoryId}`
       );
       const itemData = response.data;
-      console.log(itemData);
+      // console.log("ITEMDATA:", itemData);
       setExistingItemDetails(itemData);
       setFormData(formDataObject(itemData));
     } catch (error) {
@@ -87,9 +87,11 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
   const addNewItem = async (newItem: Object) => {
     try {
-      console.log("ADD NEW ITEM", newItem);
-      await axios.post(`${baseApiUrl}/inventories/add`, newItem);
-      alert("Item added");
+      const response = await axios.post(
+        `${baseApiUrl}/inventories/add`,
+        newItem
+      );
+      console.log(response);
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
     }
@@ -97,7 +99,10 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
   const editExistingItem = async (updatedItem: Object) => {
     try {
-      console.log(updatedItem);
+      await axios.put(
+        `${baseApiUrl}/inventories/${inventoryId}/edit`,
+        updatedItem
+      );
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
     }
@@ -107,7 +112,6 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: {
@@ -136,22 +140,29 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     try {
       const response = await axios.get(`${baseApiUrl}/inventories/categories`);
       setInventoryCategories(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.error(`Error getting inventory categories: ${error}`);
+    }
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("form submit clicked");
-    // console.log(formData);
-
-    //todo update to check for quantity based on status
     let isValid = true;
-    Object.keys(formData).forEach((key) => {
-      if (formData[key].value.trim().length === 0) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [key]: {
-            ...prevFormData[key],
+
+    const requiredFields = [
+      "itemName",
+      "description",
+      "category",
+      "status",
+      "warehouseName",
+    ];
+
+    requiredFields.forEach((field) => {
+      if (!formData[field].value.trim()) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [field]: {
+            ...prevData[field],
             hasError: true,
           },
         }));
@@ -159,20 +170,36 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
       }
     });
 
+    if (formData.status.value === "In Stock") {
+      const quantityValue = Number(formData.quantity.value);
+      if (!quantityValue || quantityValue <= 0) {
+        setFormData((prevData) => ({
+          ...prevData,
+          quantity: {
+            ...prevData.quantity,
+            hasError: true,
+          },
+        }));
+        isValid = false;
+      }
+    }
+
     if (!isValid) {
       return;
     }
 
-    console.log("validated");
-
-    //todo need to send back warehouse id, not warehouse name
     const itemDetails = {
       item_name: formData.itemName.value,
       description: formData.description.value,
       category: formData.category.value,
       status: formData.status.value,
-      quantity: formData.quantity.value,
-      warehouse_id: formData.warehouse.value,
+      quantity:
+        formData.status.value === "Out of Stock" ? 0 : formData.quantity.value,
+      warehouse_id: Number(
+        warehousesList.find(
+          (warehouse) => warehouse.value === formData.warehouseName.value
+        )?.id
+      ),
     };
 
     console.log(itemDetails);
@@ -180,6 +207,9 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     editMode
       ? await editExistingItem(itemDetails)
       : await addNewItem(itemDetails);
+
+    alert("Saved!");
+    navigate(`/inventory`);
   };
 
   useEffect(() => {
@@ -236,14 +266,14 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
             label="Status"
             fieldName="status"
             options={[
-              { id: "1", value: "In stock" },
-              { id: "2", value: "Out of stock" },
+              { id: "1", value: "In Stock" },
+              { id: "2", value: "Out of Stock" },
             ]}
             formData={formData}
             handleInputChange={handleInputChange}
           />
 
-          {formData["status"].value === "In stock" && (
+          {formData.status.value === "In Stock" && (
             <InputText
               label="Quantity"
               fieldName="quantity"
@@ -254,7 +284,7 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
           <InputDropdown
             label="Warehouse"
-            fieldName="warehouse"
+            fieldName="warehouseName"
             options={warehousesList}
             formData={formData}
             handleInputChange={handleInputChange}

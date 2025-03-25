@@ -24,14 +24,14 @@ export interface InventoryItemDetailsProps {
   category: string;
   status: string;
   quantity: string;
-  warehouse: string;
+  warehouseName: string;
 }
 
 export interface FormDataProps {
   [key: string]: {
     value: string;
     hasError: boolean;
-  }
+  };
 }
 
 export interface DeletedRecordProps {
@@ -43,3 +43,11 @@ export interface OptionProps {
   id: string;
   value: string;
 }
+
+// export interface StatusOptionsProps {
+//   [key: string]: {
+//     id: string;
+//     value: string;
+//     dbValue: string;
+//   };
+// }
