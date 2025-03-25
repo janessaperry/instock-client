@@ -56,7 +56,7 @@ function ListBodyText({ className, title, content }: ListBodyTextProps) {
     return typeof content === "string"
       ? content
       : content.map((item, index) => (
-          <span key={item}>
+          <span key={index}>
             {item} {index !== content.length - 1 && <br />}
           </span>
         ));

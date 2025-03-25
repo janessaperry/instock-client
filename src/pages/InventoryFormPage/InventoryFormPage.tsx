@@ -71,6 +71,38 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     formDataObject(existingItemDetails)
   );
 
+  const getItemDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${baseApiUrl}/inventories/${inventoryId}`
+      );
+      const itemData = response.data;
+      console.log(itemData);
+      setExistingItemDetails(itemData);
+      setFormData(formDataObject(itemData));
+    } catch (error) {
+      console.error(`Error fetching inventory item details: ${error}`);
+    }
+  };
+
+  const addNewItem = async (newItem: Object) => {
+    try {
+      console.log("ADD NEW ITEM", newItem);
+      await axios.post(`${baseApiUrl}/inventories/add`, newItem);
+      alert("Item added");
+    } catch (error) {
+      console.error(`Error adding new inventory item: ${error}`);
+    }
+  };
+
+  const editExistingItem = async (updatedItem: Object) => {
+    try {
+      console.log(updatedItem);
+    } catch (error) {
+      console.error(`Error adding new inventory item: ${error}`);
+    }
+  };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -107,11 +139,12 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     } catch (error) {}
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("form submit clicked");
-    console.log(formData);
+    // console.log(formData);
 
+    //todo update to check for quantity based on status
     let isValid = true;
     Object.keys(formData).forEach((key) => {
       if (formData[key].value.trim().length === 0) {
@@ -131,13 +164,29 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     }
 
     console.log("validated");
+
+    //todo need to send back warehouse id, not warehouse name
+    const itemDetails = {
+      item_name: formData.itemName.value,
+      description: formData.description.value,
+      category: formData.category.value,
+      status: formData.status.value,
+      quantity: formData.quantity.value,
+      warehouse_id: formData.warehouse.value,
+    };
+
+    console.log(itemDetails);
+
+    editMode
+      ? await editExistingItem(itemDetails)
+      : await addNewItem(itemDetails);
   };
 
   useEffect(() => {
     getWarehousesList();
     getInventoryCategories();
-    // setFormData(formDataObject);
-  }, []);
+    editMode && getItemDetails();
+  }, [inventoryId]);
 
   return (
     <div className="form-container">
