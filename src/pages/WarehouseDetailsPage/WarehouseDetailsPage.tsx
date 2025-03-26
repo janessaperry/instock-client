@@ -9,6 +9,13 @@ import Modal from "../../components/Modal/Modal";
 import Button from "../../components/Button/Button";
 import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
+import ListHeaderItem from "../../components/ListHeaderItem/ListHeaderItem";
+import {
+  ListBodyActions,
+  ListBodyChip,
+  ListBodyLink,
+  ListBodyText,
+} from "../../components/ListBodyItem/ListBodyItem";
 import {
   ArrowBackIcon,
   EditIcon,
@@ -16,17 +23,10 @@ import {
 } from "../../components/Icons/Icons";
 
 // Types
-import {
-  ListBodyActions,
-  ListBodyChip,
-  ListBodyLink,
-  ListBodyText,
-} from "../../components/ListBodyItem/ListBodyItem";
 import { DeletedRecordProps } from "../../types";
 
 // Styles
 import "./WarehouseDetailsPage.scss";
-import ListHeaderItem from "../../components/ListHeaderItem/ListHeaderItem";
 
 interface WarehouseDetailsPageProps {
   baseApiUrl: string;

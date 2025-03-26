@@ -1,6 +1,8 @@
 // Components
-import { WarehouseFormData } from "../../types";
 import { ErrorIcon } from "../Icons/Icons";
+
+// Types
+import { WarehouseFormData } from "../../types";
 
 // Styles
 import "./InputText.scss";

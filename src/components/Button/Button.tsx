@@ -1,3 +1,4 @@
+// Styles
 import "./Button.scss";
 
 interface ButtonProps {

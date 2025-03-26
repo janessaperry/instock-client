@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 // Components
 import { ChevronRightIcon, DeleteOutlineIcon, EditIcon } from "../Icons/Icons";
 import Button from "../Button/Button";
+
+// Styles
 import "./ListBodyItem.scss";
 
 interface ListBodyLinkProps {

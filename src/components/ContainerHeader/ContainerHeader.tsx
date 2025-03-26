@@ -1,3 +1,4 @@
+// Styles
 import "./ContainerHeader.scss";
 
 interface ContainerHeaderProps {

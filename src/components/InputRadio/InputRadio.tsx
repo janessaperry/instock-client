@@ -1,6 +1,10 @@
-// Styles
-import { FormDataProps, OptionProps } from "../../types";
+// Components
 import { ErrorIcon } from "../Icons/Icons";
+
+// Types
+import { FormDataProps, OptionProps } from "../../types";
+
+// Styles
 import "./InputRadio.scss";
 
 interface InputRadioProps {
