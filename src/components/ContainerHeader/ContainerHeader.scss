@@ -6,12 +6,12 @@
   @include flex-col($spacing-16);
   @include container-padding;
 
+  &--border-none {
+    border-bottom: none;
+  }
+
   @include tablet {
     @include flex-row-between($spacing-16);
-
-    &--tablet-border-none {
-      border-bottom: none;
-    }
   }
 
   &__title-wrapper {
@@ -24,6 +24,7 @@
     @include tablet {
       @include flex-row($spacing-16);
       flex-basis: 50%;
+      justify-content: flex-end;
     }
   }
 

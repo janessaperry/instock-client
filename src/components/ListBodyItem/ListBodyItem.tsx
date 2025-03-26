@@ -93,11 +93,15 @@ function ListBodyActions({
   return (
     <div className={`list-body__item ${className}`}>
       <Button
-        icon={<DeleteOutlineIcon />}
+        icon={<DeleteOutlineIcon size={"20"} />}
         className="btn--icon"
         handleClick={onDelete}
       />
-      <Button icon={<EditIcon />} className="btn--icon" handleClick={onEdit} />
+      <Button
+        icon={<EditIcon size={"20"} />}
+        className="btn--icon"
+        handleClick={onEdit}
+      />
     </div>
   );
 }

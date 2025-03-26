@@ -10,33 +10,14 @@
     padding: $spacing-12 $spacing-32;
 
     &__item {
-      @include flex-row($spacing-8);
+      @include flex-row($spacing-4);
       align-items: center;
-
-      &--warehouse-name {
-        flex: 1 1 20%;
-        order: 1;
-      }
-
-      &--contact-name {
-        flex: 1 1 20%;
-        order: 3;
-      }
-
-      &--address {
-        flex: 1 1 20%;
-        order: 2;
-      }
-
-      &--contact-info {
-        flex: 1 1 30%;
-        order: 4;
-      }
 
       &--actions {
         flex: 1 1 10%;
-        order: 5;
+        order: 99;
         @include flex-row($spacing-8);
+        justify-content: flex-end;
       }
     }
 

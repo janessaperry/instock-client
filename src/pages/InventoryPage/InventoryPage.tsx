@@ -85,7 +85,7 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
     <div className="inventories-container">
       <ContainerHeader
         title="Inventory"
-        className="container-header--tablet-borde-none"
+        className="container-header--border-none"
         search={<InputSearch placeholder="Search..." />}
         button={
           <Button
@@ -96,10 +96,10 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
         }
       />
 
-      <section className="inventories-section">
+      <section className="inventories-list">
         <div className="list-header">
           <ListHeaderItem
-            className="list-header__item--inventory-item"
+            className="list-header__item--item-name"
             icon={<SortIcon className="list-header__sort" />}
             label="Inventory Item"
           />
@@ -117,7 +117,7 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
           />
 
           <ListHeaderItem
-            className="list-header__item--qty"
+            className="list-header__item--quantity"
             icon={<SortIcon className="list-header__icon" />}
             label="Qty"
           />
@@ -139,15 +139,16 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
             return (
               <div key={item.id} className="list-body__row">
                 <ListBodyLink
-                  className="list-body__item--inventory-item"
+                  className="list-body__item--item-name"
                   title="Inventory Item"
                   content={item.item_name}
                   linkTo={`/inventory/${item.id}`}
                 />
 
-                <ListBodyText
+                <ListBodyChip
                   className="list-body__item--status"
                   title="Status"
+                  count={item.quantity}
                   content={item.status}
                 />
 
@@ -157,11 +158,10 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
                   content={item.category}
                 />
 
-                <ListBodyChip
-                  className="list-body__item--status"
-                  title="Quantity"
-                  count={item.quantity}
-                  content={item.status}
+                <ListBodyText
+                  className="list-body__item--quantity"
+                  title="Qty"
+                  content={`${item.quantity}`}
                 />
 
                 <ListBodyText

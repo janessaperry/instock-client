@@ -4,3 +4,50 @@
 .inventories-container {
   @include content-container;
 }
+
+.inventories-list {
+  .list-body {
+    &__row {
+      border-top: 1px solid $color-border-primary;
+      flex-wrap: wrap;
+      @include flex-row($spacing-16);
+      @include container-padding;
+
+      @include tablet {
+        flex-wrap: nowrap;
+      }
+    }
+  }
+
+  .list-header,
+  .list-body {
+    @include tablet {
+      &__item {
+        &--item-name {
+          flex: 1 1 25%;
+          order: 1;
+        }
+
+        &--category {
+          flex: 1 1 20%;
+          order: 2;
+        }
+
+        &--status {
+          flex: 1 1 20%;
+          order: 3;
+        }
+
+        &--quantity {
+          flex: 1 1 5%;
+          order: 4;
+        }
+
+        &--warehouse {
+          flex: 1 1 20%;
+          order: 5;
+        }
+      }
+    }
+  }
+}

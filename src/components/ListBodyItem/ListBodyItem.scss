@@ -18,30 +18,11 @@
     }
 
     @include tablet {
-      &--warehouse-name {
-        flex: 1 1 20%;
-        order: 1;
-      }
-
-      &--contact-name {
-        flex: 1 1 20%;
-        order: 3;
-      }
-
-      &--address {
-        flex: 1 1 20%;
-        order: 2;
-      }
-
-      &--contact-info {
-        flex: 1 1 30%;
-        order: 4;
-      }
-
       &--actions {
-        flex: 1 1 10%;
-        order: 5;
-        @include flex-row($spacing-8);
+        flex: 0 1 10%;
+        order: 99;
+        @include flex-row($spacing-4);
+        justify-content: flex-end;
       }
     }
   }
@@ -51,7 +32,10 @@
     border-radius: $radius-full;
     align-self: flex-start;
     text-transform: uppercase;
-    @include labels;
+    @include body-small;
+    & {
+      font-weight: 600;
+    }
 
     &--in-stock {
       color: $color-success;

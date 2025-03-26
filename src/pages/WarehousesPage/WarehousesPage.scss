@@ -5,20 +5,44 @@
   @include content-container;
 }
 
-.list-body {
-  @include flex-col;
-
-  &__row {
-    @include flex-row($spacing-16);
-    flex-wrap: wrap;
-    @include container-padding;
-
-    &:not(:first-of-type) {
+.warehouses-list {
+  .list-body {
+    &__row {
       border-top: 1px solid $color-border-primary;
-    }
+      flex-wrap: wrap;
+      @include flex-row($spacing-16);
+      @include container-padding;
 
+      @include tablet {
+        flex-wrap: nowrap;
+      }
+    }
+  }
+
+  .list-header,
+  .list-body {
     @include tablet {
-      flex-wrap: nowrap;
+      &__item {
+        &--warehouse-name {
+          flex: 1 1 20%;
+          order: 1;
+        }
+
+        &--contact-name {
+          flex: 1 1 20%;
+          order: 3;
+        }
+
+        &--address {
+          flex: 1 1 20%;
+          order: 2;
+        }
+
+        &--contact-info {
+          flex: 1 1 30%;
+          order: 4;
+        }
+      }
     }
   }
 }

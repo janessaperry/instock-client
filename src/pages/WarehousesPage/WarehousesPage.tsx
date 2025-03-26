@@ -75,7 +75,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
     <div className="warehouses-container">
       <ContainerHeader
         title="Warehouses"
-        className="container-header--tablet-border-none"
+        className="container-header--border-none"
         search={<InputSearch placeholder="Search..." />}
         button={
           <Button
@@ -86,7 +86,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
         }
       />
 
-      <section className="warehouses-section">
+      <section className="warehouses-list">
         <div className="list-header">
           <ListHeaderItem
             className="list-header__item--warehouse-name"
@@ -114,7 +114,6 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
 
           <ListHeaderItem
             className="list-header__item--actions"
-            icon={<SortIcon className="list-header__sort" />}
             label="Actions"
           />
         </div>

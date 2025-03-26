@@ -9,7 +9,11 @@ import Modal from "../../components/Modal/Modal";
 import Button from "../../components/Button/Button";
 import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
-import { ArrowBackIcon, EditIcon } from "../../components/Icons/Icons";
+import {
+  ArrowBackIcon,
+  EditIcon,
+  SortIcon,
+} from "../../components/Icons/Icons";
 
 // Types
 import {
@@ -22,6 +26,7 @@ import { DeletedRecordProps } from "../../types";
 
 // Styles
 import "./WarehouseDetailsPage.scss";
+import ListHeaderItem from "../../components/ListHeaderItem/ListHeaderItem";
 
 interface WarehouseDetailsPageProps {
   baseApiUrl: string;
@@ -160,43 +165,76 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
       </section>
 
       <section className="warehouse-inventory">
-        {inventory.map((inventoryItem) => {
-          return (
-            <div key={inventoryItem.id} className="warehouse-inventory__row">
-              <ListBodyLink
-                className="list-body__item--item-name"
-                title="Inventory Item"
-                linkTo={`/inventory/${inventoryItem.id}`}
-                content={inventoryItem.item_name}
-              />
+        <div className="list-header">
+          <ListHeaderItem
+            className="list-header__item--item-name"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Inventory Item"
+          />
 
-              <ListBodyChip
-                className="list-body__item--status"
-                title="Status"
-                content={inventoryItem.status}
-                count={inventoryItem.quantity}
-              />
+          <ListHeaderItem
+            className="list-header__item--category"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Category"
+          />
 
-              <ListBodyText
-                className="list-body__item--category"
-                title="Category"
-                content={inventoryItem.category}
-              />
+          <ListHeaderItem
+            className="list-header__item--status"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Status"
+          />
 
-              <ListBodyText
-                className="list-body__item--quantity"
-                title="Qty"
-                content={`${inventoryItem.quantity}`}
-              />
+          <ListHeaderItem
+            className="list-header__item--quantity"
+            icon={<SortIcon className="list-header__sort" />}
+            label="Quantity"
+          />
 
-              <ListBodyActions
-                className="list-body__item--actions"
-                onDelete={() => handleModalOpen(inventoryItem)}
-                onEdit={() => navigate(`/inventory/${inventoryItem.id}/edit`)}
-              />
-            </div>
-          );
-        })}
+          <ListHeaderItem
+            className="list-header__item--actions"
+            label="Actions"
+          />
+        </div>
+
+        <div className="list-body">
+          {inventory.map((inventoryItem) => {
+            return (
+              <div key={inventoryItem.id} className="list-body__row">
+                <ListBodyLink
+                  className="list-body__item--item-name"
+                  title="Inventory Item"
+                  linkTo={`/inventory/${inventoryItem.id}`}
+                  content={inventoryItem.item_name}
+                />
+
+                <ListBodyChip
+                  className="list-body__item--status"
+                  title="Status"
+                  content={inventoryItem.status}
+                  count={inventoryItem.quantity}
+                />
+
+                <ListBodyText
+                  className="list-body__item--category"
+                  title="Category"
+                  content={inventoryItem.category}
+                />
+
+                <ListBodyText
+                  className="list-body__item--quantity"
+                  title="Qty"
+                  content={`${inventoryItem.quantity}`}
+                />
+
+                <ListBodyActions
+                  className="list-body__item--actions"
+                  onDelete={() => handleModalOpen(inventoryItem)}
+                  onEdit={() => navigate(`/inventory/${inventoryItem.id}/edit`)}
+                />
+              </div>
+            );
+          })}
+        </div>
       </section>
       {showModal &&
         createPortal(

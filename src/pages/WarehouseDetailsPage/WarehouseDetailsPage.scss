@@ -10,7 +10,7 @@
 }
 
 .warehouse-details {
-  @include flex-col($spacing-16);
+  @include flex-col($spacing-24);
   @include container-padding-compact;
 
   &__info-wrapper {
@@ -24,33 +24,49 @@
 }
 
 .warehouse-inventory {
-  @include flex-col;
+  .list-body {
+    &__row {
+      border-top: 1px solid $color-border-primary;
+      flex-wrap: wrap;
+      @include flex-row($spacing-16);
+      @include container-padding;
 
-  &__row {
-    border-top: 1px solid $color-border-primary;
-    @include flex-row($spacing-16);
-    flex-wrap: wrap;
-    @include container-padding;
-  }
-
-  &__item {
-    flex: 1 1 calc(50% - $spacing-16);
-    @include flex-col($spacing-4);
-  }
-
-  &__content {
-    &--link {
-      color: $color-brand-primary;
-      @include flex-row($spacing-4);
-
-      &:hover {
-        color: $color-brand-primary-hover;
+      @include tablet {
+        flex-wrap: nowrap;
       }
     }
   }
 
-  &__actions {
-    flex: 1 1 100%;
-    @include flex-row-between($spacing-16);
+  .list-header,
+  .list-body {
+    &__item {
+      @include tablet {
+        &--item-name {
+          flex: 1 1 20%;
+          order: 1;
+        }
+
+        &--status {
+          flex: 1 1 30%;
+          order: 3;
+        }
+
+        &--category {
+          flex: 1 1 20%;
+          order: 2;
+        }
+
+        &--quantity {
+          flex: 1 1 20%;
+          order: 4;
+        }
+
+        // &--actions {
+        //   flex: 1 1 10%;
+        //   order: 5;
+        //   @include flex-row($spacing-8);
+        // }
+      }
+    }
   }
 }
