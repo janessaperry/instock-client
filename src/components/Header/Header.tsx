@@ -1,5 +1,5 @@
 // Libraries
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useMatch } from "react-router-dom";
 
 // Assets
 import InStockLogo from "../../assets/logo/InStock-logo.svg";
@@ -8,6 +8,9 @@ import InStockLogo from "../../assets/logo/InStock-logo.svg";
 import "./Header.scss";
 
 function Header() {
+  const isWarehousesActive = useMatch("/warehouses/*");
+  const isInventoryActive = useMatch("/inventory/*");
+
   return (
     <header className="header">
       <Link to="/">
@@ -16,12 +19,18 @@ function Header() {
       <nav className="header__nav">
         <ul className="header__nav-list">
           <li className="header__nav-item">
-            <NavLink to="/" className="header__nav-link">
+            <NavLink
+              to="/warehouses"
+              className={`header__nav-link ${isWarehousesActive && "active"}`}
+            >
               Warehouses
             </NavLink>
           </li>
           <li className="header__nav-item">
-            <NavLink to="/inventory" className="header__nav-link">
+            <NavLink
+              to="/inventory"
+              className={`header__nav-link ${isInventoryActive && "active"}`}
+            >
               Inventory
             </NavLink>
           </li>

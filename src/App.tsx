@@ -1,5 +1,5 @@
 // Libraries
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // Pages
 import WarehousesPage from "./pages/WarehousesPage/WarehousesPage";
@@ -26,22 +26,23 @@ function App() {
         <Header />
         <main className="app__main">
           <Routes>
+            <Route path="/" element={<Navigate to="/warehouses" replace />} />
             <Route
-              path="/"
+              path="/warehouses"
               element={<WarehousesPage baseApiUrl={baseApiUrl} />}
             />
             <Route
-              path="/:warehouseId"
+              path="/warehouses/:warehouseId"
               element={<WarehouseDetailsPage baseApiUrl={baseApiUrl} />}
             ></Route>
             <Route
-              path="/add"
+              path="/warehouses/add"
               element={
                 <WarehouseFormPage baseApiUrl={baseApiUrl} editMode={false} />
               }
             ></Route>
             <Route
-              path="/:warehouseId/edit"
+              path="/warehouses/:warehouseId/edit"
               element={
                 <WarehouseFormPage baseApiUrl={baseApiUrl} editMode={true} />
               }

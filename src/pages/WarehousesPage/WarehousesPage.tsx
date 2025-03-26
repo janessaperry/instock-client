@@ -81,7 +81,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
           <Button
             className="btn--primary"
             label="Add New Warehouse"
-            handleClick={() => navigate("/add")}
+            handleClick={() => navigate("/warehouses/add")}
           />
         }
       />
@@ -126,7 +126,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                 <ListBodyLink
                   className="list-body__item--warehouse-name"
                   title="Warehouse"
-                  linkTo={`/${warehouse.id}`}
+                  linkTo={`/warehouses/${warehouse.id}`}
                   content={warehouse.warehouse_name}
                 />
 
@@ -154,7 +154,7 @@ function WarehousesPage({ baseApiUrl }: WarehousesPageProps) {
                 <ListBodyActions
                   className="list-body__item--actions"
                   onDelete={() => handleModalOpen(warehouse)}
-                  onEdit={() => navigate(`/${warehouse.id}/edit`)}
+                  onEdit={() => navigate(`/warehouses/${warehouse.id}/edit`)}
                 />
               </div>
             );

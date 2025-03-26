@@ -82,7 +82,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
     try {
       await axios.post(`${baseApiUrl}/warehouses/add`, newWarehouse);
       alert("Warehouse added!");
-      navigate("/");
+      navigate("/warehouses");
     } catch (error) {
       console.error(`Error adding new warehouse: ${error}`);
     }
@@ -95,7 +95,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
         updatedWarehouse
       );
       alert("Warehouse edited!");
-      navigate("/");
+      navigate("/warehouses");
     } catch (error) {
       console.error(`Error editing warehouse ${warehouseId}: ${error}`);
     }

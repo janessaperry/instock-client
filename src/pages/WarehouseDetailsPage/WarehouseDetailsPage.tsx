@@ -126,7 +126,7 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
             label="Edit"
             icon={<EditIcon color="white" size="20" />}
             className="btn--primary btn--hide-label-mobile"
-            handleClick={() => navigate(`/${warehouse.id}/edit`)}
+            handleClick={() => navigate(`/warehouses/${warehouse.id}/edit`)}
           />
         }
       />
