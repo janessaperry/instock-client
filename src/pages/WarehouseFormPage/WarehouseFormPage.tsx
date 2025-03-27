@@ -1,12 +1,14 @@
 // Libraries
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { createPortal } from "react-dom";
 import axios from "axios";
 
 // Components
 import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText/InputText";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
+import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
 import { ArrowBackIcon } from "../../components/Icons/Icons";
 
 // Types
@@ -23,6 +25,7 @@ interface WarehousesFormPageProps {
 function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
   const navigate = useNavigate();
   const { warehouseId } = useParams();
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
   const [existingWarehouseDetails, setExistingWarehouseDetails] =
     useState<WarehouseDetails>({} as WarehouseDetails);
 
@@ -81,8 +84,9 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
   const addNewWarehouse = async (newWarehouse: Object) => {
     try {
       await axios.post(`${baseApiUrl}/warehouses/add`, newWarehouse);
-      alert("Warehouse added!");
-      navigate("/warehouses");
+      // alert("Warehouse added!");
+      setShowSuccessModal(true);
+      // navigate("/warehouses");
     } catch (error) {
       console.error(`Error adding new warehouse: ${error}`);
     }
@@ -94,8 +98,9 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
         `${baseApiUrl}/warehouses/${warehouseId}/edit`,
         updatedWarehouse
       );
-      alert("Warehouse edited!");
-      navigate("/warehouses");
+      // alert("Warehouse edited!");
+      setShowSuccessModal(true);
+      // navigate("/warehouses");
     } catch (error) {
       console.error(`Error editing warehouse ${warehouseId}: ${error}`);
     }
@@ -244,6 +249,16 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
           />
         </div>
       </form>
+      {showSuccessModal &&
+        createPortal(
+          <ModalSuccess
+            showSuccessModal={showSuccessModal}
+            setShowSuccessModal={setShowSuccessModal}
+            onDone={() => navigate("/warehouses")}
+          />,
+          document.querySelector<HTMLElement>(".form-container") ||
+            document.body
+        )}
     </div>
   );
 }
