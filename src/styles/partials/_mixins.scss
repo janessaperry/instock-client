@@ -105,18 +105,16 @@
   }
 }
 
-// @mixin container-compact {
-@mixin container-padding-compact {
+@mixin container-padding-sm-y {
   & {
     padding: $spacing-16;
   }
 
   @include tablet {
-    padding: $spacing-32;
+    padding: $spacing-16 $spacing-32;
   }
 }
 
-// @mixin container {
 @mixin container-padding {
   & {
     padding: $spacing-24 $spacing-16;

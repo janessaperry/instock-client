@@ -11,7 +11,7 @@
 
 .warehouse-details {
   @include flex-col($spacing-24);
-  @include container-padding-compact;
+  @include container-padding;
 
   &__info-wrapper {
     @include flex-row($spacing-16);
