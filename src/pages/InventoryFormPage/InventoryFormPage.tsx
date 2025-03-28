@@ -1,6 +1,7 @@
 // Libraries
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { createPortal } from "react-dom";
 import axios from "axios";
 
 // Components
@@ -10,6 +11,7 @@ import InputText from "../../components/InputText/InputText";
 import InputTextarea from "../../components/InputTextarea/InputTextarea";
 import InputDropdown from "../../components/InputDropdown/InputDropdown";
 import InputRadio from "../../components/InputRadio/InputRadio";
+import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
 import { ArrowBackIcon } from "../../components/Icons/Icons";
 
 // Types
@@ -22,8 +24,6 @@ import {
 
 // Styles
 import "./InventoryFormPage.scss";
-import { createPortal } from "react-dom";
-import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
 
 interface InventoryFormPageProps {
   baseApiUrl: string;
@@ -80,7 +80,6 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
         `${baseApiUrl}/inventories/${inventoryId}`
       );
       const itemData = response.data;
-      // console.log("ITEMDATA:", itemData);
       setExistingItemDetails(itemData);
       setFormData(formDataObject(itemData));
     } catch (error) {
@@ -208,9 +207,6 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
     editMode
       ? await editExistingItem(itemDetails)
       : await addNewItem(itemDetails);
-
-    // alert("Saved!");
-    // navigate(`/inventory`);
   };
 
   useEffect(() => {
