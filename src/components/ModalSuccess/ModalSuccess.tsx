@@ -20,6 +20,7 @@ function ModalSuccess({
     setShowSuccessModal(false);
     onDone();
   };
+
   return (
     <div className="modal">
       <div className="modal__content-wrapper">
@@ -27,6 +28,7 @@ function ModalSuccess({
           className={`modal__progress ${
             showSuccessModal ? "modal__progress--animate" : ""
           }`}
+          onAnimationEnd={handleDone}
         ></div>
         <div className="modal__content">
           <header className="modal__header">
