@@ -145,3 +145,72 @@
     border-color: $color-brand-primary;
   }
 }
+
+@mixin base-modal {
+  & {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color-background-dark, 60%);
+    backdrop-filter: blur(0.25rem);
+    @include flex-col;
+
+    &__content-wrapper {
+      background-color: $color-light-primary;
+      border-radius: $radius-4;
+      overflow: hidden;
+      flex-grow: 1;
+      @include flex-col;
+
+      @include tablet {
+        flex-grow: 0;
+        max-width: 80vw;
+        width: 100%;
+        margin: 11rem auto $spacing-64;
+      }
+    }
+
+    &__close-btn {
+      align-self: flex-end;
+    }
+
+    &__header {
+      @include flex-row-between($spacing-16);
+      @include container-padding;
+    }
+
+    &__title {
+      flex-grow: 1;
+    }
+
+    &__body {
+      flex-grow: 1;
+      @include container-padding;
+    }
+
+    &__message {
+      @include body-large;
+    }
+
+    &__footer {
+      background-color: $color-background-light;
+      @include flex-row($spacing-16);
+      @include container-padding-sm-y;
+
+      @include tablet {
+        justify-content: flex-end;
+      }
+
+      & .btn {
+        flex-grow: 1;
+
+        @include tablet {
+          flex-grow: 0;
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+}

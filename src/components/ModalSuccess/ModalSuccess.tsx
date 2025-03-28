@@ -1,5 +1,5 @@
 // Libraries
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 // Components
 import Button from "../Button/Button";
@@ -12,8 +12,8 @@ interface ModalSuccessProps {
   type: "warehouse" | "inventory item";
   nameValue: string;
   editMode: boolean;
-  showSuccessModal: boolean;
-  setShowSuccessModal: React.Dispatch<React.SetStateAction<boolean>>;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   onDone: () => void;
 }
 
@@ -21,14 +21,14 @@ function ModalSuccess({
   type,
   nameValue,
   editMode,
-  showSuccessModal,
-  setShowSuccessModal,
+  showModal,
+  setShowModal,
   onDone,
 }: ModalSuccessProps) {
-  const handleClose = () => {
-    setShowSuccessModal(false);
+  const handleClose = useCallback(() => {
+    setShowModal(false);
     onDone();
-  };
+  }, [onDone]);
 
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
@@ -40,19 +40,20 @@ function ModalSuccess({
     document.addEventListener("keydown", handleEscapeKey);
 
     return () => {
-      document.removeEventListener("keydown", handleClose);
+      document.removeEventListener("keydown", handleEscapeKey);
     };
   }, [handleClose]);
 
   return (
-    <div className="modal">
+    <div className="modal modal--success">
       <div className="modal__content-wrapper">
         <div
           className={`modal__progress ${
-            showSuccessModal ? "modal__progress--animate" : ""
+            showModal ? "modal__progress--animate" : ""
           }`}
           onAnimationEnd={handleClose}
         ></div>
+
         <div className="modal__content">
           <header className="modal__header">
             <h2 className="modal__title">Success!</h2>
