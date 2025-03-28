@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Components
-import Modal from "../../components/Modal/Modal";
+import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import Loading from "../../components/Loading/Loading";
 import Button from "../../components/Button/Button";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
@@ -183,7 +183,7 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
 
       {showModal &&
         createPortal(
-          <Modal
+          <ModalConfirm
             setShowModal={setShowModal}
             setDeleted={setDeletedItem}
             handleDelete={handleDelete}

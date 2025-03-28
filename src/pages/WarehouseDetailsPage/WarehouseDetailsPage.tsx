@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 // Components
-import Modal from "../../components/Modal/Modal";
+import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import Button from "../../components/Button/Button";
 import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
@@ -238,7 +238,7 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
       </section>
       {showModal &&
         createPortal(
-          <Modal
+          <ModalConfirm
             setShowModal={setShowModal}
             setDeleted={setDeletedItem}
             handleDelete={handleDelete}

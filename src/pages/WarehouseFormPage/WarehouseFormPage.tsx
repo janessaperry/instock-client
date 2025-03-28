@@ -25,7 +25,7 @@ interface WarehousesFormPageProps {
 function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
   const navigate = useNavigate();
   const { warehouseId } = useParams();
-  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [existingWarehouseDetails, setExistingWarehouseDetails] =
     useState<WarehouseDetails>({} as WarehouseDetails);
 
@@ -84,7 +84,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
   const addNewWarehouse = async (newWarehouse: Object) => {
     try {
       await axios.post(`${baseApiUrl}/warehouses/add`, newWarehouse);
-      setShowSuccessModal(true);
+      setShowModal(true);
     } catch (error) {
       console.error(`Error adding new warehouse: ${error}`);
     }
@@ -96,7 +96,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
         `${baseApiUrl}/warehouses/${warehouseId}/edit`,
         updatedWarehouse
       );
-      setShowSuccessModal(true);
+      setShowModal(true);
     } catch (error) {
       console.error(`Error editing warehouse ${warehouseId}: ${error}`);
     }
@@ -245,14 +245,14 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
           />
         </div>
       </form>
-      {showSuccessModal &&
+      {showModal &&
         createPortal(
           <ModalSuccess
             type={"warehouse"}
             nameValue={formData.warehouseName.value}
             editMode={editMode}
-            showSuccessModal={showSuccessModal}
-            setShowSuccessModal={setShowSuccessModal}
+            showModal={showModal}
+            setShowModal={setShowModal}
             onDone={() => navigate("/warehouses")}
           />,
           document.querySelector<HTMLElement>(".form-container") ||

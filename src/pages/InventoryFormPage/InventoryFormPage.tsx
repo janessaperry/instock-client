@@ -33,7 +33,7 @@ interface InventoryFormPageProps {
 function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
   const navigate = useNavigate();
   const { inventoryId } = useParams();
-  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [inventoryCategories, setInventoryCategories] = useState<OptionProps[]>(
     []
   );
@@ -90,7 +90,7 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
   const addNewItem = async (newItem: Object) => {
     try {
       await axios.post(`${baseApiUrl}/inventories/add`, newItem);
-      setShowSuccessModal(true);
+      setShowModal(true);
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
     }
@@ -102,7 +102,7 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
         `${baseApiUrl}/inventories/${inventoryId}/edit`,
         updatedItem
       );
-      setShowSuccessModal(true);
+      setShowModal(true);
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
     }
@@ -303,14 +303,14 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
           />
         </div>
       </form>
-      {showSuccessModal &&
+      {showModal &&
         createPortal(
           <ModalSuccess
             type={"inventory item"}
             nameValue={formData.itemName.value}
             editMode={editMode}
-            showSuccessModal={showSuccessModal}
-            setShowSuccessModal={setShowSuccessModal}
+            showModal={showModal}
+            setShowModal={setShowModal}
             onDone={() => navigate("/inventory")}
           />,
           document.querySelector(".form-container") || document.body
