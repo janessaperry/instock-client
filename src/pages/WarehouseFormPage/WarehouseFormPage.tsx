@@ -252,6 +252,9 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
       {showSuccessModal &&
         createPortal(
           <ModalSuccess
+            type={"warehouse"}
+            nameValue={formData.warehouseName.value}
+            editMode={editMode}
             showSuccessModal={showSuccessModal}
             setShowSuccessModal={setShowSuccessModal}
             onDone={() => navigate("/warehouses")}

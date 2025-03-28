@@ -1,3 +1,6 @@
+// Libraries
+import { useEffect } from "react";
+
 // Components
 import Button from "../Button/Button";
 import { CloseIcon } from "../Icons/Icons";
@@ -6,20 +9,40 @@ import { CloseIcon } from "../Icons/Icons";
 import "./ModalSuccess.scss";
 
 interface ModalSuccessProps {
+  type: "warehouse" | "inventory item";
+  nameValue: string;
+  editMode: boolean;
   showSuccessModal: boolean;
   setShowSuccessModal: React.Dispatch<React.SetStateAction<boolean>>;
   onDone: () => void;
 }
 
 function ModalSuccess({
+  type,
+  nameValue,
+  editMode,
   showSuccessModal,
   setShowSuccessModal,
   onDone,
 }: ModalSuccessProps) {
-  const handleDone = () => {
+  const handleClose = () => {
     setShowSuccessModal(false);
     onDone();
   };
+
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscapeKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleClose);
+    };
+  }, [handleClose]);
 
   return (
     <div className="modal">
@@ -28,7 +51,7 @@ function ModalSuccess({
           className={`modal__progress ${
             showSuccessModal ? "modal__progress--animate" : ""
           }`}
-          onAnimationEnd={handleDone}
+          onAnimationEnd={handleClose}
         ></div>
         <div className="modal__content">
           <header className="modal__header">
@@ -36,13 +59,15 @@ function ModalSuccess({
             <Button
               icon={<CloseIcon />}
               className="btn--icon modal__close-btn"
-              handleClick={handleDone}
+              handleClick={handleClose}
             />
           </header>
 
           <section className="modal__body">
             <p className="modal__message modal__message--success">
-              Warehouse / Inventory successfully updated / saved!
+              {`${nameValue} ${type} successfully ${
+                editMode ? "updated" : "created"
+              }!`}
             </p>
           </section>
 
@@ -50,7 +75,7 @@ function ModalSuccess({
             <Button
               className="btn btn--primary"
               label="Done"
-              handleClick={handleDone}
+              handleClick={handleClose}
             />
           </footer>
         </div>
