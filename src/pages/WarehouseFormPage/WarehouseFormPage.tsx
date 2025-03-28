@@ -84,9 +84,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
   const addNewWarehouse = async (newWarehouse: Object) => {
     try {
       await axios.post(`${baseApiUrl}/warehouses/add`, newWarehouse);
-      // alert("Warehouse added!");
       setShowSuccessModal(true);
-      // navigate("/warehouses");
     } catch (error) {
       console.error(`Error adding new warehouse: ${error}`);
     }
@@ -98,9 +96,7 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
         `${baseApiUrl}/warehouses/${warehouseId}/edit`,
         updatedWarehouse
       );
-      // alert("Warehouse edited!");
       setShowSuccessModal(true);
-      // navigate("/warehouses");
     } catch (error) {
       console.error(`Error editing warehouse ${warehouseId}: ${error}`);
     }

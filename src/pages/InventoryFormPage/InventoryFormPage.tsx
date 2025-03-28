@@ -1,5 +1,5 @@
 // Libraries
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -22,6 +22,8 @@ import {
 
 // Styles
 import "./InventoryFormPage.scss";
+import { createPortal } from "react-dom";
+import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
 
 interface InventoryFormPageProps {
   baseApiUrl: string;
@@ -31,6 +33,7 @@ interface InventoryFormPageProps {
 function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
   const navigate = useNavigate();
   const { inventoryId } = useParams();
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
   const [inventoryCategories, setInventoryCategories] = useState<OptionProps[]>(
     []
   );
@@ -87,11 +90,8 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
   const addNewItem = async (newItem: Object) => {
     try {
-      const response = await axios.post(
-        `${baseApiUrl}/inventories/add`,
-        newItem
-      );
-      console.log(response);
+      await axios.post(`${baseApiUrl}/inventories/add`, newItem);
+      setShowSuccessModal(true);
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
     }
@@ -103,6 +103,7 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
         `${baseApiUrl}/inventories/${inventoryId}/edit`,
         updatedItem
       );
+      setShowSuccessModal(true);
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
     }
@@ -208,8 +209,8 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
       ? await editExistingItem(itemDetails)
       : await addNewItem(itemDetails);
 
-    alert("Saved!");
-    navigate(`/inventory`);
+    // alert("Saved!");
+    // navigate(`/inventory`);
   };
 
   useEffect(() => {
@@ -306,6 +307,18 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
           />
         </div>
       </form>
+      {showSuccessModal &&
+        createPortal(
+          <ModalSuccess
+            type={"inventory item"}
+            nameValue={formData.itemName.value}
+            editMode={editMode}
+            showSuccessModal={showSuccessModal}
+            setShowSuccessModal={setShowSuccessModal}
+            onDone={() => navigate("/inventory")}
+          />,
+          document.querySelector(".form-container") || document.body
+        )}
     </div>
   );
 }
