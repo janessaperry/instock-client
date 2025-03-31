@@ -58,7 +58,8 @@ export class ApiService implements IApiService {
     try {
       await axios.put(`${baseApiUrl}/${endpoint}/${id}/edit`, data);
     } catch (error: any) {
-      throw new Error(errorMessageMap[endpoint][error.status]);
+      const route = errorMessageMap[endpoint] ? endpoint : "default";
+      throw new Error(errorMessageMap[route][error.status]);
     }
   }
 
@@ -80,5 +81,15 @@ export class ApiService implements IApiService {
     }
   }
 
-  //add getInventoryByWarehouse
+  async getInventoryByWarehouseId(endpoint: string, id: number) {
+    try {
+      const response = await axios.get(
+        `${baseApiUrl}/${endpoint}/${id}/inventories`
+      );
+      return response.data;
+    } catch (error: any) {
+      const route = errorMessageMap[endpoint] ? endpoint : "default";
+      throw new Error(errorMessageMap[route][error.status]);
+    }
+  }
 }

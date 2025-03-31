@@ -2,11 +2,11 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 
 // Components
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
 import Button from "../../components/Button/Button";
+import Error from "../../components/Error/Error";
 import Loading from "../../components/Loading/Loading";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import ListHeaderItem from "../../components/ListHeaderItem/ListHeaderItem";
@@ -22,15 +22,12 @@ import {
   SortIcon,
 } from "../../components/Icons/Icons";
 
-// Types
+// Types & Services
+import { ApiService } from "../../api/apiService";
 import { DeletedRecordProps } from "../../types";
 
 // Styles
 import "./WarehouseDetailsPage.scss";
-
-interface WarehouseDetailsPageProps {
-  baseApiUrl: string;
-}
 
 interface Warehouse {
   id: number;
@@ -52,8 +49,11 @@ interface Inventory {
   quantity: number;
 }
 
-function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
+function WarehouseDetailsPage() {
+  const apiService = new ApiService();
   const { warehouseId } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [deletedItem, setDeletedItem] = useState<DeletedRecordProps | null>(
     null
@@ -64,36 +64,39 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
 
   const getWarehouseDetails = async () => {
     try {
-      const response = await axios.get(
-        `${baseApiUrl}/warehouses/${warehouseId}`
-      );
-      setWarehouse(response.data);
-    } catch (error) {
-      console.error(`Error fetching warehouse details: ${error}`);
+      const data = await apiService.getById("warehouses", Number(warehouseId));
+      setWarehouse(data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getInventoryByWarehouse = async () => {
     try {
-      const response = await axios.get(
-        `${baseApiUrl}/warehouses/${warehouseId}/inventories`
+      const data = await apiService.getInventoryByWarehouseId(
+        "warehouses",
+        Number(warehouseId)
       );
-      setInventory(response.data);
-    } catch (error) {
-      console.error(`Error fetching inventory by warehouse: ${error}`);
+      setInventory(data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${baseApiUrl}/inventories/${deletedItem?.id}`);
+      await apiService.delete("inventories", deletedItem!.id);
       await getInventoryByWarehouse();
       setShowModal(false);
       setDeletedItem(null);
-    } catch (error) {
-      console.error(
-        `Error deleting inventory item ${deletedItem?.id}: ${error}`
-      );
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -110,9 +113,8 @@ function WarehouseDetailsPage({ baseApiUrl }: WarehouseDetailsPageProps) {
     getInventoryByWarehouse();
   }, [warehouseId]);
 
-  if (!Object.keys(warehouse).length) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
     <div className="warehouse-container">
