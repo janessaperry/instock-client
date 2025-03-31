@@ -1,0 +1,26 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.error-container {
+  @include content-container;
+  height: 50vh;
+  @include flex-col;
+}
+
+.error-body {
+  @include flex-col($spacing-16);
+  @include container-padding;
+
+  &__message {
+    @include body-large;
+  }
+
+  &__btn {
+    @include tablet {
+      min-width: min-content;
+      max-width: 16%;
+      width: 100%;
+      align-self: flex-start;
+    }
+  }
+}
