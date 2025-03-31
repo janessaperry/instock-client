@@ -2,29 +2,33 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createPortal } from "react-dom";
-import axios from "axios";
 
 // Components
 import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText/InputText";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
 import { ArrowBackIcon } from "../../components/Icons/Icons";
 
-// Types
+// Types & Services
+import { ApiService } from "../../api/apiService";
 import { WarehouseDetails, WarehouseFormData } from "../../types";
 
 // Styles
 import "./WarehouseFormPage.scss";
 
 interface WarehousesFormPageProps {
-  baseApiUrl: string;
   editMode: boolean;
 }
 
-function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
+function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
+  const apiService = new ApiService();
   const navigate = useNavigate();
   const { warehouseId } = useParams();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [existingWarehouseDetails, setExistingWarehouseDetails] =
     useState<WarehouseDetails>({} as WarehouseDetails);
@@ -70,35 +74,38 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
 
   const getWarehouseDetails = async () => {
     try {
-      const response = await axios.get(
-        `${baseApiUrl}/warehouses/${warehouseId}`
-      );
-      const warehouseDetailsData = response.data;
+      const data = await apiService.getById("warehouses", Number(warehouseId));
+      const warehouseDetailsData = data;
       setExistingWarehouseDetails(warehouseDetailsData);
       setFormData(formDataObject(warehouseDetailsData));
-    } catch (error) {
-      console.error(`Error fetching warehouse details: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
     }
   };
 
   const addNewWarehouse = async (newWarehouse: Object) => {
     try {
-      await axios.post(`${baseApiUrl}/warehouses/add`, newWarehouse);
+      await apiService.add("warehouses", newWarehouse);
       setShowModal(true);
-    } catch (error) {
-      console.error(`Error adding new warehouse: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const editExistingWarehouse = async (updatedWarehouse: Object) => {
     try {
-      await axios.put(
-        `${baseApiUrl}/warehouses/${warehouseId}/edit`,
+      await apiService.edit(
+        "warehouses",
+        Number(warehouseId),
         updatedWarehouse
       );
       setShowModal(true);
-    } catch (error) {
-      console.error(`Error editing warehouse ${warehouseId}: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -152,7 +159,11 @@ function WarehouseFormPage({ baseApiUrl, editMode }: WarehousesFormPageProps) {
 
   useEffect(() => {
     editMode && getWarehouseDetails();
+    setIsLoading(false);
   }, [warehouseId]);
+
+  if (isLoading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
     <div className="form-container">
