@@ -15,6 +15,7 @@ import { SortIcon } from "../../components/Icons/Icons";
 import {
   ListBodyActions,
   ListBodyChip,
+  ListBodyEmpty,
   ListBodyLink,
   ListBodyText,
 } from "../../components/ListBodyItem/ListBodyItem";
@@ -142,49 +143,53 @@ function InventoryPage() {
         </div>
 
         <div className="list-body">
-          {inventories.map((item) => {
-            return (
-              <div key={item.id} className="list-body__row">
-                <ListBodyLink
-                  className="list-body__item--item-name"
-                  title="Inventory Item"
-                  content={item.item_name}
-                  linkTo={`/inventory/${item.id}`}
-                />
+          {inventories.length === 0 ? (
+            <ListBodyEmpty item="inventory" />
+          ) : (
+            inventories.map((item) => {
+              return (
+                <div key={item.id} className="list-body__row">
+                  <ListBodyLink
+                    className="list-body__item--item-name"
+                    title="Inventory Item"
+                    content={item.item_name}
+                    linkTo={`/inventory/${item.id}`}
+                  />
 
-                <ListBodyChip
-                  className="list-body__item--status"
-                  title="Status"
-                  count={item.quantity}
-                  content={item.status}
-                />
+                  <ListBodyChip
+                    className="list-body__item--status"
+                    title="Status"
+                    count={item.quantity}
+                    content={item.status}
+                  />
 
-                <ListBodyText
-                  className="list-body__item--category"
-                  title="Category"
-                  content={item.category}
-                />
+                  <ListBodyText
+                    className="list-body__item--category"
+                    title="Category"
+                    content={item.category}
+                  />
 
-                <ListBodyText
-                  className="list-body__item--quantity"
-                  title="Qty"
-                  content={`${item.quantity}`}
-                />
+                  <ListBodyText
+                    className="list-body__item--quantity"
+                    title="Qty"
+                    content={`${item.quantity}`}
+                  />
 
-                <ListBodyText
-                  className="list-body__item--warehouse"
-                  title="Warehouse"
-                  content={`${item.warehouse_name}`}
-                />
+                  <ListBodyText
+                    className="list-body__item--warehouse"
+                    title="Warehouse"
+                    content={`${item.warehouse_name}`}
+                  />
 
-                <ListBodyActions
-                  className="list-body__item--actions"
-                  onDelete={() => handleModalOpen(item)}
-                  onEdit={() => navigate(`/inventory/${item.id}/edit`)}
-                />
-              </div>
-            );
-          })}
+                  <ListBodyActions
+                    className="list-body__item--actions"
+                    onDelete={() => handleModalOpen(item)}
+                    onEdit={() => navigate(`/inventory/${item.id}/edit`)}
+                  />
+                </div>
+              );
+            })
+          )}
         </div>
       </section>
 

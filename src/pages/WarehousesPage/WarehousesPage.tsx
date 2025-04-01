@@ -13,6 +13,7 @@ import Error from "../../components/Error/Error";
 import ListHeaderItem from "../../components/ListHeaderItem/ListHeaderItem";
 import {
   ListBodyActions,
+  ListBodyEmpty,
   ListBodyLink,
   ListBodyText,
 } from "../../components/ListBodyItem/ListBodyItem";
@@ -122,45 +123,50 @@ function WarehousesPage() {
         </div>
 
         <div className="list-body">
-          {warehouses.map((warehouse) => {
-            return (
-              <div key={warehouse.id} className="list-body__row">
-                <ListBodyLink
-                  className="list-body__item--warehouse-name"
-                  title="Warehouse"
-                  linkTo={`/warehouses/${warehouse.id}`}
-                  content={warehouse.warehouse_name}
-                />
+          {warehouses.length === 0 ? (
+            <ListBodyEmpty item="warehouses" />
+          ) : (
+            warehouses.length > 0 &&
+            warehouses.map((warehouse) => {
+              return (
+                <div key={warehouse.id} className="list-body__row">
+                  <ListBodyLink
+                    className="list-body__item--warehouse-name"
+                    title="Warehouse"
+                    linkTo={`/warehouses/${warehouse.id}`}
+                    content={warehouse.warehouse_name}
+                  />
 
-                <ListBodyText
-                  className="list-body__item--contact-name"
-                  title="Contact Name"
-                  content={warehouse.contact_name}
-                />
+                  <ListBodyText
+                    className="list-body__item--contact-name"
+                    title="Contact Name"
+                    content={warehouse.contact_name}
+                  />
 
-                <ListBodyText
-                  className="list-body__item--address"
-                  title="Address"
-                  content={`${warehouse.address}, ${warehouse.city}, ${warehouse.country}`}
-                />
+                  <ListBodyText
+                    className="list-body__item--address"
+                    title="Address"
+                    content={`${warehouse.address}, ${warehouse.city}, ${warehouse.country}`}
+                  />
 
-                <ListBodyText
-                  className="list-body__item--contact-info"
-                  title="Contact Information"
-                  content={[
-                    `${warehouse.contact_phone}`,
-                    `${warehouse.contact_email}`,
-                  ]}
-                />
+                  <ListBodyText
+                    className="list-body__item--contact-info"
+                    title="Contact Information"
+                    content={[
+                      `${warehouse.contact_phone}`,
+                      `${warehouse.contact_email}`,
+                    ]}
+                  />
 
-                <ListBodyActions
-                  className="list-body__item--actions"
-                  onDelete={() => handleModalOpen(warehouse)}
-                  onEdit={() => navigate(`/warehouses/${warehouse.id}/edit`)}
-                />
-              </div>
-            );
-          })}
+                  <ListBodyActions
+                    className="list-body__item--actions"
+                    onDelete={() => handleModalOpen(warehouse)}
+                    onEdit={() => navigate(`/warehouses/${warehouse.id}/edit`)}
+                  />
+                </div>
+              );
+            })
+          )}
         </div>
       </section>
 

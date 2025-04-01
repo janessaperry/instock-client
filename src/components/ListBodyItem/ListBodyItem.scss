@@ -59,4 +59,13 @@
       }
     }
   }
+
+  &__empty {
+    border-top: 1px solid $color-border-primary;
+    @include container-padding;
+
+    &-msg {
+      @include body-large;
+    }
+  }
 }

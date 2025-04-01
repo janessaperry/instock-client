@@ -6,7 +6,7 @@
 }
 
 .inventory-header {
-  @include flex-row-between($spacing-16);
+  @include flex-row($spacing-16);
 }
 
 .item-details {

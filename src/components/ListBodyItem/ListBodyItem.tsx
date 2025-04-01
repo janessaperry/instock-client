@@ -108,4 +108,18 @@ function ListBodyActions({
   );
 }
 
-export { ListBodyLink, ListBodyText, ListBodyChip, ListBodyActions };
+function ListBodyEmpty({ item }: { item: string }) {
+  return (
+    <div className={`list-body__empty`}>
+      <p className="list-body__empty-msg">{`No ${item} found.`}</p>
+    </div>
+  );
+}
+
+export {
+  ListBodyLink,
+  ListBodyText,
+  ListBodyChip,
+  ListBodyActions,
+  ListBodyEmpty,
+};
