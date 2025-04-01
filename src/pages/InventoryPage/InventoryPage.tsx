@@ -2,10 +2,10 @@
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 // Components
 import ModalConfirm from "../../components/ModalConfirm/ModalConfirm";
+import Error from "../../components/Error/Error";
 import Loading from "../../components/Loading/Loading";
 import Button from "../../components/Button/Button";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
@@ -19,15 +19,12 @@ import {
   ListBodyText,
 } from "../../components/ListBodyItem/ListBodyItem";
 
-// Types
+// Types & Services
+import { ApiService } from "../../api/apiService";
 import { DeletedRecordProps } from "../../types";
 
 // Styles
 import "./InventoryPage.scss";
-
-interface InventoryPageProps {
-  baseApiUrl: string;
-}
 
 interface Inventory {
   id: number;
@@ -37,7 +34,9 @@ interface Inventory {
   status: string;
   quantity: number;
 }
-function InventoryPage({ baseApiUrl }: InventoryPageProps) {
+
+function InventoryPage() {
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [deletedItem, setDeletedItem] = useState<DeletedRecordProps | null>(
@@ -46,24 +45,31 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
   const [inventories, setInventories] = useState<Inventory[]>([]);
   const navigate = useNavigate();
 
+  const apiService = new ApiService();
   const getAllInventories = async () => {
     try {
-      const response = await axios.get(`${baseApiUrl}/inventories`);
-      setInventories(response.data);
+      const data = await apiService.getAll("inventories");
+      setInventories(data);
       setIsLoading(false);
-    } catch (error) {
-      console.error(`Error fetching inventories: ${error}`);
+    } catch (error: any) {
+      const message: string = error.message || "An unexpected error occurred";
+      setError(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async (itemId: number) => {
     try {
-      await axios.delete(`${baseApiUrl}/inventories/${itemId}`);
-      await getAllInventories();
+      await apiService.delete("inventories", itemId);
+      await apiService.getAll("inventories");
       setShowModal(false);
       setDeletedItem(null);
-    } catch (error) {
-      console.error(`Error deleting item ${itemId}: ${error}`);
+    } catch (error: any) {
+      const message: string = error.message || "An unexpected error occurred";
+      setError(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,6 +86,7 @@ function InventoryPage({ baseApiUrl }: InventoryPageProps) {
   }, []);
 
   if (isLoading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
     <div className="inventories-container">
