@@ -166,9 +166,13 @@
 
       @include tablet {
         flex-grow: 0;
-        max-width: 63.75rem;
+        max-width: calc(100% - $spacing-64);
         width: 100%;
         margin: 11rem auto $spacing-64;
+      }
+
+      @include desktop {
+        max-width: 63.75rem;
       }
     }
 
