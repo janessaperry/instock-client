@@ -1,50 +1,39 @@
-# React + TypeScript + Vite
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./src/assets/logo/InStock-Logo-Dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./src/assets/logo/InStock-Logo-Light.svg">
+  <img alt="InStock Logo" src="./src/assets/logo/InStock-Logo.svg">
+</picture>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# InStock Client
 
-Currently, two official plugins are available:
+A React + TypeScript warehouse and inventory management system built with Vite. This project was originally completed as a group assignment during my BrainStation bootcamp. I chose to rebuild it independently using TypeScript and PostgreSQL (hosted on Supabase) to deepen my understanding of all aspects of full-stack development, rather than just the components I worked on in the group project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Learning Objectives
 
-## Expanding the ESLint configuration
+- Practice TypeScript with React
+- Implement CRUD operations with a REST API
+- Build a responsive UI using SASS
+- Learn effective state management in React
+- Gain experience with form validation and error handling
+- Work with PostgreSQL and Supabase
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- Warehouse Management
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+  - View list of warehouses
+  - Add/Edit/Delete warehouses
+  - View warehouse details and associated inventory
+  - Search warehouses
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Inventory Management
+  - View all inventory items
+  - Add/Edit/Delete inventory items
+  - View item details
+  - Search inventory
+  - Track stock status and quantity
+  - Assign items to warehouses
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Tech Stack
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+[![My Skills](https://skillicons.dev/icons?i=react,ts,vite,sass,postgres,supabase)](https://skillicons.dev)
