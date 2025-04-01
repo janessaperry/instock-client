@@ -6,7 +6,12 @@
 
 # InStock Client
 
-A React + TypeScript warehouse and inventory management system built with Vite. This project was originally completed as a group assignment during my BrainStation bootcamp. I chose to rebuild it independently using TypeScript and PostgreSQL (hosted on Supabase) to deepen my understanding of all aspects of full-stack development, rather than just the components I worked on in the group project.
+A React + TypeScript warehouse and inventory management system built with Vite. 
+
+> **Note:** This project was originally completed as a group assignment during my BrainStation bootcamp. I chose to rebuild it independently using TypeScript and PostgreSQL (hosted on Supabase) to deepen my understanding of all aspects of full-stack development, rather than just the components I worked on in the group project.
+
+👉🏻 **[InStock Server Repository](https://github.com/janessaperry/instock-server)**
+
 
 ## Learning Objectives
 
