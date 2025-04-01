@@ -92,4 +92,14 @@ export class ApiService implements IApiService {
       throw new Error(errorMessageMap[route][error.status]);
     }
   }
+
+  async getCategories(endpoint: string) {
+    try {
+      const response = await axios.get(`${baseApiUrl}/${endpoint}/categories`);
+      return response.data;
+    } catch (error: any) {
+      const route = errorMessageMap[endpoint] ? endpoint : "default";
+      throw new Error(errorMessageMap[route][error.status]);
+    }
+  }
 }

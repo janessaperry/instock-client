@@ -14,7 +14,8 @@ import InputRadio from "../../components/InputRadio/InputRadio";
 import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
 import { ArrowBackIcon } from "../../components/Icons/Icons";
 
-// Types
+// Types & Services
+import { ApiService } from "../../api/apiService";
 import {
   FormDataProps,
   InventoryItemDetailsProps,
@@ -26,13 +27,15 @@ import {
 import "./InventoryFormPage.scss";
 
 interface InventoryFormPageProps {
-  baseApiUrl: string;
   editMode: boolean;
 }
 
-function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
+function InventoryFormPage({ editMode }: InventoryFormPageProps) {
+  const apiService = new ApiService();
   const navigate = useNavigate();
   const { inventoryId } = useParams();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [inventoryCategories, setInventoryCategories] = useState<OptionProps[]>(
     []
@@ -76,10 +79,8 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
   const getItemDetails = async () => {
     try {
-      const response = await axios.get(
-        `${baseApiUrl}/inventories/${inventoryId}`
-      );
-      const itemData = response.data;
+      const data = await apiService.getById("inventories", Number(inventoryId));
+      const itemData = data;
       setExistingItemDetails(itemData);
       setFormData(formDataObject(itemData));
     } catch (error) {
@@ -89,7 +90,7 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
   const addNewItem = async (newItem: Object) => {
     try {
-      await axios.post(`${baseApiUrl}/inventories/add`, newItem);
+      await apiService.add("inventories", newItem);
       setShowModal(true);
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
@@ -97,11 +98,9 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
   };
 
   const editExistingItem = async (updatedItem: Object) => {
+    console.log(updatedItem);
     try {
-      await axios.put(
-        `${baseApiUrl}/inventories/${inventoryId}/edit`,
-        updatedItem
-      );
+      await apiService.edit("inventories", Number(inventoryId), updatedItem);
       setShowModal(true);
     } catch (error) {
       console.error(`Error adding new inventory item: ${error}`);
@@ -123,8 +122,8 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
   const getWarehousesList = async () => {
     try {
-      const response = await axios.get(`${baseApiUrl}/warehouses`);
-      const list = response.data.map((warehouse: WarehouseDetails) => {
+      const data = await apiService.getAll("warehouses");
+      const list = data.map((warehouse: WarehouseDetails) => {
         return {
           id: `${warehouse.id}`,
           value: warehouse.warehouse_name,
@@ -138,8 +137,8 @@ function InventoryFormPage({ baseApiUrl, editMode }: InventoryFormPageProps) {
 
   const getInventoryCategories = async () => {
     try {
-      const response = await axios.get(`${baseApiUrl}/inventories/categories`);
-      setInventoryCategories(response.data);
+      const data = await apiService.getCategories("inventories");
+      setInventoryCategories(data);
     } catch (error) {
       console.error(`Error getting inventory categories: ${error}`);
     }
