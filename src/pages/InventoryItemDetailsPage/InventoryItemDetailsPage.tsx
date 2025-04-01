@@ -1,22 +1,19 @@
 // Libraries
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 
 // Components
+import Error from "../../components/Error/Error";
 import Loading from "../../components/Loading/Loading";
 import Button from "../../components/Button/Button";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import { ArrowBackIcon, EditIcon } from "../../components/Icons/Icons";
 
-// Types
+// Types & Services
+import { ApiService } from "../../api/apiService";
 
 // Styles
 import "./InventoryItemDetailsPage.scss";
-
-interface InventoryItemDetailsPageProps {
-  baseApiUrl: string;
-}
 
 interface InventoryItem {
   id: number;
@@ -28,22 +25,24 @@ interface InventoryItem {
   warehouseName: string;
 }
 
-function InventoryItemDetailsPage({
-  baseApiUrl,
-}: InventoryItemDetailsPageProps) {
+function InventoryItemDetailsPage() {
+  const apiService = new ApiService();
   const navigate = useNavigate();
   const { itemId } = useParams();
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [itemDetails, setItemDetails] = useState({} as InventoryItem);
 
   const getItemDetails = async () => {
     try {
-      const response = await axios.get(`${baseApiUrl}/inventories/${itemId}`);
-      console.log(response.data);
-      setItemDetails(response.data);
+      const data = await apiService.getById("inventories", Number(itemId));
+      setItemDetails(data);
       setIsLoading(false);
-    } catch (error) {
-      console.error(`Error fetching item details.`);
+    } catch (error: any) {
+      const message: string = error.message || "An unexpected error occurred";
+      setError(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -51,9 +50,8 @@ function InventoryItemDetailsPage({
     getItemDetails();
   }, [itemId]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
     <div className="inventory-container">
