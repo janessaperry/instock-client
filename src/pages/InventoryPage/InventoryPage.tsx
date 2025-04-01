@@ -93,7 +93,7 @@ function InventoryPage() {
     <div className="inventories-container">
       <ContainerHeader
         title="Inventory"
-        className="container-header--border-none"
+        className="container-header--border-none container-header--with-search"
         search={<InputSearch placeholder="Search..." />}
         button={
           <Button

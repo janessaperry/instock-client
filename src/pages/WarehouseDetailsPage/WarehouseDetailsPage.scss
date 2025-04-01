@@ -5,10 +5,6 @@
   @include content-container;
 }
 
-.warehouse-header {
-  @include flex-row($spacing-16);
-}
-
 .warehouse-details {
   @include flex-col($spacing-24);
   @include container-padding;

@@ -5,10 +5,6 @@
   @include content-container;
 }
 
-.inventory-header {
-  @include flex-row($spacing-16);
-}
-
 .item-details {
   @include flex-col($spacing-16);
   @include container-padding;

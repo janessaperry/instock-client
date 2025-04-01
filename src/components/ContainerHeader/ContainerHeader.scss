@@ -23,8 +23,13 @@
 
     @include tablet {
       @include flex-row($spacing-16);
-      flex-basis: 50%;
       justify-content: flex-end;
+    }
+  }
+
+  &--with-search &__actions {
+    @include tablet {
+      flex-basis: 50%;
     }
   }
 

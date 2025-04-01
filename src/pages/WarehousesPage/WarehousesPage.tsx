@@ -79,7 +79,7 @@ function WarehousesPage() {
     <div className="warehouses-container">
       <ContainerHeader
         title="Warehouses"
-        className="container-header--border-none"
+        className="container-header--border-none container-header--with-search"
         search={<InputSearch placeholder="Search..." />}
         button={
           <Button
