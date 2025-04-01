@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createPortal } from "react-dom";
-import axios from "axios";
 
 // Components
 import Button from "../../components/Button/Button";
@@ -12,6 +11,8 @@ import InputTextarea from "../../components/InputTextarea/InputTextarea";
 import InputDropdown from "../../components/InputDropdown/InputDropdown";
 import InputRadio from "../../components/InputRadio/InputRadio";
 import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
 import { ArrowBackIcon } from "../../components/Icons/Icons";
 
 // Types & Services
@@ -83,8 +84,10 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
       const itemData = data;
       setExistingItemDetails(itemData);
       setFormData(formDataObject(itemData));
-    } catch (error) {
-      console.error(`Error fetching inventory item details: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -92,18 +95,21 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
     try {
       await apiService.add("inventories", newItem);
       setShowModal(true);
-    } catch (error) {
-      console.error(`Error adding new inventory item: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const editExistingItem = async (updatedItem: Object) => {
-    console.log(updatedItem);
     try {
       await apiService.edit("inventories", Number(inventoryId), updatedItem);
       setShowModal(true);
-    } catch (error) {
-      console.error(`Error adding new inventory item: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -130,8 +136,10 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
         };
       });
       setWarehousesList(list);
-    } catch (error) {
-      console.error(`Error fetching warehouses: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -139,8 +147,10 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
     try {
       const data = await apiService.getCategories("inventories");
       setInventoryCategories(data);
-    } catch (error) {
-      console.error(`Error getting inventory categories: ${error}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -213,6 +223,9 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
     getInventoryCategories();
     editMode && getItemDetails();
   }, [inventoryId]);
+
+  if (isLoading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
     <div className="form-container">
