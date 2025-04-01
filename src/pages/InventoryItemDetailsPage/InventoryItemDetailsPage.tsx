@@ -56,6 +56,7 @@ function InventoryItemDetailsPage() {
   return (
     <div className="inventory-container">
       <ContainerHeader
+        className="inventory-header"
         title={itemDetails.itemName}
         prevBtn={
           <Button
@@ -66,10 +67,10 @@ function InventoryItemDetailsPage() {
         }
         button={
           <Button
-            icon={<EditIcon color="white" size="20" />}
-            className="btn--primary"
-            handleClick={() => navigate(`/inventory/${itemDetails.id}/edit`)}
             label="Edit"
+            icon={<EditIcon color="white" size="20" />}
+            className="btn--primary btn--hide-label-mobile"
+            handleClick={() => navigate(`/inventory/${itemDetails.id}/edit`)}
           />
         }
       />
