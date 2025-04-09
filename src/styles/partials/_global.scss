@@ -46,7 +46,9 @@ ol {
 
 button,
 input,
+label:has(input),
 textarea,
 select {
   font-family: inherit;
+  @include body-medium;
 }

@@ -14,16 +14,23 @@
     @include flex-row-between($spacing-16);
   }
 
+  &__placeholder {
+    @include body-medium;
+  }
+
   &__options {
-    position: absolute;
-    top: calc(100% + $spacing-4);
-    width: 100%;
-    background-color: $color-background-light;
-    border: 1px solid $color-border-primary;
-    border-radius: $radius-20;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba($color-background-dark, 0.1);
-    z-index: 1;
+    @include body-medium;
+    & {
+      position: absolute;
+      top: calc(100% + $spacing-4);
+      width: 100%;
+      background-color: $color-background-light;
+      border: 1px solid $color-border-primary;
+      border-radius: $radius-20;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba($color-background-dark, 0.1);
+      z-index: 1;
+    }
 
     &[aria-expanded="false"] {
       display: none;
