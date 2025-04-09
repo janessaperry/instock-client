@@ -9,3 +9,32 @@ export const convertSnakeToCamelCase = (string: string) => {
   return newString;
 };
 
+export const formatPhoneNumber = (value: string) => {
+  let trimmedValue = value.replace(/\D/g, "");
+
+  if (trimmedValue.length <= 1) return "+1 ";
+
+  if (trimmedValue.length <= 4) return `+1 (${trimmedValue.slice(1)}`;
+
+  if (trimmedValue.length <= 7)
+    return `+1 (${trimmedValue.slice(1, 4)}) ${trimmedValue.slice(4)}`;
+
+  if (trimmedValue.length > 7)
+    return `+1 (${trimmedValue.slice(1, 4)}) ${trimmedValue.slice(
+      4,
+      7
+    )}-${trimmedValue.slice(7)}`;
+
+  return trimmedValue;
+};
+
+export const setCursorPosition = (
+  cursorPosition: any | null,
+  start: number,
+  end: number
+) => {
+  cursorPosition.current = {
+    selectionStart: start,
+    selectionEnd: end,
+  };
+};

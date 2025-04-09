@@ -1,11 +1,12 @@
 // Libraries
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createPortal } from "react-dom";
 
 // Components
 import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText/InputText";
+import InputNumber from "../../components/InputNumber/InputNumber";
 import ContainerHeader from "../../components/ContainerHeader/ContainerHeader";
 import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
 import Loading from "../../components/Loading/Loading";
@@ -14,10 +15,16 @@ import { ArrowBackIcon } from "../../components/Icons/Icons";
 
 // Types & Services
 import { ApiService } from "../../api/apiService";
-import { WarehouseDetails, WarehouseFormData } from "../../types";
+import { WarehouseDetails, FormDataProps } from "../../types";
+import { formatPhoneNumber, setCursorPosition } from "../../utils/utils";
 
 // Styles
 import "./WarehouseFormPage.scss";
+import {
+  validateBlankFields,
+  validateEmail,
+  validatePhoneNumber,
+} from "../../utils/formValidation";
 
 interface WarehousesFormPageProps {
   editMode: boolean;
@@ -32,6 +39,11 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [existingWarehouseDetails, setExistingWarehouseDetails] =
     useState<WarehouseDetails>({} as WarehouseDetails);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const cursorPosition = useRef<any | null>({
+    selectionStart: 0,
+    selectionEnd: 0,
+  });
 
   const formDataObject = (warehouseObject: WarehouseDetails) => ({
     warehouseName: {
@@ -68,7 +80,7 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
     },
   });
 
-  const [formData, setFormData] = useState<WarehouseFormData>(
+  const [formData, setFormData] = useState<FormDataProps>(
     formDataObject(existingWarehouseDetails)
   );
 
@@ -110,36 +122,70 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: {
-        value: value,
-        hasError: false,
-      },
-    }));
+    const { name, value, selectionStart, selectionEnd } = e.target;
+
+    if (name === "contactPhone") {
+      const formattedValue = formatPhoneNumber(value);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        contactPhone: {
+          value: formattedValue,
+          hasError: false,
+        },
+      }));
+
+      const lengthDiff = formattedValue.length - value.length;
+      setCursorPosition(
+        cursorPosition,
+        selectionStart! + lengthDiff,
+        selectionEnd! + lengthDiff
+      );
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: {
+          value: value,
+          hasError: false,
+        },
+      }));
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.setSelectionRange(
+        cursorPosition.current.selectionStart,
+        cursorPosition.current.selectionEnd
+      );
+    }
+  }, [formData["contactPhone"].value]);
+
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const target = e.target;
+
+    if (!target.value) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        contactPhone: {
+          value: "+1 ",
+          hasError: false,
+        },
+      }));
+    }
   };
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let isValid = true;
-    Object.keys(formData).forEach((key) => {
-      if (formData[key].value.trim().length === 0) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [key]: {
-            ...prevFormData[key],
-            hasError: true,
-          },
-        }));
-        isValid = false;
-      }
-    });
+    isValid = validateBlankFields(formData, setFormData);
 
-    if (!isValid) {
-      return;
-    }
+    if (isValid)
+      isValid =
+        validatePhoneNumber(formData, setFormData) &&
+        validateEmail(formData, setFormData);
+
+    if (!isValid) return;
 
     const warehouseDetails = {
       warehouse_name: formData.warehouseName.value,
@@ -228,11 +274,15 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
             handleInputChange={handleInputChange}
           />
 
-          <InputText
+          <InputNumber
+            inputRef={inputRef}
             label="Phone Number"
+            placeholder="+1 (555) 555-5555"
+            maxLength={17}
             fieldName="contactPhone"
             formData={formData}
             handleInputChange={handleInputChange}
+            handleInputFocus={handleInputFocus}
           />
 
           <InputText
