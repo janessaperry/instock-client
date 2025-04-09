@@ -13,6 +13,7 @@ interface InputNumberProps {
   placeholder?: string;
   maxLength?: number;
   fieldName: string;
+  inputMode: "numeric" | "tel";
   formData: FormDataProps;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleInputFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -24,6 +25,7 @@ function InputNumber({
   placeholder,
   maxLength,
   fieldName,
+  inputMode,
   formData,
   handleInputChange,
   handleInputFocus,
@@ -34,6 +36,7 @@ function InputNumber({
       <input
         ref={inputRef ?? undefined}
         type="text"
+        inputMode={inputMode}
         className={`form__input-text ${
           formData[fieldName].hasError && "form__input-text--error"
         }`}

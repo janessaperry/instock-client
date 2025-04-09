@@ -17,14 +17,14 @@ import { ArrowBackIcon } from "../../components/Icons/Icons";
 import { ApiService } from "../../api/apiService";
 import { WarehouseDetails, FormDataProps } from "../../types";
 import { formatPhoneNumber, setCursorPosition } from "../../utils/utils";
-
-// Styles
-import "./WarehouseFormPage.scss";
 import {
   validateBlankFields,
   validateEmail,
   validatePhoneNumber,
 } from "../../utils/formValidation";
+
+// Styles
+import "./WarehouseFormPage.scss";
 
 interface WarehousesFormPageProps {
   editMode: boolean;
@@ -280,6 +280,7 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
             placeholder="+1 (555) 555-5555"
             maxLength={17}
             fieldName="contactPhone"
+            inputMode="tel"
             formData={formData}
             handleInputChange={handleInputChange}
             handleInputFocus={handleInputFocus}

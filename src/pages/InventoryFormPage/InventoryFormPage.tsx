@@ -10,6 +10,7 @@ import InputText from "../../components/InputText/InputText";
 import InputTextarea from "../../components/InputTextarea/InputTextarea";
 import InputDropdown from "../../components/InputDropdown/InputDropdown";
 import InputRadio from "../../components/InputRadio/InputRadio";
+import InputNumber from "../../components/InputNumber/InputNumber";
 import ModalSuccess from "../../components/ModalSuccess/ModalSuccess";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
@@ -143,6 +144,7 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
     }
   };
 
+  // todo need to update this since we don't want it to be empty
   const getInventoryCategories = async () => {
     try {
       const data = await apiService.getCategories("inventories");
@@ -210,8 +212,6 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
         )?.id
       ),
     };
-
-    console.log(itemDetails);
 
     editMode
       ? await editExistingItem(itemDetails)
@@ -283,9 +283,10 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
           />
 
           {formData.status.value === "In Stock" && (
-            <InputText
+            <InputNumber
               label="Quantity"
               fieldName="quantity"
+              inputMode="numeric"
               formData={formData}
               handleInputChange={handleInputChange}
             />

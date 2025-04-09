@@ -10,13 +10,6 @@ export interface WarehouseDetails {
   contact_email: string;
 }
 
-export interface WarehouseFormData {
-  [key: string]: {
-    value: string;
-    hasError: boolean;
-  };
-}
-
 export interface InventoryItemDetailsProps {
   id: number;
   itemName: string;
