@@ -22,7 +22,6 @@ import {
   FormDataProps,
   InventoryItemDetailsProps,
   WarehouseDetails,
-  OptionProps,
 } from "../../types";
 
 // Styles
@@ -39,9 +38,6 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [inventoryCategories, setInventoryCategories] = useState<OptionProps[]>(
-    []
-  );
   const [warehousesList, setWarehousesList] = useState<
     { id: string; value: string }[]
   >([]);
@@ -78,6 +74,14 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
   const [formData, setFormData] = useState<FormDataProps>(
     formDataObject(existingItemDetails)
   );
+
+  const inventoryCategories = [
+    { id: "1", value: "Accessories" },
+    { id: "2", value: "Apparel" },
+    { id: "3", value: "Electronics" },
+    { id: "4", value: "Gear" },
+    { id: "5", value: "Health" },
+  ];
 
   const getItemDetails = async () => {
     try {
@@ -137,18 +141,6 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
         };
       });
       setWarehousesList(list);
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // todo need to update this since we don't want it to be empty
-  const getInventoryCategories = async () => {
-    try {
-      const data = await apiService.getCategories("inventories");
-      setInventoryCategories(data);
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -220,7 +212,6 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
 
   useEffect(() => {
     getWarehousesList();
-    getInventoryCategories();
     editMode && getItemDetails();
   }, [inventoryId]);
 

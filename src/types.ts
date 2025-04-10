@@ -36,11 +36,3 @@ export interface OptionProps {
   id: string;
   value: string;
 }
-
-// export interface StatusOptionsProps {
-//   [key: string]: {
-//     id: string;
-//     value: string;
-//     dbValue: string;
-//   };
-// }
