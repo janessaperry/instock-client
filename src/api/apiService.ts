@@ -16,16 +16,19 @@ const errorMessageMap: IErrorMessageMap = {
   warehouses: {
     400: "Bad Request: update this",
     404: "Warehouse not found. Please try again.",
+    429: "Too many requests! You've hit the limit for write actions. As this is a portfolio project, I'm limiting the number of requests to prevent overloading. Please try again later!",
     500: "Something went wrong on our end. We're working to fix it.",
   },
   inventories: {
     400: "Bad Request: update this",
     404: "Inventory not found. Please try again.",
+    429: "Too many requests! You've hit the limit for write actions. As this is a portfolio project, I'm limiting the number of requests to prevent overloading. Please try again later!",
     500: "Something went wrong on our end. We're working to fix it.",
   },
   default: {
     400: "Bad Request: update this",
     404: "Sorry, we couldn't find what you were looking for! Please try again.",
+    429: "Too many requests! You've hit the limit for write actions. As this is a portfolio project, I'm limiting the number of requests to prevent overloading. Please try again later!",
     500: "Something went wrong on our end. We're working to fix it.",
   },
 };

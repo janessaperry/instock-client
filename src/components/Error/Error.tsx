@@ -12,11 +12,24 @@ interface ErrorProps {
   message: string;
 }
 
+const errorTitles = [
+  "Uh oh...",
+  "Whoops!",
+  "Yikes!",
+  "Oopsie daisy!",
+  "Something went wrong...",
+];
+
+const renderTitle = () => {
+  let randomIndex = Math.floor(Math.random() * 5);
+  return errorTitles[randomIndex];
+};
+
 function Error({ message }: ErrorProps) {
   const navigate = useNavigate();
   return (
     <div className="error-container">
-      <ContainerHeader title="Uh oh..." />
+      <ContainerHeader title={renderTitle()} />
 
       <section className="error-body">
         <p className="error-body__message">{message}</p>
