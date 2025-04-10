@@ -35,8 +35,8 @@ function Error({ message }: ErrorProps) {
         <p className="error-body__message">{message}</p>
         <Button
           className="btn--primary error-body__btn"
-          label="Back"
-          handleClick={() => navigate(-1)}
+          label="Back to Home"
+          handleClick={() => navigate("/")}
         />
       </section>
     </div>

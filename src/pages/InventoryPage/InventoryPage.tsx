@@ -63,7 +63,7 @@ function InventoryPage() {
   const handleDelete = async (itemId: number) => {
     try {
       await apiService.delete("inventories", itemId);
-      await apiService.getAll("inventories");
+      await getAllInventories();
       setShowModal(false);
       setDeletedItem(null);
     } catch (error: any) {
