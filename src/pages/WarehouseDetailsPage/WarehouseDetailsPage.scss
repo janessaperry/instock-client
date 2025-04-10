@@ -13,12 +13,30 @@
   @include flex-col($spacing-24);
   @include container-padding;
 
+  @include tablet {
+    @include flex-row($spacing-64);
+  }
+
   &__info-wrapper {
     @include flex-row($spacing-16);
+    position: relative;
+
+    @include tablet {
+      flex: 1 1 66%;
+      gap: $spacing-64;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: -$spacing-32;
+        height: 100%;
+        border-left: 1px solid $color-border-primary;
+      }
+    }
   }
 
   &__info {
-    flex: 1 1 0;
+    flex: 1 1 33%;
     @include flex-col($spacing-4);
   }
 }
