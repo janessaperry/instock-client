@@ -219,7 +219,7 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
   if (error) return <Error message={error} />;
 
   return (
-    <div className="form-container">
+    <div className="inventory-form-container">
       <ContainerHeader
         title={`${editMode ? "Edit" : "Add New"} Inventory Item`}
         prevBtn={
@@ -231,9 +231,9 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
         }
       />
 
-      <form className="form" onSubmit={handleFormSubmit}>
-        <section className="form__section">
-          <h2 className="form__section-title">Item Details</h2>
+      <form className="inventory-form" onSubmit={handleFormSubmit}>
+        <section className="inventory-form__section">
+          <h2 className="inventory-form__section-title">Item Details</h2>
 
           <InputText
             label={"Item Name"}
@@ -259,8 +259,8 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
           />
         </section>
 
-        <section className="form__section">
-          <h2 className="form__section-title">Item Availability</h2>
+        <section className="inventory-form__section">
+          <h2 className="inventory-form__section-title">Item Availability</h2>
 
           <InputRadio
             label="Status"
@@ -292,17 +292,17 @@ function InventoryFormPage({ editMode }: InventoryFormPageProps) {
           />
         </section>
 
-        <div className="form__actions">
+        <div className="inventory-form__actions">
           <Button
             btnType="button"
-            className="btn--secondary form__btn"
+            className="btn--secondary inventory-form__btn"
             label={"Cancel"}
             handleClick={() => navigate(-1)}
           />
 
           <Button
             btnType="submit"
-            className="btn--primary form__btn"
+            className="btn--primary inventory-form__btn"
             label={`${editMode ? "Save" : "Add Item"} `}
           />
         </div>

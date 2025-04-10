@@ -1,5 +1,6 @@
 @use "./variables.scss" as *;
 
+// Breakpoint
 @mixin tablet {
   @media (min-width: $breakpoint-tablet) {
     @content;
@@ -12,6 +13,7 @@
   }
 }
 
+// Flexbox
 @mixin flex-row($gap: 0) {
   display: flex;
   flex-direction: row;
@@ -40,6 +42,7 @@
   gap: $gap;
 }
 
+// Typography
 @mixin typography($font-size, $font-weight, $line-height) {
   font-family: $font-family-primary;
   font-size: $font-size;
@@ -105,6 +108,7 @@
   }
 }
 
+// Containers
 @mixin container-padding-sm-y {
   & {
     padding: $spacing-16;
@@ -132,6 +136,7 @@
   // overflow: hidden;
 }
 
+// Inputs
 @mixin input-text {
   padding: $spacing-8 $spacing-12;
   border: 1px solid $color-border-primary;
@@ -146,6 +151,7 @@
   }
 }
 
+// Components
 @mixin base-modal {
   & {
     position: fixed;
@@ -219,6 +225,66 @@
           flex-grow: 0;
           align-self: flex-end;
         }
+      }
+    }
+  }
+}
+
+@mixin base-form-container {
+  & {
+    @include content-container;
+    @include flex-col;
+
+    &__header {
+      @include flex-row($spacing-16);
+      align-items: center;
+      @include container-padding;
+    }
+  }
+}
+
+@mixin base-form {
+  & {
+    @include flex-col;
+
+    @include tablet {
+      @include flex-row;
+      flex-wrap: wrap;
+    }
+
+    &__section {
+      flex: 1 1 0;
+      @include flex-col($spacing-16);
+      @include container-padding;
+
+      &:not(:first-of-type) {
+        border-top: 1px solid $color-border-primary;
+      }
+
+      @include tablet {
+        &:not(:first-of-type) {
+          border-top: none;
+          border-left: 1px solid $color-border-primary;
+        }
+      }
+    }
+
+    &__actions {
+      flex-basis: 100%;
+      background-color: $color-background-light;
+      @include flex-row($spacing-16);
+      @include container-padding;
+
+      @include tablet {
+        justify-content: flex-end;
+      }
+    }
+
+    &__btn {
+      flex: 1 1 0;
+
+      @include tablet {
+        flex: 0 1 20%;
       }
     }
   }

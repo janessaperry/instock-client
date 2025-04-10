@@ -212,7 +212,7 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
   if (error) return <Error message={error} />;
 
   return (
-    <div className="form-container">
+    <div className="warehouse-form-container">
       <ContainerHeader
         title={`${editMode ? "Edit" : "Add New"} Warehouse`}
         prevBtn={
@@ -224,9 +224,9 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
         }
       />
 
-      <form className="form" onSubmit={handleFormSubmit}>
-        <section className="form__section">
-          <h2 className="form__section-title">Warehouse Details</h2>
+      <form className="warehouse-form" onSubmit={handleFormSubmit}>
+        <section className="warehouse-form__section">
+          <h2 className="warehouse-form__section-title">Warehouse Details</h2>
 
           <InputText
             label="Warehouse Name"
@@ -257,8 +257,8 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
           />
         </section>
 
-        <section className="form__section">
-          <h2 className="form__section-title">Contact Details</h2>
+        <section className="warehouse-form__section">
+          <h2 className="warehouse-form__section-title">Contact Details</h2>
 
           <InputText
             label="Contact Name"
@@ -294,15 +294,15 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
           />
         </section>
 
-        <div className="form__actions">
+        <div className="warehouse-form__actions">
           <Button
-            className="btn--secondary form__btn"
+            className="btn--secondary warehouse-form__btn"
             label="Cancel"
             handleClick={() => navigate(-1)}
           />
           <Button
             btnType="submit"
-            className="btn--primary form__btn"
+            className="btn--primary warehouse-form__btn"
             label={`${editMode ? "Save" : "Add New Warehouse"}`}
           />
         </div>

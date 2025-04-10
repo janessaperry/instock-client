@@ -1,36 +1,10 @@
 @use "../../styles/partials/variables" as *;
 @use "../../styles/partials/mixins" as *;
 
-.form-container {
-  @include content-container;
-  @include flex-col;
-
-  &__header {
-    @include flex-row($spacing-16);
-    align-items: center;
-    @include container-padding;
-  }
+.warehouse-form-container {
+  @include base-form-container;
 }
 
-.form {
-  @include flex-col;
-
-  &__section {
-    @include flex-col($spacing-16);
-    @include container-padding;
-
-    &:not(:first-of-type) {
-      border-top: 1px solid $color-border-primary;
-    }
-  }
-
-  &__actions {
-    background-color: $color-background-light;
-    @include flex-row($spacing-16);
-    @include container-padding;
-  }
-
-  &__btn {
-    flex: 1 1 0;
-  }
+.warehouse-form {
+  @include base-form;
 }
