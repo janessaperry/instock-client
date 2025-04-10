@@ -102,21 +102,27 @@ function InputDropdown({
         className="dropdown__options"
         aria-expanded={showOptions}
       >
-        {options.map((option) => {
-          return (
-            <li
-              key={option.id}
-              role="radio"
-              aria-checked={formData[fieldName]?.value === option.id}
-              aria-label={option.value}
-              data-value={option.value}
-              className="dropdown__option"
-              onClick={() => handleOptionSelect(option.value)}
-            >
-              {option.value}
-            </li>
-          );
-        })}
+        {options.length > 0 ? (
+          options.map((option) => {
+            return (
+              <li
+                key={option.id}
+                role="radio"
+                aria-checked={formData[fieldName]?.value === option.id}
+                aria-label={option.value}
+                data-value={option.value}
+                className="dropdown__option"
+                onClick={() => handleOptionSelect(option.value)}
+              >
+                {option.value}
+              </li>
+            );
+          })
+        ) : (
+          <li className="dropdown__message">
+            No options available at the moment. Try again later!
+          </li>
+        )}
       </ul>
     </div>
   );

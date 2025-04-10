@@ -50,4 +50,9 @@
       background-color: $color-brand-primary;
     }
   }
+
+  &__message {
+    padding: $spacing-12 $spacing-16;
+    color: $color-text-secondary;
+  }
 }
