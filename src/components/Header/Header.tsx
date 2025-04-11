@@ -21,7 +21,9 @@ function Header() {
           <li className="header__nav-item">
             <NavLink
               to="/warehouses"
-              className={`header__nav-link ${isWarehousesActive && "active"}`}
+              className={`header__nav-link ${
+                isWarehousesActive ? "active" : ""
+              }`}
             >
               Warehouses
             </NavLink>
@@ -29,7 +31,9 @@ function Header() {
           <li className="header__nav-item">
             <NavLink
               to="/inventory"
-              className={`header__nav-link ${isInventoryActive && "active"}`}
+              className={`header__nav-link ${
+                isInventoryActive ? "active" : ""
+              }`}
             >
               Inventory
             </NavLink>
