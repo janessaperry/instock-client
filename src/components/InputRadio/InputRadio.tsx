@@ -23,8 +23,14 @@ function InputRadio({
   handleInputChange,
 }: InputRadioProps) {
   return (
-    <div className="input-radio">
-      {label}
+    <div
+      className="input-radio"
+      role="radiogroup"
+      aria-labelledby={`${fieldName}-group`}
+    >
+      <p id={`${fieldName}-group`} className="input-radio__legend">
+        {label}
+      </p>
       <div className="input-radio__options">
         {options.map((option) => {
           return (

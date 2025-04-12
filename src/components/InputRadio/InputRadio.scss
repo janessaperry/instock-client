@@ -4,6 +4,10 @@
 .input-radio {
   @include flex-col($spacing-4);
 
+  &__legend {
+    @include labels;
+  }
+
   &__options {
     @include flex-row($spacing-4);
   }
