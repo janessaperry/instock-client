@@ -3,9 +3,11 @@
 
 .dropdown {
   position: relative;
+  @include flex-col($spacing-4);
 
   &__label {
     @include flex-col($spacing-4);
+    @include labels;
   }
 
   &__btn {
@@ -32,7 +34,7 @@
       z-index: 1;
     }
 
-    &[aria-expanded="false"] {
+    &--collapsed {
       display: none;
     }
   }
@@ -42,6 +44,12 @@
     padding: $spacing-12 $spacing-16;
 
     &:hover {
+      background-color: $color-brand-primary-light-hover;
+    }
+
+    &:focus-visible {
+      // outline: 1px solid $color-brand-primary;
+      outline: none;
       background-color: $color-brand-primary-light-hover;
     }
 

@@ -4,6 +4,7 @@
 .form {
   &__label {
     @include flex-col($spacing-4);
+    @include labels;
   }
 
   &__input-text {

@@ -3,6 +3,7 @@
 
 .btn {
   cursor: pointer;
+  min-width: max-content;
   outline-color: $color-brand-primary-hover;
   border: none;
   border-radius: $radius-full;
