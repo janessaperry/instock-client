@@ -50,6 +50,17 @@ function InputDropdown({
     setShowOptions(false);
   };
 
+  const handleOptionNav = (e: React.KeyboardEvent<HTMLLIElement>) => {
+    const target = e.target;
+    const nextOption = (target as HTMLElement).nextElementSibling;
+    const prevOption = (target as HTMLElement).previousElementSibling;
+
+    if (e.key === "ArrowDown") (nextOption as HTMLElement)?.focus();
+    if (e.key === "ArrowUp") (prevOption as HTMLElement)?.focus();
+    if (e.key === "Escape" || (e.key === "Tab" && nextOption === null))
+      setShowOptions(false);
+  };
+
   const handleClickOutside = (e: MouseEvent) => {
     if (
       dropdownRef.current &&
@@ -58,6 +69,15 @@ function InputDropdown({
       setShowOptions(false);
     }
   };
+
+  useEffect(() => {
+    if (showOptions) {
+      const first = dropdownRef.current?.querySelector(
+        ".dropdown__option"
+      ) as HTMLElement;
+      first.focus();
+    }
+  }, [showOptions]);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -75,32 +95,37 @@ function InputDropdown({
         onClick={handleLabelClick}
       >
         {label}
-        <div
-          className="dropdown__btn"
-          tabIndex={0}
-          role="button"
-          aria-labelledby={fieldName}
-          onClick={toggleDropdown}
-          onKeyDown={(e) => e.key === "Enter" && toggleDropdown()}
-          aria-placeholder="Please select"
-        >
-          <span className="dropdown__placeholder">
-            {formData[fieldName]?.value || "Please select"}
-          </span>
-          <ArrowDropDownIcon />
-        </div>
-        {formData[fieldName].hasError && (
-          <span className="form__error">
-            <ErrorIcon size="16" />
-            This field is required.
-          </span>
-        )}
       </label>
+      <div
+        className="dropdown__btn"
+        role="button"
+        tabIndex={0}
+        aria-labelledby={fieldName}
+        aria-placeholder="Please select"
+        aria-expanded={showOptions}
+        aria-controls={`radio-${fieldName}`}
+        onClick={toggleDropdown}
+        onKeyDown={(e) => e.key === "Enter" && toggleDropdown()}
+      >
+        <span className="dropdown__placeholder">
+          {formData[fieldName]?.value || "Please select"}
+        </span>
+        <ArrowDropDownIcon />
+      </div>
+      {formData[fieldName].hasError && (
+        <span className="form__error">
+          <ErrorIcon size="16" />
+          This field is required.
+        </span>
+      )}
 
       <ul
+        id={`radio-${fieldName}`}
         role="radiogroup"
-        className="dropdown__options"
-        aria-expanded={showOptions}
+        className={`dropdown__options dropdown__options--${
+          showOptions ? "expanded" : "collapsed"
+        }`}
+        aria-labelledby={fieldName}
       >
         {options.length > 0 ? (
           options.map((option) => {
@@ -108,11 +133,15 @@ function InputDropdown({
               <li
                 key={option.id}
                 role="radio"
+                tabIndex={0}
                 aria-checked={formData[fieldName]?.value === option.id}
-                aria-label={option.value}
-                data-value={option.value}
                 className="dropdown__option"
                 onClick={() => handleOptionSelect(option.value)}
+                onKeyDown={(e) => {
+                  handleOptionNav(e);
+                  if (e.key === "Enter") handleOptionSelect(option.value);
+                }}
+                // onKeyDown={handleOptionNav} //todo will need to add more to this like when enter is hit it selects the option
               >
                 {option.value}
               </li>

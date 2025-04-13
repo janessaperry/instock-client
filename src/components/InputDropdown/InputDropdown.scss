@@ -47,6 +47,7 @@
       background-color: $color-brand-primary-light-hover;
     }
 
+    &:focus,
     &:focus-visible {
       // outline: 1px solid $color-brand-primary;
       outline: none;
