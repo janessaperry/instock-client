@@ -38,7 +38,7 @@ function InputNumber({
         type="text"
         inputMode={inputMode}
         className={`form__input-text ${
-          formData[fieldName].hasError && "form__input-text--error"
+          formData[fieldName].hasError ? "form__input-text--error" : ""
         }`}
         placeholder={placeholder || label}
         name={fieldName}

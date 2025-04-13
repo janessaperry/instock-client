@@ -41,7 +41,7 @@ function ListBodyLink({
   linkTo,
 }: ListBodyLinkProps) {
   return (
-    <div className={`list-body__item ${className}`}>
+    <div className={`list-body__item ${className || ""}`}>
       <h4 className="list-body__title">{title}</h4>
       <Link
         to={`${linkTo}`}
