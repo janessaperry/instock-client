@@ -16,10 +16,9 @@ import Footer from "./components/Footer/Footer";
 // Types
 // Styles
 import "./App.scss";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
-  const baseApiUrl: string = import.meta.env.VITE_API_URL;
-
   return (
     <>
       <BrowserRouter>
@@ -27,46 +26,33 @@ function App() {
         <main className="app__main">
           <Routes>
             <Route path="/" element={<Navigate to="/warehouses" replace />} />
-            <Route
-              path="/warehouses"
-              element={<WarehousesPage baseApiUrl={baseApiUrl} />}
-            />
+            <Route path="/warehouses" element={<WarehousesPage />} />
             <Route
               path="/warehouses/:warehouseId"
-              element={<WarehouseDetailsPage baseApiUrl={baseApiUrl} />}
+              element={<WarehouseDetailsPage />}
             ></Route>
             <Route
               path="/warehouses/add"
-              element={
-                <WarehouseFormPage baseApiUrl={baseApiUrl} editMode={false} />
-              }
+              element={<WarehouseFormPage editMode={false} />}
             ></Route>
             <Route
               path="/warehouses/:warehouseId/edit"
-              element={
-                <WarehouseFormPage baseApiUrl={baseApiUrl} editMode={true} />
-              }
+              element={<WarehouseFormPage editMode={true} />}
             ></Route>
-            <Route
-              path="/inventory"
-              element={<InventoryPage baseApiUrl={baseApiUrl} />}
-            />
+            <Route path="/inventory" element={<InventoryPage />} />
             <Route
               path="/inventory/:itemId"
-              element={<InventoryItemDetailsPage baseApiUrl={baseApiUrl} />}
+              element={<InventoryItemDetailsPage />}
             />
             <Route
               path="/inventory/add"
-              element={
-                <InventoryFormPage baseApiUrl={baseApiUrl} editMode={false} />
-              }
+              element={<InventoryFormPage editMode={false} />}
             />
             <Route
               path="/inventory/:inventoryId/edit"
-              element={
-                <InventoryFormPage baseApiUrl={baseApiUrl} editMode={true} />
-              }
+              element={<InventoryFormPage editMode={true} />}
             />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />
