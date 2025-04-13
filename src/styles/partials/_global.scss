@@ -46,7 +46,7 @@ ol {
 
 button,
 input,
-label:has(input),
+label:has(input[type="radio"]),
 textarea,
 select {
   font-family: inherit;
