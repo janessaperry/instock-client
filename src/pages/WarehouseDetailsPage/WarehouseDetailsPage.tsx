@@ -64,28 +64,16 @@ function WarehouseDetailsPage() {
   const navigate = useNavigate();
 
   const getWarehouseDetails = async () => {
-    try {
-      const data = await apiService.getById("warehouses", Number(warehouseId));
-      setWarehouse(data);
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    const data = await apiService.getById("warehouses", Number(warehouseId));
+    setWarehouse(data);
   };
 
   const getInventoryByWarehouse = async () => {
-    try {
-      const data = await apiService.getInventoryByWarehouseId(
-        "warehouses",
-        Number(warehouseId)
-      );
-      setInventory(data);
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    const data = await apiService.getInventoryByWarehouseId(
+      "warehouses",
+      Number(warehouseId)
+    );
+    setInventory(data);
   };
 
   const handleDelete = async () => {
@@ -110,8 +98,17 @@ function WarehouseDetailsPage() {
   };
 
   useEffect(() => {
-    getWarehouseDetails();
-    getInventoryByWarehouse();
+    const fetchWarehouseData = async () => {
+      try {
+        await getWarehouseDetails();
+        await getInventoryByWarehouse();
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchWarehouseData();
   }, [warehouseId]);
 
   if (isLoading) return <Loading />;
