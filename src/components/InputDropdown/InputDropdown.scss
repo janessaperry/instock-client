@@ -14,6 +14,10 @@
     cursor: pointer;
     @include input-text;
     @include flex-row-between($spacing-16);
+
+    &--error {
+      border-color: $color-error;
+    }
   }
 
   &__placeholder {
@@ -49,7 +53,6 @@
 
     &:focus,
     &:focus-visible {
-      // outline: 1px solid $color-brand-primary;
       outline: none;
       background-color: $color-brand-primary-light-hover;
     }

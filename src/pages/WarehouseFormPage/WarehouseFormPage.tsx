@@ -176,14 +176,19 @@ function WarehouseFormPage({ editMode }: WarehousesFormPageProps) {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     let isValid = true;
+
     isValid = validateBlankFields(formData, setFormData);
 
-    if (isValid)
-      isValid =
-        validatePhoneNumber(formData, setFormData) &&
-        validateEmail(formData, setFormData);
+    if (formData.contactPhone.value.trim() !== "") {
+      const phoneValid = validatePhoneNumber(formData, setFormData);
+      isValid = isValid && phoneValid;
+    }
+
+    if (formData.contactEmail.value.trim() !== "") {
+      const emailValid = validateEmail(formData, setFormData);
+      isValid = isValid && emailValid;
+    }
 
     if (!isValid) return;
 

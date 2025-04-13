@@ -26,7 +26,7 @@ function InputText({
       <input
         type="text"
         className={`form__input-text ${
-          formData[fieldName].hasError && "form__input-text--error"
+          formData[fieldName].hasError ? "form__input-text--error" : ""
         }`}
         placeholder={label}
         name={fieldName}

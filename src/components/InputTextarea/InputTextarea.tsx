@@ -24,7 +24,9 @@ function InputTextarea({
     <label className="form__label">
       {label}
       <textarea
-        className="form__input-textarea"
+        className={`form__input-textarea ${
+          formData[fieldName].hasError ? "form__input-textarea--error" : ""
+        }`}
         placeholder={placeholder}
         rows={4}
         name={fieldName}

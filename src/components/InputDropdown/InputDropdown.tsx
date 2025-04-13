@@ -97,7 +97,9 @@ function InputDropdown({
         {label}
       </label>
       <div
-        className="dropdown__btn"
+        className={`dropdown__btn ${
+          formData[fieldName].hasError ? "dropdown__btn--error" : ""
+        }`}
         role="button"
         tabIndex={0}
         aria-labelledby={fieldName}
@@ -141,7 +143,6 @@ function InputDropdown({
                   handleOptionNav(e);
                   if (e.key === "Enter") handleOptionSelect(option.value);
                 }}
-                // onKeyDown={handleOptionNav} //todo will need to add more to this like when enter is hit it selects the option
               >
                 {option.value}
               </li>
