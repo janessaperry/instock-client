@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <header className="header">
-      <Link to="/">
+      <Link to="/" className="header__logo-link">
         <img className="header__logo" src={InStockLogo} alt="InStock Logo" />
       </Link>
       <nav className="header__nav">
