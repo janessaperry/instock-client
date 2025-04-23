@@ -51,12 +51,12 @@ function InputDropdown({
   };
 
   const handleOptionNav = (e: React.KeyboardEvent<HTMLLIElement>) => {
-    const target = e.target;
-    const nextOption = (target as HTMLElement).nextElementSibling;
-    const prevOption = (target as HTMLElement).previousElementSibling;
+    const target = e.target as HTMLElement;
+    const nextOption = target.nextElementSibling as HTMLElement;
+    const prevOption = target.previousElementSibling as HTMLElement;
 
-    if (e.key === "ArrowDown") (nextOption as HTMLElement)?.focus();
-    if (e.key === "ArrowUp") (prevOption as HTMLElement)?.focus();
+    if (e.key === "ArrowDown") nextOption.focus();
+    if (e.key === "ArrowUp") prevOption.focus();
     if (e.key === "Escape" || (e.key === "Tab" && nextOption === null))
       setShowOptions(false);
   };
