@@ -2,7 +2,7 @@
 import { NavLink, Link, useMatch } from "react-router-dom";
 
 // Assets
-import InStockLogo from "../../assets/logo/InStock-logo.svg";
+import InStockLogo from "../../assets/logo/InStock-Logo.svg";
 
 // Styles
 import "./Header.scss";
