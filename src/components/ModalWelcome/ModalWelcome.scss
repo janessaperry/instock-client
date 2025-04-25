@@ -1,0 +1,94 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.modal {
+  @include base-modal;
+
+  &__body {
+    @include flex-col($spacing-16);
+  }
+}
+
+.memory-game {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: $spacing-8;
+  position: relative;
+
+  &__card {
+    cursor: pointer;
+    @include flex-row-center;
+    min-height: 5rem;
+    background-color: $color-background-dark;
+    color: $color-background-light;
+    border-radius: $radius-4;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 1s ease;
+
+    &-back,
+    &-front {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+
+      .memory-game__icon {
+        position: absolute;
+        top: calc(50% - $spacing-24);
+        left: calc(50% - $spacing-24);
+      }
+    }
+
+    &-back {
+      color: $color-text-secondary;
+      transform: rotateY(0deg);
+    }
+
+    &-front {
+      transform: rotateY(180deg);
+    }
+
+    &--selected, &--matched {
+      pointer-events: none;
+      transform: rotateY(180deg);
+      background-color: $color-brand-primary;
+    }
+
+    &--matched {
+      background-color: $color-border-primary;
+      color: $color-background-dark;
+    }
+  }
+
+
+  &__message {
+    background-color: rgba($color-background-light, 0.9);
+    backdrop-filter: blur(2px);
+    padding: $spacing-24 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    @include flex-col($spacing-12);
+    align-items: center;
+    transition: all 1s ease;
+
+    & > * {
+      transition: opacity 1s ease;
+      opacity: 0;
+    }
+
+    &--visible {
+      width: 100%;
+      padding: $spacing-24;
+
+      & > * {
+        opacity: 1;
+      }
+    }
+  }
+}

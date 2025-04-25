@@ -154,11 +154,12 @@
 // Components
 @mixin base-modal {
   & {
+    z-index: 1;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background-color: rgba($color-background-dark, 60%);
     backdrop-filter: blur(0.25rem);
     @include flex-col;

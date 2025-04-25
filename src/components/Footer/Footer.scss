@@ -3,7 +3,7 @@
 
 .footer {
   color: $color-text-secondary;
-  @include flex-row-center;
+  @include flex-row-between($spacing-16);
   @include body-small;
   @include container-padding;
 
@@ -14,4 +14,10 @@
     padding-left: 0;
     padding-right: 0;
   }
+
+  &__icon--start-game {
+    color: $color-brand-primary;
+  }
 }
+
+
